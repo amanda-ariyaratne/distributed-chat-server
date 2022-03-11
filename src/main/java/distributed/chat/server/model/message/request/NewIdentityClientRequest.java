@@ -12,4 +12,7 @@ public class NewIdentityClientRequest extends AbstractClientRequest {
         this.identity = identity;
     }
 
+    public String getIdentity() {
+        return identity;
+    }
 }

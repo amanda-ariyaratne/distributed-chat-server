@@ -1,10 +1,10 @@
 package distributed.chat.server.service;
 
 import distributed.chat.server.model.message.AbstractClientRequest;
+import distributed.chat.server.model.message.AbstractClientResponse;
 
-public abstract class AbstractClientService {
+public abstract class AbstractClientService<S extends AbstractClientRequest, T extends AbstractClientResponse> {
 
-    public abstract void processRequest(AbstractClientRequest request);
-    public abstract void handleRequest(AbstractClientRequest request);
+    public abstract T processRequest(S request);
 
 }

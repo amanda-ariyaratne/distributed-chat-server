@@ -20,8 +20,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void serveRequest(AbstractClientRequest request) {
-        AbstractClientService requestService = RequestHandlerFactory.requestHandler(request, client);
-        requestService.handleRequest(request);
         // TODO
     }
 
