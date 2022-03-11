@@ -7,6 +7,10 @@ public class Client {
     private ChannelHandlerContext ctx;
     private Room room;
 
+    public Client(ChannelHandlerContext ctx){
+        this.ctx = ctx;
+    }
+
     public Room getRoom() {
         return room;
     }

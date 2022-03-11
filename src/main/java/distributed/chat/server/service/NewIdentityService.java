@@ -1,7 +1,9 @@
 package distributed.chat.server.service;
 
+import distributed.chat.server.Server;
 import distributed.chat.server.model.message.request.NewIdentityClientRequest;
 import distributed.chat.server.model.message.response.NewIdentityClientResponse;
+import org.json.simple.JSONObject;
 
 public class NewIdentityService extends AbstractClientService<NewIdentityClientRequest, NewIdentityClientResponse> {
 
@@ -19,15 +21,34 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     @Override
     public NewIdentityClientResponse processRequest(NewIdentityClientRequest request) {
         String identity = request.getIdentity();
-        boolean approved = false;
-        approved = approveIdentity(identity);
+        boolean approved;
+        synchronized (this){
+            approved = approveIdentity(identity);
+            /**
+             * Todo: if approved =>
+             * add to list
+             * Set Identity of client
+             * Set room to Main hall
+              */
+        }
 
         return new NewIdentityClientResponse(approved);
     }
 
     private boolean approveIdentity(String identity) {
-        // TODO : add logic
-        return true;
+        if (isValidValue(identity)) {
+            return !checkUniqueIdentity(identity);
+        }
+        return false;
+    }
+
+    private boolean isValidValue(String identity) {
+        if (identity.length() < 3 || identity.length() > 16) return false;
+        else return Character.isAlphabetic(identity.charAt(0));
+    }
+
+    private boolean checkUniqueIdentity(String identity) {
+        return Server.clients.containsKey(identity);
     }
 
 }

@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14fab419-bccb-4690-9de5-716f817b23fc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/ServerHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/handlers/client/NewIdentityHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/handlers/client/NewIdentityHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/service/AbstractClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/service/AbstractClientService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/service/NewIdentityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/service/NewIdentityService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

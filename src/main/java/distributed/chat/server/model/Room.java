@@ -40,4 +40,8 @@ public class Room {
     public void setMembers(ArrayList<Client> members) {
         this.members = members;
     }
+
+    public void addMember(Client client) {
+        this.members.add(client);
+    }
 }

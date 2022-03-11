@@ -1,17 +1,27 @@
 package distributed.chat.server;
 
+import distributed.chat.server.model.Client;
+import distributed.chat.server.model.Room;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Server {
-
     private final int port;
+    public static Map<String, Client> clients = new ConcurrentHashMap<>();
+    public static Map<String, Room> rooms = new ConcurrentHashMap<>(){
+        {
+            put("Main-hall", new Room("", null));
+        }
+    };
 
     public Server(int port) {
         this.port = port;
@@ -28,7 +38,6 @@ public class Server {
     }
 
     public void start() throws Exception {
-        final ServerHandler serverHandler = new ServerHandler();
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
