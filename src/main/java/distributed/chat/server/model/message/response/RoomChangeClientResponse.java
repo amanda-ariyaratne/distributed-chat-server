@@ -5,9 +5,9 @@ import distributed.chat.server.model.message.MessageType;
 
 public class RoomChangeClientResponse extends AbstractClientResponse {
 
-    String identity;
-    String former;
-    String roomId;
+    private String identity;
+    private String former;
+    private String roomId;
 
     public RoomChangeClientResponse(String identity, String former, String roomId) {
         super(MessageType.ROOM_CHANGE);
