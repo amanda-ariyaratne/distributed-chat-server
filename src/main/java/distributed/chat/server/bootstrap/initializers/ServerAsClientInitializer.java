@@ -1,5 +1,6 @@
-package distributed.chat.server;
+package distributed.chat.server.bootstrap.initializers;
 
+import distributed.chat.server.ClientRequestDecoder;
 import distributed.chat.server.handlers.client.NewIdentityHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -8,7 +9,7 @@ import io.netty.handler.codec.json.JsonObjectDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 
-public class ServerInitializer extends ChannelInitializer<SocketChannel> {
+public class ServerAsClientInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel channel) throws Exception {
@@ -18,7 +19,5 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast("json_decode", new JsonObjectDecoder());
         pipeline.addLast("string_encode", new StringEncoder(CharsetUtil.UTF_8));
         pipeline.addLast("pojo_decode", new ClientRequestDecoder());
-        pipeline.addLast("chat_handle", new NewIdentityHandler());
     }
-
 }
