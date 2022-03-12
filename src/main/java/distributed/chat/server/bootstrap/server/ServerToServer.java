@@ -1,40 +1,20 @@
-package distributed.chat.server;
+package distributed.chat.server.bootstrap.server;
 
-import distributed.chat.server.model.Client;
-import distributed.chat.server.model.Room;
+import distributed.chat.server.bootstrap.initializers.ServerToServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class Server {
+public class ServerToServer {
     private final int port;
-    public static Map<String, Client> clients = new ConcurrentHashMap<>();
-    public static Map<String, Room> rooms = new ConcurrentHashMap<>(){
-        {
-            put("Main-hall", new Room("", null));
-        }
-    };
 
-    public Server(int port) {
+    public ServerToServer(int port) {
         this.port = port;
-    }
-
-    public static void main(String[] args) throws Exception {
-        int port;
-        if (args.length!= 1) {
-            port = 4444;
-        } else {
-            port = Integer.parseInt(args[0]);
-        }
-        new Server(port).start();
     }
 
     public void start() throws Exception {
@@ -47,7 +27,7 @@ public class Server {
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .localAddress(new InetSocketAddress(port))
-                    .childHandler(new ServerInitializer());
+                    .childHandler(new ServerToServerInitializer());
             ChannelFuture f = b.bind().sync();
             f.channel().closeFuture().sync();
         } finally {

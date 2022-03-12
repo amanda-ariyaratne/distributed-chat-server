@@ -1,9 +1,8 @@
 package distributed.chat.server.service;
 
-import distributed.chat.server.Server;
+import distributed.chat.server.bootstrap.server.ServerToClient;
 import distributed.chat.server.model.message.request.NewIdentityClientRequest;
 import distributed.chat.server.model.message.response.NewIdentityClientResponse;
-import org.json.simple.JSONObject;
 
 public class NewIdentityService extends AbstractClientService<NewIdentityClientRequest, NewIdentityClientResponse> {
 
@@ -24,6 +23,11 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         boolean approved;
         synchronized (this){
             approved = approveIdentity(identity);
+            if (approved) {
+                ServerToClient.clients.put(identity, request.getSender());
+            } else {
+
+            }
             /**
              * Todo: if approved =>
              * add to list
@@ -48,7 +52,18 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     }
 
     private boolean checkUniqueIdentity(String identity) {
-        return Server.clients.containsKey(identity);
+        boolean locallyRedundant = ServerToClient.clients.containsKey(identity);
+
+        if (locallyRedundant)
+            return true;
+
+        /**
+         * else {
+         *      Todo: Ask from Leader
+         * }
+         */
+
+        return true;
     }
 
 }

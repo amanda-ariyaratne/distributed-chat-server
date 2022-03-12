@@ -4,13 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14fab419-bccb-4690-9de5-716f817b23fc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="14fab419-bccb-4690-9de5-716f817b23fc" name="Changes" comment="New Identity request processed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/bootstrap/client/ServerAsClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/bootstrap/initializers/ServerAsClientInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/bootstrap/initializers/ServerToClientInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/bootstrap/server/ServerToServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/handlers/server/IdentityApprovalInboundHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/handlers/server/IdentityApprovalOutboundHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/ServerConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/bootstrap/server/ServerToClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/ServerInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/bootstrap/initializers/ServerToServerInitializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/handlers/client/NewIdentityHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/handlers/client/NewIdentityHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/message/request/NewIdentityClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/model/message/request/NewIdentityClientRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/distributed/chat/server/service/NewIdentityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/distributed/chat/server/service/NewIdentityService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +86,14 @@
       <option name="presentableId" value="Default" />
       <updated>1646996556349</updated>
     </task>
+    <task id="LOCAL-00001" summary="New Identity request processed">
+      <created>1647016584664</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1647016584664</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -103,5 +118,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="New Identity request processed" />
+    <option name="LAST_COMMIT_MESSAGE" value="New Identity request processed" />
   </component>
 </project>
