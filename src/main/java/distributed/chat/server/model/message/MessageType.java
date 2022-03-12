@@ -18,5 +18,6 @@ public enum MessageType {
     RESERVE_IDENTITY,
     ADD_IDENTITY,
     RESERVE_ROOM,
-    ADD_ROOM
+    ADD_ROOM,
+    DELETE_IDENTITY
 }
