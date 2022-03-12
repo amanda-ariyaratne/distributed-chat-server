@@ -14,5 +14,10 @@ public enum MessageType {
     SERVER_CHANGE,
     DELETE_ROOM,
     MESSAGE,
-    QUIT
+    QUIT,
+    RESERVE_IDENTITY,
+    ADD_IDENTITY,
+    RESERVE_ROOM,
+    ADD_ROOM,
+    DELETE_IDENTITY
 }
