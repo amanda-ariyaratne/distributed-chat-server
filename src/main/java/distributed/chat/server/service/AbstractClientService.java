@@ -1,5 +1,7 @@
 package distributed.chat.server.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.AbstractClientRequest;
 import io.netty.channel.ChannelFuture;
@@ -11,8 +13,10 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
 
     public abstract T processRequest(S request);
 
-    public void sendResponse(JSONObject reply, Client client) {
-        final ChannelFuture f = client.getCtx().writeAndFlush(reply.toJSONString() + "\n");
+    public void sendResponse(T response, Client client) {
+        Gson gson = new Gson();
+        String responseJsonStr = gson.toJson(response);
+        final ChannelFuture f = client.getCtx().writeAndFlush(responseJsonStr + "\n");
         f.addListener((ChannelFutureListener) future -> {
             assert f == future;
         });
