@@ -1,5 +1,6 @@
 package distributed.chat.server;
 
+import distributed.chat.server.handlers.client.NewIdentityHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -17,7 +18,7 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast("json_decode", new JsonObjectDecoder());
         pipeline.addLast("string_encode", new StringEncoder(CharsetUtil.UTF_8));
         pipeline.addLast("pojo_decode", new ClientRequestDecoder());
-        pipeline.addLast("chat_handle", new ServerHandler());
+        pipeline.addLast("chat_handle", new NewIdentityHandler());
     }
 
 }

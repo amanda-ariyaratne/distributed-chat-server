@@ -16,7 +16,8 @@ public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
         if (request instanceof NewIdentityClientRequest){
             NewIdentityClientRequest newIdentityClientRequest = (NewIdentityClientRequest) msg;
             newIdentityService = NewIdentityService.getInstance();
-            newIdentityService.processRequest(newIdentityClientRequest);
+            NewIdentityClientresponse response = newIdentityService.processRequest(newIdentityClientRequest);
+            ctx.write(response);
         } else {
             ctx.fireChannelRead(msg);
         }
