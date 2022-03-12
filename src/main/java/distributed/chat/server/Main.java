@@ -1,7 +1,7 @@
 package distributed.chat.server;
 
-import distributed.chat.server.bootstrap.client.ServerAsClient;
-import distributed.chat.server.bootstrap.server.ServerToClient;
+import distributed.chat.server.bootstrap.server.ServerAsClient;
+import distributed.chat.server.bootstrap.client.ServerToClient;
 import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.states.ServerState;
@@ -34,28 +34,25 @@ public class Main {
 
         // Todo: Read these data from config files
 
-        ArrayList<Thread> threads = new ArrayList<>();
         for (Map.Entry<String, ServerConfig> server : servers.entrySet()){
             ServerConfig configs = server.getValue();
 
             if (portServerToServer != configs.getCoordination_port()) {
-                threads.add(
-                    new Thread(() -> {
-                        try {
-                            ServerAsClient serverAsClient = new ServerAsClient(
-                                    configs.getServer_address(),
-                                    configs.getCoordination_port()
-                            );
-                            serverAsClient.start();
-                            ServerState.serverChannels.put(configs.getServer_id() , serverAsClient.getChannel());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    })
-                );
+                new Thread(() -> {
+                    try {
+                        ServerAsClient serverAsClient = new ServerAsClient(
+                                configs.getServer_address(),
+                                configs.getCoordination_port()
+                        );
+                        serverAsClient.start();
+                        ServerState.serverChannels.put(configs.getServer_id() , serverAsClient.getChannel());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
-
         }
+
         Thread coordinatorThread = new Thread(() -> {
             try {
                 new ServerToServer(portServerToServer).start();

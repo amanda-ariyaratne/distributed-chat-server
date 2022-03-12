@@ -3,8 +3,8 @@ package distributed.chat.server.service.client;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.request.client.NewIdentityClientRequest;
 import distributed.chat.server.model.message.request.server.NewIdentityCheckRedundantRequest;
-import distributed.chat.server.model.message.response.NewIdentityClientResponse;
-import distributed.chat.server.service.server.NewIdentityCheckRedundantService;
+import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
+import distributed.chat.server.service.server.ReserveIdentityServerService;
 import distributed.chat.server.states.ServerState;
 
 import java.util.Map;
@@ -68,7 +68,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         if (locallyRedundant)
             return true;
         else {
-            NewIdentityCheckRedundantService.getInstance().processRequest(
+            ReserveIdentityServerService.getInstance().processRequest(
                     new NewIdentityCheckRedundantRequest(identity),
                     ServerState.serverChannels.get(ServerState.leaderId)
             );
@@ -78,5 +78,6 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             return false;
         }
     }
+
 
 }

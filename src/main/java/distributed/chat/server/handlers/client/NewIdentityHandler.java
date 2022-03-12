@@ -1,7 +1,7 @@
 package distributed.chat.server.handlers.client;
 
 import distributed.chat.server.model.Client;
-import distributed.chat.server.model.message.AbstractClientRequest;
+import distributed.chat.server.model.message.request.client.AbstractClientRequest;
 import distributed.chat.server.model.message.request.client.NewIdentityClientRequest;
 import distributed.chat.server.service.client.NewIdentityService;
 import distributed.chat.server.states.ServerState;

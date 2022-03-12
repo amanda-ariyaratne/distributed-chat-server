@@ -1,14 +1,11 @@
 package distributed.chat.server.service.client;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import distributed.chat.server.model.Client;
-import distributed.chat.server.model.message.AbstractClientRequest;
-import io.netty.channel.Channel;
+import distributed.chat.server.model.message.request.client.AbstractClientRequest;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
-import org.json.simple.JSONObject;
-import distributed.chat.server.model.message.AbstractClientResponse;
+import distributed.chat.server.model.message.response.client.AbstractClientResponse;
 
 public abstract class AbstractClientService<S extends AbstractClientRequest, T extends AbstractClientResponse> {
 

@@ -3,7 +3,7 @@ package distributed.chat.server;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import distributed.chat.server.model.message.AbstractClientRequest;
+import distributed.chat.server.model.message.request.client.AbstractClientRequest;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;

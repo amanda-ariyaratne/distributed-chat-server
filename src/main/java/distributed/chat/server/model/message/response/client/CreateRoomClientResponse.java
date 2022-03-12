@@ -1,6 +1,5 @@
-package distributed.chat.server.model.message.response;
+package distributed.chat.server.model.message.response.client;
 
-import distributed.chat.server.model.message.AbstractClientResponse;
 import distributed.chat.server.model.message.MessageType;
 
 public class CreateRoomClientResponse extends AbstractClientResponse {

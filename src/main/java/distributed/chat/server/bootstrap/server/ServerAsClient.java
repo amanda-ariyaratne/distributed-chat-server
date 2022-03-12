@@ -1,4 +1,4 @@
-package distributed.chat.server.bootstrap.client;
+package distributed.chat.server.bootstrap.server;
 
 import distributed.chat.server.bootstrap.initializers.ServerAsClientInitializer;
 import io.netty.bootstrap.Bootstrap;

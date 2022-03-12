@@ -1,4 +1,4 @@
-package distributed.chat.server.bootstrap.server;
+package distributed.chat.server.bootstrap.client;
 
 import distributed.chat.server.bootstrap.initializers.ServerToClientInitializer;
 import distributed.chat.server.model.Client;
