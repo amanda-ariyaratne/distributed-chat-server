@@ -2,7 +2,7 @@ package distributed.chat.server;
 
 import com.google.gson.*;
 import distributed.chat.server.model.message.*;
-import distributed.chat.server.model.message.request.*;
+import distributed.chat.server.model.message.request.client.*;
 
 import java.lang.reflect.Type;
 

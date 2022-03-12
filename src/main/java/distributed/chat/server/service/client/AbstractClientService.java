@@ -1,9 +1,10 @@
-package distributed.chat.server.service;
+package distributed.chat.server.service.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.AbstractClientRequest;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import org.json.simple.JSONObject;
@@ -21,5 +22,4 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
             assert f == future;
         });
     }
-
 }

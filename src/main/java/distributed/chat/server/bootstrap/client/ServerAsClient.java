@@ -2,6 +2,7 @@ package distributed.chat.server.bootstrap.client;
 
 import distributed.chat.server.bootstrap.initializers.ServerAsClientInitializer;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -12,6 +13,7 @@ import java.net.InetSocketAddress;
 public class ServerAsClient {
     private final String host;
     private final int port;
+    private Channel channel;
 
     public ServerAsClient(String host, int port) {
         this.host = host;
@@ -27,9 +29,14 @@ public class ServerAsClient {
                     .remoteAddress(new InetSocketAddress(host, port))
                     .handler(new ServerAsClientInitializer());
             ChannelFuture f = b.connect().sync();
+            this.channel = f.channel();
             f.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();
         }
+    }
+
+    public Channel getChannel() {
+        return channel;
     }
 }

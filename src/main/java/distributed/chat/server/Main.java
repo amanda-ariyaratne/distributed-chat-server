@@ -4,6 +4,7 @@ import distributed.chat.server.bootstrap.client.ServerAsClient;
 import distributed.chat.server.bootstrap.server.ServerToClient;
 import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
+import distributed.chat.server.states.ServerState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,19 +36,25 @@ public class Main {
 
         ArrayList<Thread> threads = new ArrayList<>();
         for (Map.Entry<String, ServerConfig> server : servers.entrySet()){
-            threads.add(
-                new Thread(() -> {
-                    ServerConfig configs = server.getValue();
-                    try {
-                        new ServerAsClient(
-                                configs.getServer_address(),
-                                configs.getCoordination_port()
-                        ).start();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                })
-            );
+            ServerConfig configs = server.getValue();
+
+            if (portServerToServer != configs.getCoordination_port()) {
+                threads.add(
+                    new Thread(() -> {
+                        try {
+                            ServerAsClient serverAsClient = new ServerAsClient(
+                                    configs.getServer_address(),
+                                    configs.getCoordination_port()
+                            );
+                            serverAsClient.start();
+                            ServerState.serverChannels.put(configs.getServer_id() , serverAsClient.getChannel());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    })
+                );
+            }
+
         }
         Thread coordinatorThread = new Thread(() -> {
             try {

@@ -18,10 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServerToClient {
     private final int port;
 
-    public static Map<ChannelId, Client> activeClients = new ConcurrentHashMap<>();
-    public static Map<String, Client> clients = new ConcurrentHashMap<>();
-    public static Map<String, Room> rooms = new ConcurrentHashMap<>();
-
     public ServerToClient(int port) {
         this.port = port;
     }
