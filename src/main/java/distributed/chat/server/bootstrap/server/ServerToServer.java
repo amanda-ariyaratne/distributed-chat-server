@@ -12,9 +12,11 @@ import java.net.InetSocketAddress;
 
 public class ServerToServer {
     private final int port;
+    private final String id;
 
-    public ServerToServer(int port) {
+    public ServerToServer(int port, String id) {
         this.port = port;
+        this.id = id;
     }
 
     public void start() throws Exception {
@@ -34,5 +36,13 @@ public class ServerToServer {
             bossGroup.shutdownGracefully().sync();
             workerGroup.shutdownGracefully().sync();
         }
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public String getId() {
+        return id;
     }
 }

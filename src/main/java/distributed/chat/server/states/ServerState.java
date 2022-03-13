@@ -5,15 +5,22 @@ import distributed.chat.server.model.Room;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerState {
-    public static String leaderId = "s1";
+
+    public static String leaderId;
+    public static Integer leaderPort;
+    public static String localId;
+    public static Integer localPort;
+
     public static Map<ChannelId, Client> activeClients = new ConcurrentHashMap<>();
-    public static Map<String, Client> clients = new ConcurrentHashMap<>();
+    public static Map<String, Client> localClients = new ConcurrentHashMap<>();
+    public static Map<String, Client> globalClients = new ConcurrentHashMap<>();
+
     public static Map<String, Client> reservedClients = new ConcurrentHashMap<>();
     public static Map<String, Room> rooms = new ConcurrentHashMap<>();
     public static Map<String, Channel> serverChannels = new ConcurrentHashMap<>();
+
 }

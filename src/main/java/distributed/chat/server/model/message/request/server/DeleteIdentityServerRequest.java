@@ -1,12 +1,12 @@
-package distributed.chat.server.model.message.request;
+package distributed.chat.server.model.message.request.server;
 
 import distributed.chat.server.model.message.AbstractServerRequest;
 import distributed.chat.server.model.message.MessageType;
 
 public class DeleteIdentityServerRequest extends AbstractServerRequest {
 
-    private String serverId;
-    private String identity;
+    private final String serverId;
+    private final String identity;
 
     public DeleteIdentityServerRequest(String serverId, String identity) {
         super(MessageType.DELETE_IDENTITY);
@@ -14,4 +14,11 @@ public class DeleteIdentityServerRequest extends AbstractServerRequest {
         this.identity = identity;
     }
 
+    public String getServerId() {
+        return serverId;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
 }

@@ -1,12 +1,11 @@
-package distributed.chat.server.model.message.response;
+package distributed.chat.server.model.message.response.client;
 
-import distributed.chat.server.model.message.AbstractClientResponse;
 import distributed.chat.server.model.message.MessageType;
 
 public class DeleteRoomClientResponse extends AbstractClientResponse {
 
-    private String roomId;
-    private boolean approved;
+    private final String roomId;
+    private final boolean approved;
 
     public DeleteRoomClientResponse(String roomId, boolean approved) {
         super(MessageType.DELETE_ROOM);
@@ -14,5 +13,11 @@ public class DeleteRoomClientResponse extends AbstractClientResponse {
         this.approved = approved;
     }
 
+    public String getRoomId() {
+        return roomId;
+    }
 
+    public boolean isApproved() {
+        return approved;
+    }
 }

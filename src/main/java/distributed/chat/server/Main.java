@@ -6,14 +6,15 @@ import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.states.ServerState;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         int portServerToClient = 4444;
+        String idServerToClient = "s1";
         int portServerToServer = 5555;
+        String idServerToServer = "s2";
 
         Map<String, ServerConfig> servers = new HashMap<>();
         servers.put("s1", new ServerConfig(
@@ -55,7 +56,7 @@ public class Main {
 
         Thread coordinatorThread = new Thread(() -> {
             try {
-                new ServerToServer(portServerToServer).start();
+                new ServerToServer(portServerToServer, idServerToServer).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -63,7 +64,7 @@ public class Main {
         coordinatorThread.start();
 
         try {
-            new ServerToClient(portServerToClient).start();
+            new ServerToClient(portServerToClient, idServerToClient).start();
         } catch (Exception e) {
             e.printStackTrace();
         }
