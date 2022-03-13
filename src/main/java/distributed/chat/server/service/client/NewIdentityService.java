@@ -66,7 +66,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     private boolean checkUniqueIdentity(String identity, NewIdentityClientRequest request) {
         boolean locallyRedundant = ServerState.clients.containsKey(identity);
         if (locallyRedundant)
-            return true;
+            return true; // TODO: false
         else {
             ReserveIdentityServerService.getInstance().processRequest(
                     new NewIdentityCheckRedundantRequest(identity),
@@ -75,7 +75,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
 
             pendingNewIdentityRequests.put(identity, request.getSender());
 
-            return false;
+            return false; // TODO : true
         }
     }
 
