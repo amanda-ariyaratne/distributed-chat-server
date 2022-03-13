@@ -8,6 +8,7 @@ public class CreateRoomClientResponse extends AbstractClientResponse {
     private boolean approved;
 
     public CreateRoomClientResponse(String roomId, boolean approved) {
+        // {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
         super(MessageType.CREATE_ROOM);
         this.roomId = roomId;
         this.approved = approved;

@@ -20,8 +20,9 @@ public class ServerState {
     public static Map<String, Client> clients = new ConcurrentHashMap<>();
     public static Map<String, Client> reservedClients = new ConcurrentHashMap<>();
 
-    public static Map<ChannelId, Room> activeRooms = new ConcurrentHashMap<>(); // key = room-id
-    public static Map<String, Room> rooms = new ConcurrentHashMap<>(); // key = room-id
+    public static Map<String, Room> activeRooms = new ConcurrentHashMap<>(); // key = room-id // TODO : currently active or local rooms
+//    public static Map<String, Room> rooms = new ConcurrentHashMap<>(); // key = room-id // TODO: global rooms?
+    public static Set<String> rooms ;
 //    public static Map<String, Room> reservedRooms = new ConcurrentHashMap<>();
     public static Set<String> reservedRooms;
 

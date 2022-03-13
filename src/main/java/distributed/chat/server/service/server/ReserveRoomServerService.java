@@ -20,7 +20,7 @@ public class ReserveRoomServerService extends AbstractServerService {
 
     @Override
     public AbstractClientResponse processRequest(AbstractServerRequest request, Channel channel) {
-        // Todo: check
+        // Todo: check response type -> AbstractServerResponse
         // send to leader
         sendRequest(request, channel);
         // get response from leader
@@ -33,7 +33,7 @@ public class ReserveRoomServerService extends AbstractServerService {
         // {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
 
         // check if already room-id exists in roomlist
-        boolean exists = ServerState.rooms.containsKey(request.getRoomId());
+        boolean exists = ServerState.rooms.contains(request.getRoomId());
 
         ReserveRoomServerResponse reserveRoomServerResponse;
         if (!exists) {

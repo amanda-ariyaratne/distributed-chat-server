@@ -27,7 +27,7 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        // client inactive -> delete room -> remove other clients
+        // client inactive -> delete room -> remove other clients and add them to mainhall
     }
 
     @Override

@@ -1,7 +1,8 @@
 package distributed.chat.server.model.message.request;
 
-import distributed.chat.server.model.message.AbstractServerRequest;
+
 import distributed.chat.server.model.message.MessageType;
+import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 
 public class AddRoomServerRequest extends AbstractServerRequest {
 
@@ -13,5 +14,13 @@ public class AddRoomServerRequest extends AbstractServerRequest {
         this.serverId = serverId;
         this.roomId = roomId;
 
+    }
+
+    public String getServerId() {
+        return serverId;
+    }
+
+    public String getRoomId() {
+        return roomId;
     }
 }
