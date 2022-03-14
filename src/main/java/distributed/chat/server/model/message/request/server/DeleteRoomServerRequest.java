@@ -1,9 +1,9 @@
 package distributed.chat.server.model.message.request.server;
 
-import distributed.chat.server.model.message.AbstractServerRequest;
+import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
-public class DeleteRoomServerRequest extends AbstractServerRequest {
+public class DeleteRoomServerRequest extends AbstractMessage {
 
     private final String serverId;
     private final String roomId;

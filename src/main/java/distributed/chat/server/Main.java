@@ -12,9 +12,8 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         int portServerToClient = 4444;
-        String idServerToClient = "s1";
+        String idLocal = "s1";
         int portServerToServer = 5555;
-        String idServerToServer = "s2";
 
         Map<String, ServerConfig> servers = new HashMap<>();
         servers.put("s1", new ServerConfig(
@@ -56,7 +55,7 @@ public class Main {
 
         Thread coordinatorThread = new Thread(() -> {
             try {
-                new ServerToServer(portServerToServer, idServerToServer).start();
+                new ServerToServer(portServerToServer, idLocal).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -64,7 +63,7 @@ public class Main {
         coordinatorThread.start();
 
         try {
-            new ServerToClient(portServerToClient, idServerToClient).start();
+            new ServerToClient(portServerToClient, idLocal).start();
         } catch (Exception e) {
             e.printStackTrace();
         }

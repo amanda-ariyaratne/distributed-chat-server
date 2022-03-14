@@ -1,9 +1,9 @@
 package distributed.chat.server.model.message.response.server;
 
-import distributed.chat.server.model.message.AbstractServerResponse;
+import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
-public class ReserveRoomServerResponse extends AbstractServerResponse {
+public class ReserveRoomServerResponse extends AbstractMessage {
 
     private final String serverId;
     private final String roomId;

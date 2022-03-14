@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
 import distributed.chat.server.model.message.request.client.AbstractClientRequest;
+import distributed.chat.server.model.message.response.client.AbstractClientResponse;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.*;
-import distributed.chat.server.model.message.response.client.AbstractClientResponse;
 
 import java.util.Map;
 

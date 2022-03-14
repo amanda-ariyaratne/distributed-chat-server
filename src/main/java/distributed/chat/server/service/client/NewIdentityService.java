@@ -35,11 +35,6 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             approved = isUniqueIdentity(identity, request);
         }
 
-        /*
-           approved will never be true immediately => Leader has to aprove
-           approved can be false immediately => can have redundant identities
-         */
-
         if (!approved && !ServerState.reservedClients.containsKey(identity)){
             sendResponse(new NewIdentityClientResponse(false), client);
         }
@@ -49,7 +44,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         Client client = ServerState.reservedClients.get(identity);
         ServerState.reservedClients.remove(identity);
 
-        if (isApproved){
+        if (isApproved) {
             ServerState.localClients.put(identity, client);
             client.setIdentity(identity);
             client.setRoom(ServerState.rooms.get("MainHall-" + ServerState.localId));
@@ -72,7 +67,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     }
 
     private boolean checkUniqueIdentity(String identity, NewIdentityClientRequest request) {
-        boolean locallyRedundant = ServerState.globalClients.containsKey(identity);
+        boolean locallyRedundant = ServerState.globalClients.contains(identity);
         boolean isReservedIdentity = ServerState.reservedClients.containsKey(identity);
 
         if (locallyRedundant || isReservedIdentity){

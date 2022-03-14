@@ -7,8 +7,7 @@ public class AddIdentityServerResponse extends AbstractServerResponse{
     private final boolean added;
 
     public AddIdentityServerResponse(boolean added){
-        // Todo: add reserve identity message type
-        super(MessageType.NEW_IDENTITY);
+        super(MessageType.ADD_IDENTITY);
         this.added = added;
     }
 
