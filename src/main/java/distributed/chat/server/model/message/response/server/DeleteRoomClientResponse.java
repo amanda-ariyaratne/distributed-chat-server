@@ -1,4 +1,4 @@
-package distributed.chat.server.model.message.response;
+package distributed.chat.server.model.message.response.server;
 
 
 import distributed.chat.server.model.message.MessageType;

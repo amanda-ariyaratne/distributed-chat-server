@@ -1,8 +1,7 @@
 package distributed.chat.server.service.server;
 
-import distributed.chat.server.model.message.request.AddRoomServerRequest;
 import distributed.chat.server.model.message.request.server.AbstractServerRequest;
-import distributed.chat.server.model.message.response.client.AbstractClientResponse;
+import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
@@ -18,13 +17,11 @@ public class AddRoomServerService extends AbstractServerService{
     }
 
     @Override
-    public AbstractClientResponse processRequest(AbstractServerRequest request, Channel channel) {
+    public void processRequest(AbstractServerRequest request, Channel channel) {
         // Todo: check response type -> AbstractServerResponse
         // send to leader
         sendRequest(request, channel);
         // get response from leader
-
-        return null;
     }
 
     /***

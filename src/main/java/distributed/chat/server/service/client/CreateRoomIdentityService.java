@@ -2,12 +2,9 @@ package distributed.chat.server.service.client;
 
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
-import distributed.chat.server.model.message.request.AddRoomServerRequest;
-import distributed.chat.server.model.message.request.ReserveRoomServerRequest;
 import distributed.chat.server.model.message.request.client.CreateRoomClientRequest;
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
-import distributed.chat.server.model.message.response.ReserveRoomServerResponse;
-import distributed.chat.server.model.message.response.client.AbstractClientResponse;
+import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
+import distributed.chat.server.model.message.request.server.ReserveRoomServerRequest;
 import distributed.chat.server.model.message.response.client.CreateRoomClientResponse;
 import distributed.chat.server.service.server.AddRoomServerService;
 import distributed.chat.server.service.server.ReserveRoomServerService;
@@ -29,7 +26,7 @@ public class CreateRoomIdentityService extends AbstractClientService<CreateRoomC
     }
 
     @Override
-    public CreateRoomClientResponse processRequest(CreateRoomClientRequest request) {
+    public void processRequest(CreateRoomClientRequest request) {
         // request : {"type" : "createroom", "roomid" : "jokes"}
         String roomId = request.getRoomId();
         boolean room_approved = false;
@@ -76,7 +73,7 @@ public class CreateRoomIdentityService extends AbstractClientService<CreateRoomC
         }
 
         // return : {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
-        return new CreateRoomClientResponse(roomId, room_approved);
+//        return new CreateRoomClientResponse(roomId, room_approved);
 
 
     }

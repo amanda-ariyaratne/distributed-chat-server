@@ -1,13 +1,12 @@
-package distributed.chat.server.model.message.request;
+package distributed.chat.server.model.message.request.server;
 
-
+import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 
 public class AddRoomServerRequest extends AbstractServerRequest {
 
-    private String serverId;
-    private String roomId;
+    private final String serverId;
+    private final String roomId;
 
     public AddRoomServerRequest(String serverId, String roomId) {
         super(MessageType.ADD_ROOM);

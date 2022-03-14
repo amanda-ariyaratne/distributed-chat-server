@@ -30,6 +30,7 @@ public class ServerAsClient {
                     .handler(new ServerAsClientInitializer());
             ChannelFuture f = b.connect().sync();
             this.channel = f.channel();
+
             f.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();

@@ -2,23 +2,37 @@ package distributed.chat.server.model.message;
 
 public enum MessageType {
     NEW_IDENTITY,
-    ROOM_CHANGE,
     LIST,
-    ROOM_LIST,
     WHO,
-    ROOM_CONTENTS,
+
+    ROOM_CHANGE, // Todo
+    ROOM_LIST, // Todo
+    ROOM_CONTENTS, // Todo
+
     CREATE_ROOM,
     JOIN_ROOM,
-    ROUTE,
+    ROUTE, // Todo
     MOVE_JOIN,
-    SERVER_CHANGE,
+    SERVER_CHANGE, // Todo
     DELETE_ROOM,
     MESSAGE,
     QUIT,
+
     RESERVE_IDENTITY,
+    RESERVE_IDENTITY_CONFIRM,
     ADD_IDENTITY,
-    RESERVE_ROOM,
-    ADD_ROOM,
-    DELETE_IDENTITY,
-    CHECK_CREATE_ROOM_REDUNDANT
+
+    RESERVE_ROOM, // Todo
+    ADD_ROOM, // Todo
+    DELETE_IDENTITY, // Todo
+
+    HEARTBEAT, // TODO
+
+    I_AM_UP,
+    VIEW,
+    COORDINATOR,
+    ELECTION,
+    ANSWER,
+    NOMINATION
+
 }

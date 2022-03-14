@@ -1,11 +1,15 @@
 package distributed.chat.server.service.server;
 
-import distributed.chat.server.model.message.response.client.AbstractClientResponse;
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
-import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
+import distributed.chat.server.model.message.request.server.ReserveIdentityServerRequest;
+import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
+import distributed.chat.server.service.client.NewIdentityService;
+import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
-public class ReserveIdentityServerService extends AbstractServerService{
+import java.util.Objects;
+import java.util.SplittableRandom;
+
+public class ReserveIdentityServerService extends AbstractServerService<ReserveIdentityServerRequest, ReserveIdentityServerResponse>{
     private static ReserveIdentityServerService instance;
 
     private ReserveIdentityServerService(){}
@@ -18,9 +22,20 @@ public class ReserveIdentityServerService extends AbstractServerService{
     }
 
     @Override
-    public AbstractClientResponse processRequest(AbstractServerRequest request, Channel channel) {
-        // Todo: check
-        sendRequest(request, channel);
-        return new NewIdentityClientResponse(true);
+    public void processRequest(ReserveIdentityServerRequest request, Channel channel) {
+        if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
+            boolean isUnique = isUniqueIdentity(request.getIdentity());
+            sendResponse(new ReserveIdentityServerResponse(request.getIdentity(), isUnique), channel);
+
+        } else {
+            sendRequest(request, ServerState.serverChannels.get(ServerState.leaderId));
+        }
+    }
+
+    private synchronized boolean isUniqueIdentity(String identity) {
+        boolean isUnique = !ServerState.globalClients.contains(identity);
+        if (isUnique)
+            ServerState.globalClients.add(identity);
+        return isUnique;
     }
 }

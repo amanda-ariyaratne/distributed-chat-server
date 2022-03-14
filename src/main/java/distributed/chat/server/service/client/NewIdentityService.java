@@ -2,8 +2,10 @@ package distributed.chat.server.service.client;
 
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.request.client.NewIdentityClientRequest;
-import distributed.chat.server.model.message.request.server.NewIdentityCheckRedundantRequest;
+import distributed.chat.server.model.message.request.server.AddIdentityServerRequest;
+import distributed.chat.server.model.message.request.server.ReserveIdentityServerRequest;
 import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
+import distributed.chat.server.service.server.AddIdentityServerService;
 import distributed.chat.server.service.server.ReserveIdentityServerService;
 import distributed.chat.server.states.ServerState;
 
@@ -13,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NewIdentityService extends AbstractClientService<NewIdentityClientRequest, NewIdentityClientResponse> {
 
     private static NewIdentityService instance;
-    private Map<String, Client> pendingNewIdentityRequests = new ConcurrentHashMap<>();
 
     private NewIdentityService(){}
 
@@ -25,33 +26,35 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     }
 
     @Override
-    public NewIdentityClientResponse processRequest(NewIdentityClientRequest request) {
+    public void processRequest(NewIdentityClientRequest request) {
         String identity = request.getIdentity();
+        Client client = request.getSender();
         boolean approved;
         synchronized (this){
-            approved = approveIdentity(identity, request);
-            if (approved) {
-                ServerState.clients.put(identity, request.getSender());
-                /**
-                 * Todo: if approved =>
-                 * add to list
-                 * Set Identity of client
-                 * Set room to Main hall
-                 */
-
-            } else {
-                if (pendingNewIdentityRequests.containsKey(identity)){
-                    // Todo: Wait until response
-                } else {
-                    // Todo: send failed response
-                }
-            }
+            ServerState.reservedClients.put(identity, client);
+            approved = isUniqueIdentity(identity, request);
         }
 
-        return new NewIdentityClientResponse(approved);
+        if (!approved && !ServerState.reservedClients.containsKey(identity)){
+            sendResponse(new NewIdentityClientResponse(false), client);
+        }
     }
 
-    private boolean approveIdentity(String identity, NewIdentityClientRequest request) {
+    public synchronized void approveIdentityProcessed(boolean isApproved, String identity){
+        Client client = ServerState.reservedClients.get(identity);
+        ServerState.reservedClients.remove(identity);
+
+        if (isApproved) {
+            ServerState.localClients.put(identity, client);
+            client.setIdentity(identity);
+            client.setRoom(ServerState.activeRooms.get("MainHall-" + ServerState.localId)); // TODO : check
+            AddIdentityServerService.getInstance().broadcast(new AddIdentityServerRequest(identity));
+        }
+
+        sendResponse(new NewIdentityClientResponse(isApproved), client);
+    }
+
+    private boolean isUniqueIdentity(String identity, NewIdentityClientRequest request) {
         if (isValidValue(identity)) {
             return !checkUniqueIdentity(identity, request);
         }
@@ -64,20 +67,19 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     }
 
     private boolean checkUniqueIdentity(String identity, NewIdentityClientRequest request) {
-        boolean locallyRedundant = ServerState.clients.containsKey(identity);
-        if (locallyRedundant)
-            return true; // TODO: false
+        boolean locallyRedundant = ServerState.globalClients.contains(identity);
+        boolean isReservedIdentity = ServerState.reservedClients.containsKey(identity);
+
+        if (locallyRedundant || isReservedIdentity){
+            return true;
+        }
         else {
             ReserveIdentityServerService.getInstance().processRequest(
-                    new NewIdentityCheckRedundantRequest(identity),
+                    new ReserveIdentityServerRequest(identity),
                     ServerState.serverChannels.get(ServerState.leaderId)
             );
 
-            pendingNewIdentityRequests.put(identity, request.getSender());
-
-            return false; // TODO : true
+            return false;
         }
     }
-
-
 }

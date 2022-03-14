@@ -1,8 +1,7 @@
 package distributed.chat.server.handlers.server;
 
-import distributed.chat.server.model.message.request.AddRoomServerRequest;
-import distributed.chat.server.model.message.request.ReserveRoomServerRequest;
 import distributed.chat.server.model.message.request.server.AbstractServerRequest;
+import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
 import distributed.chat.server.service.server.AddRoomServerService;
 import distributed.chat.server.service.server.ReserveRoomServerService;
 import distributed.chat.server.states.ServerState;

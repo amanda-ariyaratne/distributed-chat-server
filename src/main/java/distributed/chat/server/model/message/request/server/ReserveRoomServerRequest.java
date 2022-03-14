@@ -1,12 +1,12 @@
-package distributed.chat.server.model.message.request;
+package distributed.chat.server.model.message.request.server;
 
+import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 
 public class ReserveRoomServerRequest extends AbstractServerRequest {
 
-    private String serverId;
-    private String roomId;
+    private final String serverId;
+    private final String roomId;
 
     public ReserveRoomServerRequest(String serverId, String roomId) {
         // {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}

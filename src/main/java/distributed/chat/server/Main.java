@@ -6,35 +6,71 @@ import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.states.ServerState;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) throws Exception {
-        int portServerToClient = 4444;
-        int portServerToServer = 5555;
+
+        if (args.length != 4) {
+            System.out.println("Command line arguments are missing");
+            return;
+        }
+
+        String serverId = "";
+        String configFile = "";
+        if (args[0].equals("-i") || args[2].equals("-c")) {
+            serverId = args[1];
+            configFile = args[3];
+        } else if (args[2].equals("-i") || args[0].equals("-c")) {
+            serverId = args[3];
+            configFile = args[1];
+        } else {
+            System.out.println("Command line arguments are incorrect");
+            return;
+        }
 
         Map<String, ServerConfig> servers = new HashMap<>();
-        servers.put("s1", new ServerConfig(
-                "s1",
-                "localhost",
-                4444,
-                5555));
-        servers.put("s2", new ServerConfig(
-                "s2",
-                "localhost",
-                4445,
-                5556));
-        servers.put("s3", new ServerConfig(
-                "s3",
-                "localhost",
-                4446,
-                5557));
 
-        // Todo: Read these data from config files
+        try {
+            servers = readServerConfgis(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("IO Exception occurred");
+            return;
+        }
 
-        for (Map.Entry<String, ServerConfig> server : servers.entrySet()){
+        int portServerToClient = servers.get(serverId).getClients_port();
+        int portServerToServer = servers.get(serverId).getCoordination_port();
+
+        String finalServerId = serverId;
+        Thread coordinatorThread = new Thread(() -> {
+            try {
+                new ServerToServer(portServerToServer, finalServerId).start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        coordinatorThread.start();
+
+        Thread clientThread = new Thread(() -> {
+            try {
+                new ServerToClient(portServerToClient, finalServerId).start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        clientThread.start();
+
+        for (Map.Entry<String, ServerConfig> server : servers.entrySet()) {
             ServerConfig configs = server.getValue();
 
             if (portServerToServer != configs.getCoordination_port()) {
@@ -45,7 +81,7 @@ public class Main {
                                 configs.getCoordination_port()
                         );
                         serverAsClient.start();
-                        ServerState.serverChannels.put(configs.getServer_id() , serverAsClient.getChannel());
+                        ServerState.serverChannels.put(configs.getServer_id(), serverAsClient.getChannel());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -53,20 +89,24 @@ public class Main {
             }
         }
 
-        Thread coordinatorThread = new Thread(() -> {
-            try {
-                new ServerToServer(portServerToServer).start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        coordinatorThread.start();
+    }
 
+    private static Map<String, ServerConfig> readServerConfgis(String configFile) throws IOException {
+        Map<String, ServerConfig> servers = new HashMap<>();
+        BufferedReader reader = new BufferedReader(new FileReader(configFile));
         try {
-            new ServerToClient(portServerToClient).start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            String line;
+            String ls = System.getProperty("line.separator");
 
+            while((line = reader.readLine()) != null) {
+                Scanner s = new Scanner(line).useDelimiter("\\t");
+                String serverId = s.next();
+                ServerConfig server = new ServerConfig(serverId, s.next(), s.nextInt(), s.nextInt());
+                servers.put(serverId, server);
+            }
+            return servers;
+        } finally {
+            reader.close();
+        }
     }
 }
