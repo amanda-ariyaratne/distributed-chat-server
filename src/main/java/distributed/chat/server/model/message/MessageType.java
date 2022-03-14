@@ -25,9 +25,17 @@ public enum MessageType {
     MESSAGE,
     QUIT,
 
-    HEARTBEAT, // Todo
-
     RESERVE_ROOM, // Todo
     ADD_ROOM, // Todo
     DELETE_IDENTITY, // Todo
+
+    HEARTBEAT, // TODO
+
+    I_AM_UP,
+    VIEW,
+    COORDINATOR,
+    ELECTION,
+    ANSWER,
+    NOMINATION
+
 }
