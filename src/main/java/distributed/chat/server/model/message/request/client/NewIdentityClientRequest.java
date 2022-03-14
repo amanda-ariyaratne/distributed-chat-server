@@ -5,7 +5,7 @@ import distributed.chat.server.model.message.MessageType;
 
 public class NewIdentityClientRequest extends AbstractClientRequest {
 
-    private String identity;
+    private final String identity;
     private Client sender;
 
     public NewIdentityClientRequest(String identity) {

@@ -1,9 +1,11 @@
 package distributed.chat.server.service.server;
 
 import distributed.chat.server.model.message.request.server.AddIdentityServerRequest;
+import distributed.chat.server.model.message.response.server.AddIdentityServerResponse;
+import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
-public class AddIdentityServerService extends AbstractServerService<AddIdentityServerRequest>{
+public class AddIdentityServerService extends AbstractServerService<AddIdentityServerRequest, AddIdentityServerResponse>{
     private static AddIdentityServerService instance;
 
     private AddIdentityServerService(){}
@@ -17,8 +19,6 @@ public class AddIdentityServerService extends AbstractServerService<AddIdentityS
 
     @Override
     public void processRequest(AddIdentityServerRequest request, Channel channel) {
-        // Todo: check
-        sendRequest(request, channel);
-        // return new AddIdentityServerResponse(true);
+        ServerState.globalClients.add(request.getIdentity());
     }
 }

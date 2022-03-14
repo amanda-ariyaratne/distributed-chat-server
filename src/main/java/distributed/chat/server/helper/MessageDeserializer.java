@@ -1,25 +1,40 @@
-package distributed.chat.server;
+package distributed.chat.server.helper;
 
 import com.google.gson.*;
+import distributed.chat.server.RequestConstants;
+import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.client.*;
-
+import distributed.chat.server.model.message.request.server.*;
 import java.lang.reflect.Type;
 
-public class ClientRequestDeserializer implements JsonDeserializer<AbstractClientRequest> {
+public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
 
     @Override
-    public AbstractClientRequest deserialize(JsonElement jsonElement, Type type,
+    public AbstractMessage deserialize(JsonElement jsonElement, Type type,
                                              JsonDeserializationContext jsonDeserializationContext)
             throws JsonParseException {
 
         final JsonObject requestJson = jsonElement.getAsJsonObject();
 
-        AbstractClientRequest request;
+        AbstractMessage request;
 
         switch (requestJson.get("type").getAsString()) {
             case RequestConstants.NEW_IDENTITY:
                 request = new NewIdentityClientRequest(requestJson.get("identity").getAsString());
                 break;
+            case RequestConstants.RESERVE_IDENTITY:
+                request = new ReserveIdentityServerRequest(requestJson.get("identity").getAsString());
+                break;
+            case RequestConstants.RESERVE_IDENTITY_CONFIRM:
+                request = new ReserveIdentityConfirmServerRequest(
+                        requestJson.get("reserved").getAsBoolean(),
+                        requestJson.get("identity").getAsString());
+                break;
+            case RequestConstants.ADD_IDENTITY:
+                request = new AddIdentityServerRequest(
+                        requestJson.get("identity").getAsString());
+                break;
+
             case RequestConstants.LIST:
                 request = new ListClientRequest();
                 break;
