@@ -1,6 +1,7 @@
 package distributed.chat.server.model.message.response.client;
 
 import distributed.chat.server.model.message.MessageType;
+import distributed.chat.server.model.message.response.client.AbstractClientResponse;
 
 public class DeleteRoomClientResponse extends AbstractClientResponse {
 
