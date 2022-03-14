@@ -1,7 +1,6 @@
 package distributed.chat.server.bootstrap.initializers;
 
 import distributed.chat.server.ClientRequestDecoder;
-import distributed.chat.server.handlers.client.NewIdentityHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
