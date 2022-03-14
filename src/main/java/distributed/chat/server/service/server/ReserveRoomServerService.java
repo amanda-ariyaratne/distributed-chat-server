@@ -2,11 +2,14 @@ package distributed.chat.server.service.server;
 
 import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.request.server.ReserveRoomServerRequest;
+import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveRoomServerResponse;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
-public class ReserveRoomServerService extends AbstractServerService {
+import java.util.Objects;
+
+public class ReserveRoomServerService extends AbstractServerService <ReserveRoomServerRequest, ReserveRoomServerResponse> {
 
     private static ReserveRoomServerService instance;
 
@@ -17,39 +20,28 @@ public class ReserveRoomServerService extends AbstractServerService {
         return instance;
     }
 
+    /***
+     *
+     * @param request {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
+     * @param channel Channel
+     */
     @Override
-    public void processRequest(AbstractServerRequest request, Channel channel) {
-        // Todo: check response type -> AbstractServerResponse
-        // send to leader
-        sendRequest(request, channel);
-        // get response from leader
+    public void processRequest(ReserveRoomServerRequest request, Channel channel) {
+        // if leader -> check the room validity
+        if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
+            boolean isUnique = isUniqueIdentity(request.getRoomId());
+            // send response to slave
+            sendResponse(new ReserveRoomServerResponse(request.getServerId(),  request.getRoomId(), isUnique), channel);
+        }
+        else { // if slave -> send to leader
+            sendRequest(request, ServerState.serverChannels.get(ServerState.leaderId));
+        }
     }
 
-    // leader side handle request
-    public void handleRequest(ReserveRoomServerRequest request, Channel channel) {
-        // {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
-
-        // check if already room-id exists in roomlist
-        boolean exists = ServerState.rooms.contains(request.getRoomId());
-
-        ReserveRoomServerResponse reserveRoomServerResponse;
-        if (!exists) {
-            // add to reserved list
-            ServerState.reservedRooms.add(request.getRoomId());
-            // create response object
-            // {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes", "approved" : true}
-            reserveRoomServerResponse = new ReserveRoomServerResponse(
-                    request.getServerId(),
-                    request.getRoomId(),
-                    true);
-        } else {
-            // create response object
-            reserveRoomServerResponse = new ReserveRoomServerResponse(
-                    request.getServerId(),
-                    request.getRoomId(),
-                    false);
-        }
-        // send response from leader to server
-        // TODO : sendRespond(reserveRoomServerResponse, channel);
+    private synchronized boolean isUniqueIdentity(String roomId) {
+        boolean isUnique = !ServerState.globalRooms.contains(roomId);
+        if (isUnique)
+            ServerState.globalRooms.add(roomId);
+        return isUnique;
     }
 }

@@ -30,24 +30,27 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
         // client inactive -> delete room -> remove other clients and add them to mainhall
     }
 
+    /***
+     * {"type" : "createroom", "roomid" : "jokes"}
+     */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        super.channelRead(ctx, msg);
-        // {"type" : "createroom", "roomid" : "jokes"}
-        // client send messages
-
         AbstractClientRequest request = (AbstractClientRequest) msg;
-        if (request instanceof CreateRoomClientRequest){
+        if (request instanceof CreateRoomClientRequest) {
             // get active client
             Client client = ServerState.activeClients.get(ctx.channel().id());
             // create message with new room id
             CreateRoomClientRequest createRoomClientRequest = (CreateRoomClientRequest) msg;
             // set sender
             createRoomClientRequest.setSender(client);
-
+            // add to reserved rooms
+            String roomId = ((CreateRoomClientRequest) msg).getRoomId();
+            ServerState.reservedRooms.put(roomId, client);
             // validation and create room -> call service class
             CreateRoomIdentityService createRoomIdentityService = CreateRoomIdentityService.getInstance();
             createRoomIdentityService.processRequest(createRoomClientRequest);
+        } else {
+            ctx.fireChannelRead(msg);
         }
 
     }

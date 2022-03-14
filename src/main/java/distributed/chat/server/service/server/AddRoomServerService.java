@@ -32,7 +32,7 @@ public class AddRoomServerService extends AbstractServerService{
      */
     public void handleRequest(AddRoomServerRequest request, Channel channel){
         // add to leader's room list
-        ServerState.rooms.add(request.getRoomId());
+        ServerState.globalRooms.add(request.getRoomId());
 
         // broadcast to all the servers
     }

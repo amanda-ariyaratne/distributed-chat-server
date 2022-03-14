@@ -26,11 +26,11 @@ public class ServerState {
     public static Set<String> globalClients = new HashSet<String>();
     public static Map<String, Client> reservedClients = new ConcurrentHashMap<>();
 
-    public static Map<String, Room> activeRooms = new ConcurrentHashMap<>(); // key = room-id // local rooms
-//    public static Map<String, Room> rooms = new ConcurrentHashMap<>(); // key = room-id // TODO: global rooms?
-    public static Set<String> rooms ; // global rooms
-//    public static Map<String, Room> reservedRooms = new ConcurrentHashMap<>();
-    public static Set<String> reservedRooms;
+    // ROOMS
+    public static Map<String, Room> localRooms = new ConcurrentHashMap<>(); // key = room-id
+    public static Set<String> globalRooms;
+    public static Map<String, Client> reservedRooms = new ConcurrentHashMap<>(); // key = room-id
+
     public static Map<String, Channel> serverChannels = new ConcurrentHashMap<>();
 
 }

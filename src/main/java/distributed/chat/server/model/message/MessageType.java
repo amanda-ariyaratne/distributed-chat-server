@@ -22,7 +22,8 @@ public enum MessageType {
     RESERVE_IDENTITY_CONFIRM,
     ADD_IDENTITY,
 
-    RESERVE_ROOM, // Todo
+    RESERVE_ROOM,
+    RESERVE_ROOM_CONFIRM,
     ADD_ROOM, // Todo
     DELETE_IDENTITY, // Todo
 

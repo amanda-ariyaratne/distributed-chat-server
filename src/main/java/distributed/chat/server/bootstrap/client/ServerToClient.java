@@ -1,27 +1,23 @@
 package distributed.chat.server.bootstrap.client;
 
 import distributed.chat.server.bootstrap.initializers.ServerToClientInitializer;
-import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
 import distributed.chat.server.states.ServerState;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerToClient {
     private final int port;
 
     public ServerToClient(int port, String id) {
         this.port = port;
-        ServerState.rooms.put("MainHall-" + id, new Room("MainHall-" + id, null));
+        ServerState.localRooms.put("MainHall-" + id, new Room("MainHall-" + id, null));
         ServerState.localId = id;
         ServerState.localPort = port;
     }

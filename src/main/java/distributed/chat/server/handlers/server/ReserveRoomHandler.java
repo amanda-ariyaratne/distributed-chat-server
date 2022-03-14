@@ -14,7 +14,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * Leader as Server
  * Other Servers as Clients
  */
-public class RoomApprovalInboundHandler extends ChannelInboundHandlerAdapter {
+public class ReserveRoomHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -27,8 +27,10 @@ public class RoomApprovalInboundHandler extends ChannelInboundHandlerAdapter {
 
             // check validity -> call service
             ReserveRoomServerService reserveRoomServerService = ReserveRoomServerService.getInstance();
-            reserveRoomServerService.handleRequest(reserveRoomServerRequest,
+            reserveRoomServerService.processRequest(reserveRoomServerRequest,
                     ServerState.serverChannels.get(ServerState.serverConfig.getServer_id()));
+        } else {
+            ctx.fireChannelRead(msg);
         }
 
     }
