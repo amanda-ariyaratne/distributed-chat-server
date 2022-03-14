@@ -16,9 +16,18 @@ public enum MessageType {
     MESSAGE,
     QUIT,
     RESERVE_IDENTITY,
+    RESERVE_IDENTITY_CONFIRM,
     ADD_IDENTITY,
     RESERVE_ROOM,
     ADD_ROOM,
     DELETE_IDENTITY,
-    HEARTBEAT
+
+    HEARTBEAT,
+
+    I_AM_UP,
+    VIEW,
+    COORDINATOR,
+    ELECTION,
+    ANSWER,
+    NOMINATION
 }

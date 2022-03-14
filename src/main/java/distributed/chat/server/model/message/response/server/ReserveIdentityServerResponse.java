@@ -9,7 +9,7 @@ public class ReserveIdentityServerResponse extends AbstractServerResponse{
 
     public ReserveIdentityServerResponse(String identity, boolean approved){
         // Todo: add reserve identity message type
-        super(MessageType.NEW_IDENTITY);
+        super(MessageType.RESERVE_IDENTITY_CONFIRM);
         this.approved = approved;
         this.identity = identity;
     }
