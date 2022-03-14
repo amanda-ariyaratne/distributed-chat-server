@@ -21,4 +21,13 @@ public class DeleteRoomServerRequest extends AbstractMessage {
     public String getRoomId() {
         return roomId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.DELETE_ROOM + '\'' +
+                ", serverId:'" + serverId + '\'' +
+                ", roomId:'" + roomId + '\'' +
+                '}';
+    }
 }

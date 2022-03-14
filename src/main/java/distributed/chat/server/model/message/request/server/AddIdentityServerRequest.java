@@ -14,4 +14,12 @@ public class AddIdentityServerRequest extends AbstractServerRequest {
     public String getIdentity() {
         return identity;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.ADD_IDENTITY + '\'' +
+                ", identity:'" + identity + '\'' +
+                '}';
+    }
 }

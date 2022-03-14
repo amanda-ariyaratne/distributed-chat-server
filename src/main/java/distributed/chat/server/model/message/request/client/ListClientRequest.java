@@ -8,4 +8,10 @@ public class ListClientRequest extends AbstractClientRequest {
         super(MessageType.LIST);
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.LIST + '\'' +
+                "}";
+    }
 }

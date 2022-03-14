@@ -21,4 +21,13 @@ public class ReserveRoomServerRequest extends AbstractMessage {
     public String getRoomId() {
         return roomId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.RESERVE_ROOM + '\'' +
+                ", serverId:'" + serverId + '\'' +
+                ", roomId:'" + roomId + '\'' +
+                '}';
+    }
 }

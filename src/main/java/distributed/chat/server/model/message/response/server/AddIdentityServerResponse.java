@@ -7,11 +7,19 @@ public class AddIdentityServerResponse extends AbstractServerResponse{
     private final boolean added;
 
     public AddIdentityServerResponse(boolean added){
-        super(MessageType.ADD_IDENTITY);
+        super(MessageType.ADD_IDENTITY_RESPONSE);
         this.added = added;
     }
 
     public boolean isAdded() {
         return added;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.ADD_IDENTITY_RESPONSE + '\'' +
+                ", added:" + added +
+                '}';
     }
 }

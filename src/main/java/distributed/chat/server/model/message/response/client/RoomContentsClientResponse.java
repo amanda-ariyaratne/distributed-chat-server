@@ -7,9 +7,9 @@ import java.util.List;
 
 public class RoomContentsClientResponse extends AbstractClientResponse {
 
-    private String roomId;
-    private List<String> identities;
-    private String owner;
+    private final String roomId;
+    private final List<String> identities;
+    private final String owner;
 
     public RoomContentsClientResponse(String roomId, ArrayList<String> identities, String owner) {
         super(MessageType.ROOM_CONTENTS);
@@ -18,4 +18,25 @@ public class RoomContentsClientResponse extends AbstractClientResponse {
         this.owner = owner;
     }
 
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public List<String> getIdentities() {
+        return identities;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.ROOM_CONTENTS + '\'' +
+                ", roomid:'" + roomId + '\'' +
+                ", identities:" + identities +
+                ", owner:'" + owner + '\'' +
+                '}';
+    }
 }

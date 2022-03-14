@@ -10,4 +10,12 @@ public class MessageClientRequest extends AbstractClientRequest {
         super(MessageType.MESSAGE);
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.MESSAGE + '\'' +
+                ", content:'" + content + '\'' +
+                '}';
+    }
 }

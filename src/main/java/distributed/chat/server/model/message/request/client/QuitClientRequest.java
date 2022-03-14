@@ -8,4 +8,10 @@ public class QuitClientRequest extends AbstractClientRequest {
         super(MessageType.QUIT);
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.QUIT + '\'' +
+                "}";
+    }
 }

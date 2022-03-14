@@ -15,4 +15,11 @@ public class ReserveIdentityServerRequest extends AbstractServerRequest {
         return identity;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.RESERVE_IDENTITY + '\'' +
+                ", identity:'" + identity + '\'' +
+                '}';
+    }
 }

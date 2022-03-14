@@ -23,7 +23,9 @@ public class ServerState {
     public static Set<String> globalClients = new HashSet<String>();
     public static Map<String, Client> reservedClients = new ConcurrentHashMap<>();
 
-    public static Map<String, Room> rooms = new ConcurrentHashMap<>();
+    public static Map<String, Room> localRooms = new ConcurrentHashMap<>();
+    public static Set<Room> globalRooms = new HashSet<>();
+
     public static Map<String, Channel> serverChannels = new ConcurrentHashMap<>();
 
 }

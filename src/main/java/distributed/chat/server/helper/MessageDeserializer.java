@@ -5,6 +5,11 @@ import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.client.*;
 import distributed.chat.server.model.message.request.server.*;
+import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
+import distributed.chat.server.model.message.response.server.AddIdentityServerResponse;
+import distributed.chat.server.model.message.response.server.ReserveIdentityConfirmServerResponse;
+import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
+
 import java.lang.reflect.Type;
 
 public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
@@ -22,17 +27,35 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
             case RequestConstants.NEW_IDENTITY:
                 request = new NewIdentityClientRequest(requestJson.get("identity").getAsString());
                 break;
+
             case RequestConstants.RESERVE_IDENTITY:
                 request = new ReserveIdentityServerRequest(requestJson.get("identity").getAsString());
                 break;
+            case RequestConstants.RESERVE_IDENTITY_RESPONSE:
+                request = new ReserveIdentityServerResponse(
+                        requestJson.get("identity").getAsString(),
+                        requestJson.get("approved").getAsBoolean()
+                );
+                break;
+
             case RequestConstants.RESERVE_IDENTITY_CONFIRM:
                 request = new ReserveIdentityConfirmServerRequest(
                         requestJson.get("reserved").getAsBoolean(),
                         requestJson.get("identity").getAsString());
                 break;
+            case RequestConstants.RESERVE_IDENTITY_CONFIRM_RESPONSE:
+                request = new ReserveIdentityConfirmServerResponse(
+                        requestJson.get("identity").getAsString(),
+                        requestJson.get("reserved").getAsBoolean());
+                break;
+
             case RequestConstants.ADD_IDENTITY:
                 request = new AddIdentityServerRequest(
                         requestJson.get("identity").getAsString());
+                break;
+            case RequestConstants.ADD_IDENTITY_RESPONSE:
+                request = new AddIdentityServerResponse(
+                        requestJson.get("reserved").getAsBoolean());
                 break;
 
             case RequestConstants.LIST:
@@ -63,6 +86,7 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
             case RequestConstants.QUIT:
                 request = new QuitClientRequest();
                 break;
+
             default:
                 throw new JsonParseException("Unexpected request type");
         }

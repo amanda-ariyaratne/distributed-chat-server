@@ -4,8 +4,8 @@ import distributed.chat.server.model.message.MessageType;
 
 public class CreateRoomClientResponse extends AbstractClientResponse {
 
-    private String roomId;
-    private boolean approved;
+    private final String roomId;
+    private final boolean approved;
 
     public CreateRoomClientResponse(String roomId, boolean approved) {
         super(MessageType.CREATE_ROOM);
@@ -13,4 +13,20 @@ public class CreateRoomClientResponse extends AbstractClientResponse {
         this.approved = approved;
     }
 
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.CREATE_ROOM + '\'' +
+                ", roomid:'" + roomId + '\'' +
+                ", approved:" + approved +
+                '}';
+    }
 }
