@@ -1,12 +1,12 @@
-package distributed.chat.server.model.message.request;
+package distributed.chat.server.model.message.request.server;
 
 import distributed.chat.server.model.message.AbstractServerRequest;
 import distributed.chat.server.model.message.MessageType;
 
 public class ReserveRoomServerRequest extends AbstractServerRequest {
 
-    private String serverId;
-    private String roomId;
+    private final String serverId;
+    private final String roomId;
 
     public ReserveRoomServerRequest(String serverId, String roomId) {
         super(MessageType.RESERVE_ROOM);
@@ -14,4 +14,11 @@ public class ReserveRoomServerRequest extends AbstractServerRequest {
         this.roomId = roomId;
     }
 
+    public String getServerId() {
+        return serverId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
 }

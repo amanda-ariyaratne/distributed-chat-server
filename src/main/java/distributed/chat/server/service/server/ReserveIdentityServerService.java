@@ -1,11 +1,11 @@
 package distributed.chat.server.service.server;
 
-import distributed.chat.server.model.message.response.client.AbstractClientResponse;
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
-import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
+import distributed.chat.server.model.message.request.server.ReserveIdentityServerRequest;
+import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
+import distributed.chat.server.service.client.NewIdentityService;
 import io.netty.channel.Channel;
 
-public class ReserveIdentityServerService extends AbstractServerService{
+public class ReserveIdentityServerService extends AbstractServerService<ReserveIdentityServerRequest>{
     private static ReserveIdentityServerService instance;
 
     private ReserveIdentityServerService(){}
@@ -18,9 +18,12 @@ public class ReserveIdentityServerService extends AbstractServerService{
     }
 
     @Override
-    public AbstractClientResponse processRequest(AbstractServerRequest request, Channel channel) {
+    public void processRequest(ReserveIdentityServerRequest request, Channel channel) {
         // Todo: check
         sendRequest(request, channel);
-        return new NewIdentityClientResponse(true);
+    }
+
+    public void approveIdentityRequestProcessed(ReserveIdentityServerResponse response){
+        NewIdentityService.getInstance().approveIdentityProcessed(response.isApproved(), response.getIdentity());
     }
 }

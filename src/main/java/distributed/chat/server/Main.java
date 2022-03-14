@@ -11,11 +11,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) throws Exception {
 
         if (args.length != 4) {
@@ -49,9 +51,10 @@ public class Main {
         int portServerToClient = servers.get(serverId).getClients_port();
         int portServerToServer = servers.get(serverId).getCoordination_port();
 
+        String finalServerId = serverId;
         Thread coordinatorThread = new Thread(() -> {
             try {
-                new ServerToServer(portServerToServer).start();
+                new ServerToServer(portServerToServer, finalServerId).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -60,7 +63,7 @@ public class Main {
 
         Thread clientThread = new Thread(() -> {
             try {
-                new ServerToClient(portServerToClient).start();
+                new ServerToClient(portServerToClient, finalServerId).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -78,7 +81,7 @@ public class Main {
                                 configs.getCoordination_port()
                         );
                         serverAsClient.start();
-                        ServerState.serverChannels.put(configs.getServer_id() , serverAsClient.getChannel());
+                        ServerState.serverChannels.put(configs.getServer_id(), serverAsClient.getChannel());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

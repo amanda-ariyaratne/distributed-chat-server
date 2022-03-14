@@ -1,12 +1,12 @@
-package distributed.chat.server.model.message.request;
+package distributed.chat.server.model.message.request.server;
 
 import distributed.chat.server.model.message.AbstractServerRequest;
 import distributed.chat.server.model.message.MessageType;
 
 public class DeleteRoomServerRequest extends AbstractServerRequest {
 
-    private String serverId;
-    private String roomId;
+    private final String serverId;
+    private final String roomId;
 
     public DeleteRoomServerRequest(String serverId, String roomId) {
         super(MessageType.DELETE_ROOM);
@@ -14,4 +14,11 @@ public class DeleteRoomServerRequest extends AbstractServerRequest {
         this.roomId = roomId;
     }
 
+    public String getServerId() {
+        return serverId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
 }
