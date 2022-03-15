@@ -22,4 +22,13 @@ public class AddRoomServerRequest extends AbstractServerRequest {
     public String getRoomId() {
         return roomId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.ADD_ROOM + '\'' +
+                ", serverId:'" + serverId + '\'' +
+                ", roomId:'" + roomId + '\'' +
+                '}';
+    }
 }

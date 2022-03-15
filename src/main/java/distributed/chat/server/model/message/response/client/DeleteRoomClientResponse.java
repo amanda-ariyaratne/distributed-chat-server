@@ -21,4 +21,13 @@ public class DeleteRoomClientResponse extends AbstractClientResponse {
     public boolean isApproved() {
         return approved;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.DELETE_ROOM + '\'' +
+                ", roomid:'" + roomId + '\'' +
+                ", approved:" + approved +
+                '}';
+    }
 }

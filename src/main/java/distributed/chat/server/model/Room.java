@@ -1,16 +1,18 @@
 package distributed.chat.server.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Room {
     private String roomId;
     private Client owner;
-    private ArrayList<Client> members;
+    private Set<Client> members;
 
     public Room(String roomId, Client owner) {
         this.roomId = roomId;
         this.owner = owner;
-        this.members = new ArrayList<Client>(){
+        this.members = new HashSet<>(){
             {
                 add(owner);
             }
@@ -33,15 +35,19 @@ public class Room {
         this.owner = owner;
     }
 
-    public ArrayList<Client> getMembers() {
+    public Set<Client> getMembers() {
         return members;
     }
 
-    public void setMembers(ArrayList<Client> members) {
+    public void setMembers(Set<Client> members) {
         this.members = members;
     }
 
-    public void addMember(Client client) {
-        this.members.add(client);
+    public synchronized boolean addMember(Client client) {
+        if (!members.contains(client)) {
+            members.add(client);
+            return true;
+        }
+        return false;
     }
 }

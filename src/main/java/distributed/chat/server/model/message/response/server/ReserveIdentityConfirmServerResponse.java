@@ -8,7 +8,7 @@ public class ReserveIdentityConfirmServerResponse extends AbstractServerResponse
     private final boolean reserved;
 
     public ReserveIdentityConfirmServerResponse(String identity, boolean reserved) {
-        super(MessageType.RESERVE_IDENTITY_CONFIRM);
+        super(MessageType.RESERVE_IDENTITY_CONFIRM_RESPONSE);
         this.reserved = reserved;
         this.identity = identity;
     }
@@ -19,5 +19,14 @@ public class ReserveIdentityConfirmServerResponse extends AbstractServerResponse
 
     public boolean isReserved() {
         return reserved;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.RESERVE_IDENTITY_CONFIRM_RESPONSE + '\'' +
+                ", identity:'" + identity + '\'' +
+                ", reserved:" + reserved +
+                '}';
     }
 }

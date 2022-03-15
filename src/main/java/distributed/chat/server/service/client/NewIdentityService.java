@@ -5,6 +5,7 @@ import distributed.chat.server.model.message.request.client.NewIdentityClientReq
 import distributed.chat.server.model.message.request.server.AddIdentityServerRequest;
 import distributed.chat.server.model.message.request.server.ReserveIdentityServerRequest;
 import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
+import distributed.chat.server.model.message.response.client.RoomChangeClientResponse;
 import distributed.chat.server.service.server.AddIdentityServerService;
 import distributed.chat.server.service.server.ReserveIdentityServerService;
 import distributed.chat.server.states.ServerState;
@@ -44,11 +45,16 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         if (isApproved) {
             ServerState.localClients.put(identity, client);
             client.setIdentity(identity);
-            client.setRoom(ServerState.localRooms.get("MainHall-" + ServerState.localId)); // TODO : check
+            client.setRoom(ServerState.localRooms.get("MainHall-" + ServerState.localId));
             AddIdentityServerService.getInstance().broadcast(new AddIdentityServerRequest(identity));
         }
 
         sendResponse(new NewIdentityClientResponse(isApproved), client);
+        JoinRoomClientService.getInstance().broadCastRoomChangeMessage(new RoomChangeClientResponse(
+                identity,
+                "",
+                "MainHall-" + ServerState.localId
+        ), ServerState.localRooms.get("MainHall-" + ServerState.localId));
     }
 
     private boolean isUniqueIdentity(String identity, NewIdentityClientRequest request) {

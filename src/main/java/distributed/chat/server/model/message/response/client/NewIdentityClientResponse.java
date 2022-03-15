@@ -4,11 +4,22 @@ import distributed.chat.server.model.message.MessageType;
 
 public class NewIdentityClientResponse extends AbstractClientResponse {
 
-    private boolean approved;
+    private final boolean approved;
 
     public NewIdentityClientResponse(boolean approved) {
         super(MessageType.NEW_IDENTITY);
         this.approved = approved;
     }
 
+    public boolean isApproved() {
+        return approved;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.NEW_IDENTITY + '\'' +
+                ", approved:" + approved +
+                '}';
+    }
 }

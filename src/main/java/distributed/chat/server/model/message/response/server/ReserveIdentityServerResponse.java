@@ -8,7 +8,7 @@ public class ReserveIdentityServerResponse extends AbstractServerResponse{
     private final boolean reserved;
 
     public ReserveIdentityServerResponse(String identity, boolean reserved){
-        super(MessageType.RESERVE_IDENTITY);
+        super(MessageType.RESERVE_IDENTITY_RESPONSE);
         this.reserved = reserved;
         this.identity = identity;
     }
@@ -19,5 +19,14 @@ public class ReserveIdentityServerResponse extends AbstractServerResponse{
 
     public boolean isReserved() {
         return reserved;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.RESERVE_IDENTITY_RESPONSE + '\'' +
+                ", identity='" + identity + '\'' +
+                ", reserved=" + reserved +
+                '}';
     }
 }

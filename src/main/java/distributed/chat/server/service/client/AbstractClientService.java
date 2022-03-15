@@ -9,6 +9,7 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.*;
 
 import java.util.Map;
+import java.util.Set;
 
 public abstract class AbstractClientService<S extends AbstractClientRequest, T extends AbstractClientResponse> {
 
@@ -18,8 +19,20 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
         Gson gson = new Gson();
         String requestJsonStr = gson.toJson(request);
 
-        for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
-            final ChannelFuture f = ServerState.serverChannels.get(server.getKey()).writeAndFlush(requestJsonStr + "\n");
+        for (Client member : room.getMembers()) {
+            final ChannelFuture f = member.getCtx().writeAndFlush(requestJsonStr + "\n");
+            f.addListener((ChannelFutureListener) future -> {
+                assert f == future;
+            });
+        }
+    }
+
+    public void broadcast(T response, Room room) {
+        Gson gson = new Gson();
+        String responseJsonStr = gson.toJson(response);
+
+        for (Client member : room.getMembers()) {
+            final ChannelFuture f = member.getCtx().writeAndFlush(responseJsonStr + "\n");
             f.addListener((ChannelFutureListener) future -> {
                 assert f == future;
             });

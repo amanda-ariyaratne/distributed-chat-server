@@ -21,4 +21,13 @@ public class ReserveIdentityConfirmServerRequest extends AbstractServerRequest {
     public boolean isReserved() {
         return reserved;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.RESERVE_IDENTITY_CONFIRM + '\'' +
+                ", identity:'" + identity + '\'' +
+                ", reserved:" + reserved +
+                '}';
+    }
 }

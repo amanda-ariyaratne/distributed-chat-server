@@ -21,4 +21,13 @@ public class DeleteIdentityServerRequest extends AbstractMessage {
     public String getIdentity() {
         return identity;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.DELETE_IDENTITY + '\'' +
+                ", serverId:'" + serverId + '\'' +
+                ", identity:'" + identity + '\'' +
+                '}';
+    }
 }

@@ -29,4 +29,12 @@ public class CreateRoomClientRequest extends AbstractClientRequest {
     public void setSender(Client sender) {
         this.sender = sender;
     }
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.CREATE_ROOM + '\'' +
+                ", roomId:'" + roomId + '\'' +
+                '}';
+
+    }
 }

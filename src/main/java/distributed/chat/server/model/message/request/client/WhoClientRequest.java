@@ -8,4 +8,10 @@ public class WhoClientRequest extends AbstractClientRequest {
         super(MessageType.WHO);
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.WHO + '\'' +
+                "}";
+    }
 }

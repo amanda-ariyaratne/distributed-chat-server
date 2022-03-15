@@ -22,4 +22,5 @@ public class RoomListClientResponse extends AbstractClientResponse {
     public void addRoom(String roomId) {
         this.rooms.add(roomId);
     }
+
 }

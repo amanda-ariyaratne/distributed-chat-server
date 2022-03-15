@@ -24,4 +24,13 @@ public class NewIdentityClientRequest extends AbstractClientRequest {
     public void setSender(Client sender) {
         this.sender = sender;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.NEW_IDENTITY + '\'' +
+                ", identity:'" + identity + '\'' +
+                ", sender:" + sender +
+                '}';
+    }
 }
