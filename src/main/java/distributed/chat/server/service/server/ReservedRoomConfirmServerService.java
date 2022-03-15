@@ -2,8 +2,7 @@ package distributed.chat.server.service.server;
 
 import distributed.chat.server.model.message.request.server.ReserveRoomConfirmServerRequest;
 import distributed.chat.server.model.message.response.server.ReserveRoomConfirmServerResponse;
-import distributed.chat.server.service.client.CreateRoomIdentityService;
-import distributed.chat.server.service.client.NewIdentityService;
+import distributed.chat.server.service.client.CreateRoomService;
 import io.netty.channel.Channel;
 
 public class ReservedRoomConfirmServerService  extends AbstractServerService<ReserveRoomConfirmServerRequest, ReserveRoomConfirmServerResponse> {
@@ -17,11 +16,17 @@ public class ReservedRoomConfirmServerService  extends AbstractServerService<Res
         return instance;
     }
 
+    /***
+     * Called from Reserve Room Confirm Inbound Handler
+     *
+     * @param request {"type" : "reserveroomconfirm", "roomid" : "jokes", "reserved" : "true"}
+     * @param channel Channel
+     */
     @Override
     public void processRequest(ReserveRoomConfirmServerRequest request, Channel channel) {
-        // get CreateRoomIdentityService
-        CreateRoomIdentityService createRoomIdentityService = CreateRoomIdentityService.getInstance();
-
-        createRoomIdentityService.approveIdentityProcessed(request.isReserved(), request.getRoomId());
+        // get Create Room Identity Service
+        CreateRoomService createRoomService = CreateRoomService.getInstance();
+        // approve identity of room
+        createRoomService.approveIdentityProcessed(request.isReserved(), request.getRoomId());
     }
 }

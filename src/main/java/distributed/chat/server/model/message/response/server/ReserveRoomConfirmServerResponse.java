@@ -4,12 +4,12 @@ import distributed.chat.server.model.message.MessageType;
 
 public class ReserveRoomConfirmServerResponse extends AbstractServerResponse{
 
-
     private final String roomId;
     private final boolean reserved;
 
     public ReserveRoomConfirmServerResponse(String roomId, boolean reserved) {
-        super(MessageType.RESERVE_ROOM_CONFIRM);
+        // {"type" : "reserveroomconfirmresponse", "roomid" : "jokes", "reserved" : "true"}
+        super(MessageType.RESERVE_ROOM_CONFIRM_RESPONSE);
         this.roomId = roomId;
         this.reserved = reserved;
     }

@@ -1,16 +1,16 @@
 package distributed.chat.server.handlers.client;
 
 import distributed.chat.server.model.Client;
-import distributed.chat.server.model.Room;
 import distributed.chat.server.model.message.request.client.AbstractClientRequest;
 import distributed.chat.server.model.message.request.client.CreateRoomClientRequest;
-import distributed.chat.server.model.message.request.client.NewIdentityClientRequest;
-import distributed.chat.server.service.client.CreateRoomIdentityService;
-import distributed.chat.server.service.client.NewIdentityService;
+import distributed.chat.server.service.client.CreateRoomService;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for reading requests from the clients
+ */
 public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
 
 //    @Override
@@ -47,8 +47,8 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
             String roomId = ((CreateRoomClientRequest) msg).getRoomId();
             ServerState.reservedRooms.put(roomId, client);
             // validation and create room -> call service class
-            CreateRoomIdentityService createRoomIdentityService = CreateRoomIdentityService.getInstance();
-            createRoomIdentityService.processRequest(createRoomClientRequest);
+            CreateRoomService createRoomService = CreateRoomService.getInstance();
+            createRoomService.processRequest(createRoomClientRequest);
         } else {
             ctx.fireChannelRead(msg);
         }

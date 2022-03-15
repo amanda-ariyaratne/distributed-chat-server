@@ -2,21 +2,19 @@ package distributed.chat.server.model.message.response.server;
 
 import distributed.chat.server.model.message.MessageType;
 
+/***
+ * Response sent from leader to slave
+ */
 public class ReserveRoomServerResponse extends AbstractServerResponse {
 
-    private final String serverId;
     private final String roomId;
     private final boolean reserved;
 
-    public ReserveRoomServerResponse(String serverId, String roomId, boolean reserved) {
-        super(MessageType.RESERVE_ROOM);
-        this.serverId = serverId;
+    public ReserveRoomServerResponse(String roomId, boolean reserved) {
+        // {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
+        super(MessageType.RESERVE_ROOM_RESPONSE);
         this.roomId = roomId;
         this.reserved = reserved;
-    }
-
-    public String getServerId() {
-        return serverId;
     }
 
     public String getRoomId() {
@@ -25,5 +23,14 @@ public class ReserveRoomServerResponse extends AbstractServerResponse {
 
     public boolean isReserved() {
         return reserved;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.RESERVE_ROOM_RESPONSE + '\'' +
+                ", roomId='" + roomId + '\'' +
+                ", reserved=" + reserved +
+                '}';
     }
 }

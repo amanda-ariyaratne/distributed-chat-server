@@ -8,6 +8,7 @@ public class ReserveRoomConfirmServerRequest extends AbstractServerRequest{
     private final boolean reserved;
 
     public ReserveRoomConfirmServerRequest(String roomId, boolean reserved) {
+        // {"type" : "reserveroomconfirm", "roomid" : "jokes", "reserved" : "true"}
         super(MessageType.RESERVE_ROOM_CONFIRM);
         this.roomId = roomId;
         this.reserved = reserved;
@@ -21,5 +22,13 @@ public class ReserveRoomConfirmServerRequest extends AbstractServerRequest{
         return reserved;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.RESERVE_ROOM_CONFIRM + '\'' +
+                ", roomId:'" + roomId + '\'' +
+                ", reserved:" + reserved +
+                '}';
+    }
 
 }

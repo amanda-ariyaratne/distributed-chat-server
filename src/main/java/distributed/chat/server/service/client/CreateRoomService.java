@@ -3,28 +3,29 @@ package distributed.chat.server.service.client;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
 import distributed.chat.server.model.message.request.client.CreateRoomClientRequest;
+import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
 import distributed.chat.server.model.message.request.server.ReserveRoomServerRequest;
 import distributed.chat.server.model.message.response.client.CreateRoomClientResponse;
+import distributed.chat.server.service.server.AddRoomServerService;
 import distributed.chat.server.service.server.ReserveRoomServerService;
 import distributed.chat.server.states.ServerState;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+/***
+ * Service Class for handling client request to create new rooms
+ */
+public class CreateRoomService extends AbstractClientService<CreateRoomClientRequest, CreateRoomClientResponse> {
 
-public class CreateRoomIdentityService extends AbstractClientService<CreateRoomClientRequest, CreateRoomClientResponse> {
+    private static CreateRoomService instance;
 
-    private static CreateRoomIdentityService instance;
-    private Map<String, Client> pendingCreateRoomRequests = new ConcurrentHashMap<>();
-
-    public static synchronized CreateRoomIdentityService getInstance() {
+    public static synchronized CreateRoomService getInstance() {
         if (instance == null) {
-            instance = new CreateRoomIdentityService();
+            instance = new CreateRoomService();
         }
         return instance;
     }
 
     /***
-     * Called from CreateRoomHandler
+     * Called from CreateRoom Inbound Handler
      *
      * @param request {"type" : "createroom", "roomid" : "jokes"}
      */
@@ -41,40 +42,7 @@ public class CreateRoomIdentityService extends AbstractClientService<CreateRoomC
             if (!room_approved && !ServerState.reservedRooms.containsKey(roomId)) {
                 sendResponse(new CreateRoomClientResponse(roomId, false), client);
             }
-
-            // create room
-//            Room room = new Room(roomId, request.getSender());
-
-            // add room object to rooms and activeRooms hashmaps
-//            ServerState.globalRooms.add(roomId);
-//            ServerState.localRooms.put(roomId, room);
-
-            // send add room request to leader to notify that room has been created
-
-            // create addRoomRequest object
-//            AddRoomServerRequest addRoomServerRequest = new AddRoomServerRequest(
-//                    ServerState.serverConfig.getServer_id(),
-//                    roomId
-//            );
-            // get service
-//            AddRoomServerService addRoomServerService = AddRoomServerService.getInstance();
-            // process request
-//            addRoomServerService.processRequest(
-//                    addRoomServerRequest,
-//                    ServerState.serverChannels.get(ServerState.serverConfig.getServer_id()));
-
-            // change room main-hall to new room
-
-
-            // create response object for client
-
-
         }
-
-        // return : {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
-//        return new CreateRoomClientResponse(roomId, room_approved);
-
-
     }
 
     private boolean approveIdentity(String roomId, CreateRoomClientRequest request) {
@@ -116,23 +84,37 @@ public class CreateRoomIdentityService extends AbstractClientService<CreateRoomC
     }
 
     /***
+     * Called from Reserved Room Confirm Server Service
      *
-     * @param reserved boolean
+     * @param approved boolean
      * @param roomId String
      */
-    public void approveIdentityProcessed(boolean reserved, String roomId) {
+    public void approveIdentityProcessed(boolean approved, String roomId) {
         Client client = ServerState.reservedRooms.get(roomId);
         ServerState.reservedRooms.remove(roomId);
 
-        if (reserved) {
+        if (approved) {
             // TODO check
+            // create new room with new roomId and add to localRooms hashmap
             Room room = new Room(roomId, client);
             ServerState.localRooms.put(roomId, room);
 
-//            AddRoomServerService.getInstance().broadcast(new AddRoomServerRequest(roomId)); // TODO
+            // broadcast to other servers
+            AddRoomServerService addRoomServerService = AddRoomServerService.getInstance();
+            // {"type" : "addroom", "roomid" : "jokes"}
+            AddRoomServerRequest addRoomServerRequest = new AddRoomServerRequest(roomId);
+            addRoomServerService.broadcast(addRoomServerRequest);
+
+            // remove client from main hall add to new room
+            client.setRoom(ServerState.localRooms.get(roomId));
         }
 
-        sendResponse(new CreateRoomClientResponse(roomId, reserved), client);
+        // send response to client
+        // {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
+        CreateRoomClientResponse createRoomClientResponse = new CreateRoomClientResponse(roomId, approved);
+        sendResponse(createRoomClientResponse, client);
+
+        // TODO : broadcast room change
 
     }
 }

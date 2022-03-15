@@ -1,14 +1,15 @@
 package distributed.chat.server.service.server;
 
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.request.server.ReserveRoomServerRequest;
-import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveRoomServerResponse;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
 import java.util.Objects;
 
+/***
+ * Process ReserveRoomHandler requests
+ */
 public class ReserveRoomServerService extends AbstractServerService <ReserveRoomServerRequest, ReserveRoomServerResponse> {
 
     private static ReserveRoomServerService instance;
@@ -31,7 +32,9 @@ public class ReserveRoomServerService extends AbstractServerService <ReserveRoom
         if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
             boolean isUnique = isUniqueIdentity(request.getRoomId());
             // send response to slave
-            sendResponse(new ReserveRoomServerResponse(request.getServerId(),  request.getRoomId(), isUnique), channel);
+            // {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
+            ReserveRoomServerResponse reserveRoomServerResponse = new ReserveRoomServerResponse(request.getRoomId(), isUnique);
+            sendResponse(reserveRoomServerResponse, channel);
         }
         else { // if slave -> send to leader
             sendRequest(request, ServerState.serverChannels.get(ServerState.leaderId));

@@ -9,7 +9,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 
 /***
- * Leader side create-room inbound handler
+ * Leader side create-room inbound handler to reserve roomId
  *
  * Leader as Server
  * Other Servers as Clients

@@ -7,6 +7,10 @@ import distributed.chat.server.service.server.ReservedRoomConfirmServerService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Reserve Room Confirm Inbound Handler
+ * Handle responses sent from leader to slave
+ */
 public class ReserveRoomConfirmHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -14,7 +18,7 @@ public class ReserveRoomConfirmHandler extends ChannelInboundHandlerAdapter {
         AbstractServerResponse abstractServerResponse = (AbstractServerResponse) msg;
 
         if (abstractServerResponse instanceof ReserveRoomServerResponse) {
-            // request object
+            // request object : {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
             ReserveRoomServerResponse response = (ReserveRoomServerResponse) abstractServerResponse;
             // get service
             ReservedRoomConfirmServerService reservedRoomConfirmServerService = ReservedRoomConfirmServerService.getInstance();
