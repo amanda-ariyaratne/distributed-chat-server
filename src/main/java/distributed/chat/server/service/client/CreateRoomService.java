@@ -107,6 +107,11 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
 
             // remove client from main hall add to new room
             client.setRoom(ServerState.localRooms.get(roomId));
+            //TODO: move the client from mainhall to new room
+            // add the client to the room's members list
+            room.addMember(client);
+
+            AddRoomServerService.getInstance().broadcast(new AddRoomServerRequest(ServerState.localId,roomId)); // TODO:check
         }
 
         // send response to client
