@@ -35,7 +35,7 @@ public class RoomContentsClientResponse extends AbstractClientResponse {
         return "{" +
                 "type:'" + MessageType.ROOM_CONTENTS + '\'' +
                 ", roomid:'" + roomId + '\'' +
-                ", identities:" + identities +
+                ", identities: [\"" + String.join("\", \"", identities) + "\"]" +
                 ", owner:'" + owner + '\'' +
                 '}';
     }
