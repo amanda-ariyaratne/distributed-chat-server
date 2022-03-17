@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomListClientResponse extends AbstractClientResponse {
+    //{
+    //"type" : "roomlist",
+    //"rooms" : ["MainHall-s1", "MainHall-s2", "jokes"]
+    //}
 
     private List<String> rooms;
 
@@ -23,4 +27,11 @@ public class RoomListClientResponse extends AbstractClientResponse {
         this.rooms.add(roomId);
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + MessageType.ROOM_LIST + '\'' +
+                ", rooms: [\"" + String.join("\", \"", rooms) + "\"]" +
+                "}";
+    }
 }
