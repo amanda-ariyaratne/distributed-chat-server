@@ -16,7 +16,7 @@ public enum MessageType {
     ROOM_LIST, // Todo
     ROOM_CONTENTS, // Todo
 
-    CREATE_ROOM,
+
     JOIN_ROOM,
     ROUTE, // Todo
     MOVE_JOIN,
@@ -25,8 +25,14 @@ public enum MessageType {
     MESSAGE,
     QUIT,
 
-    RESERVE_ROOM, // Todo
+    CREATE_ROOM,
+    RESERVE_ROOM,
+    RESERVE_ROOM_RESPONSE,
+    RESERVE_ROOM_CONFIRM,
+    RESERVE_ROOM_CONFIRM_RESPONSE,
     ADD_ROOM, // Todo
+    ADD_ROOM_RESPONSE, // Todo
+
     DELETE_IDENTITY, // Todo
 
     HEARTBEAT, // TODO

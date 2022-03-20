@@ -1,22 +1,18 @@
 package distributed.chat.server.model.message.request.server;
 
-import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
-public class AddRoomServerRequest extends AbstractMessage {
+/***
+ * Request obj to broadcast to all the servers when a new room is created
+ */
+public class AddRoomServerRequest extends AbstractServerRequest {
 
-    private final String serverId;
     private final String roomId;
 
-    public AddRoomServerRequest(String serverId, String roomId) {
+    public AddRoomServerRequest(String roomId) {
+        // {"type" : "addroom", "roomid" : "jokes"}
         super(MessageType.ADD_ROOM);
-        this.serverId = serverId;
         this.roomId = roomId;
-
-    }
-
-    public String getServerId() {
-        return serverId;
     }
 
     public String getRoomId() {
@@ -27,7 +23,6 @@ public class AddRoomServerRequest extends AbstractMessage {
     public String toString() {
         return "{" +
                 "type:'" + MessageType.ADD_ROOM + '\'' +
-                ", serverId:'" + serverId + '\'' +
                 ", roomId:'" + roomId + '\'' +
                 '}';
     }

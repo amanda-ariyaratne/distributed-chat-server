@@ -10,9 +10,6 @@ import distributed.chat.server.service.server.AddIdentityServerService;
 import distributed.chat.server.service.server.ReserveIdentityServerService;
 import distributed.chat.server.states.ServerState;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 public class NewIdentityService extends AbstractClientService<NewIdentityClientRequest, NewIdentityClientResponse> {
 
     private static NewIdentityService instance;
@@ -32,7 +29,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         Client client = request.getSender();
         boolean approved;
         synchronized (this){
-            ServerState.reservedClients.put(identity, client);
+            ServerState.reservedClients.put(identity, client); // TODO : no need to add to reservedClients map twice ???
             approved = isUniqueIdentity(identity, request);
         }
 
@@ -74,7 +71,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
 
     private boolean checkUniqueIdentity(String identity, NewIdentityClientRequest request) {
         boolean locallyRedundant = ServerState.globalClients.contains(identity);
-        boolean isReservedIdentity = ServerState.reservedClients.containsKey(identity);
+        boolean isReservedIdentity = ServerState.reservedClients.containsKey(identity); // TODO: ??
 
         if (locallyRedundant || isReservedIdentity){
             return true;

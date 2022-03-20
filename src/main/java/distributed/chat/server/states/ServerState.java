@@ -18,6 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerState {
 
+    public static ServerConfig serverConfig;
+
     public static String leaderId;
     public static Integer leaderPort;
     public static String localId;
@@ -29,8 +31,10 @@ public class ServerState {
     public static Set<String> globalClients = new HashSet<String>();
     public static Map<String, Client> reservedClients = new ConcurrentHashMap<>();
 
-    public static Map<String, Room> localRooms = new ConcurrentHashMap<>();
-    public static Set<Room> globalRooms = new HashSet<>();
+    // ROOMS
+    public static Map<String, Room> localRooms = new ConcurrentHashMap<>(); // key = room-id
+    public static Set<String> globalRooms = new HashSet<>(); // String key= room-id
+    public static Map<String, Client> reservedRooms = new ConcurrentHashMap<>(); // key = room-id
 
     public static Map<String, ServerConfig> servers;
     public static Map<String, Channel> serverChannels = new ConcurrentHashMap<>();

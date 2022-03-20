@@ -1,5 +1,6 @@
 package distributed.chat.server.bootstrap.initializers;
 
+import distributed.chat.server.handlers.server.ReserveRoomHandler;
 import distributed.chat.server.handlers.election.*;
 import distributed.chat.server.handlers.heartbeat.HeartBeatHandler;
 import distributed.chat.server.helper.MessageDecoder;
@@ -24,6 +25,7 @@ public class ServerToServerInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("string_encode", new StringEncoder(CharsetUtil.UTF_8));
         pipeline.addLast("pojo_decode", new MessageDecoder());
         pipeline.addLast("reserve_identity", new ReserveIdentityHandler());
+        pipeline.addLast("reserve_room", new ReserveRoomHandler());
         pipeline.addLast(new IdleStateHandler(
                 ServerState.heartBeatReadTimeout,
                 ServerState.heartBeatWriteTimeout,

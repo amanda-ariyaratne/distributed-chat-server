@@ -1,14 +1,17 @@
 package distributed.chat.server.model.message.request.server;
 
-import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
-public class ReserveRoomServerRequest extends AbstractMessage {
+/***
+ * Request obj sent from slave to leader to reserve the new roomId
+ */
+public class ReserveRoomServerRequest extends AbstractServerRequest {
 
     private final String serverId;
     private final String roomId;
 
     public ReserveRoomServerRequest(String serverId, String roomId) {
+        // {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
         super(MessageType.RESERVE_ROOM);
         this.serverId = serverId;
         this.roomId = roomId;
