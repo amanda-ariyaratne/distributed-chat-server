@@ -1,10 +1,8 @@
 package distributed.chat.server.service.server;
 
-import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.request.server.ReserveIdentityConfirmServerRequest;
 import distributed.chat.server.model.message.response.server.ReserveIdentityConfirmServerResponse;
 import distributed.chat.server.service.client.NewIdentityService;
-import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
 public class ReserveIdentityConfirmServerService extends AbstractServerService<ReserveIdentityConfirmServerRequest, ReserveIdentityConfirmServerResponse> {

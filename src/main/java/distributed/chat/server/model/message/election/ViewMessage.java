@@ -1,9 +1,8 @@
 package distributed.chat.server.model.message.election;
 
-import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
-public class ViewMessage extends AbstractMessage {
+public class ViewMessage extends FastBullyMessage {
 
     private String serverId;
     private String currentLeaderId;
@@ -14,4 +13,20 @@ public class ViewMessage extends AbstractMessage {
         this.currentLeaderId = currentLeaderId;
     }
 
+    public String getServerId() {
+        return serverId;
+    }
+
+    public String getCurrentLeaderId() {
+        return currentLeaderId;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'view'" +
+                "serverId:'" + serverId + '\'' +
+                "currentLeaderId:'" + currentLeaderId + '\'' +
+                '}';
+    }
 }

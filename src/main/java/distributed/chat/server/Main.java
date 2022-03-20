@@ -4,14 +4,12 @@ import distributed.chat.server.bootstrap.server.ServerAsClient;
 import distributed.chat.server.bootstrap.client.ServerToClient;
 import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
+import distributed.chat.server.service.election.IAmUpService;
 import distributed.chat.server.states.ServerState;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -38,7 +36,7 @@ public class Main {
             return;
         }
 
-        Map<String, ServerConfig> servers = new HashMap<>();
+        Map<String, ServerConfig> servers;
 
         try {
             servers = readServerConfgis(configFile);
@@ -61,19 +59,10 @@ public class Main {
         });
         coordinatorThread.start();
 
-        Thread clientThread = new Thread(() -> {
-            try {
-                new ServerToClient(portServerToClient, finalServerId).start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        clientThread.start();
-
         for (Map.Entry<String, ServerConfig> server : servers.entrySet()) {
             ServerConfig configs = server.getValue();
 
-            if (portServerToServer != configs.getCoordination_port()) {
+            if (serverId != configs.getServer_id()) {
                 new Thread(() -> {
                     try {
                         ServerAsClient serverAsClient = new ServerAsClient(
@@ -88,6 +77,20 @@ public class Main {
                 }).start();
             }
         }
+
+        // TODO : Set Main Hall
+
+        Thread clientThread = new Thread(() -> {
+            try {
+                new ServerToClient(portServerToClient, finalServerId).start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        clientThread.start();
+
+        IAmUpService iAmUpService = IAmUpService.getInstance();
+        iAmUpService.broadcastIAmUpMessage();
 
     }
 
