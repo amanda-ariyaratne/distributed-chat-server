@@ -18,6 +18,8 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static Map<String, ServerConfig> servers;
+
     public static void main(String[] args) throws Exception {
 
         if (args.length != 4) {
@@ -38,7 +40,7 @@ public class Main {
             return;
         }
 
-        Map<String, ServerConfig> servers = new HashMap<>();
+        servers = new HashMap<>();
 
         try {
             servers = readServerConfgis(configFile);

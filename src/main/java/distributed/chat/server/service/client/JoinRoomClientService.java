@@ -1,7 +1,9 @@
 package distributed.chat.server.service.client;
 
+import distributed.chat.server.Main;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
+import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.model.message.request.client.JoinRoomClientRequest;
 import distributed.chat.server.model.message.response.client.RoomChangeClientResponse;
 import distributed.chat.server.model.message.response.client.RouteClientResponse;
@@ -53,6 +55,9 @@ public class JoinRoomClientService extends AbstractClientService<JoinRoomClientR
                     // TODO : if room in a another server
                     // first replies to the client with a route message redirecting it to another server.
                     // {"type" : "route", "roomid" : "jokes", "host" : "122.134.2.4", "port" : "4445"}
+                    ServerConfig serverConfig = Main.servers.get("s2");
+                    String host = serverConfig.getServer_address();
+                    String port = String.valueOf(serverConfig.getClients_port());
 
                     // server removes the client from its list
                     ServerState.localClients.remove(client.getIdentity());
