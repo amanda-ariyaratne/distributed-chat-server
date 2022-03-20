@@ -3,8 +3,10 @@ package distributed.chat.server.service.client;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
 import distributed.chat.server.model.message.request.client.DeleteRoomClientRequest;
+import distributed.chat.server.model.message.request.server.DeleteRoomServerRequest;
 import distributed.chat.server.model.message.response.client.DeleteRoomClientResponse;
 import distributed.chat.server.model.message.response.client.RoomChangeClientResponse;
+import distributed.chat.server.service.server.DeleteRoomServerService;
 import distributed.chat.server.states.ServerState;
 
 public class DeleteRoomService extends AbstractClientService<DeleteRoomClientRequest, DeleteRoomClientResponse> {
@@ -32,16 +34,7 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
             String roomId = request.getRoomId();
 
             if (isCapable(client, roomId)) { // client is the owner
-                // move client and other members to main-hall -> broadcast joinroom
-                moveMembersToMainHall(roomId);
-                // TODO : inform other servers - {"type" : "deleteroom", "serverid" : "s1", "roomid" : "jokes"}
-
-                // delete room
-                ServerState.localRooms.remove(roomId);
-
-                // response
-                DeleteRoomClientResponse deleteRoomClientResponse = new DeleteRoomClientResponse(roomId, true);
-                sendResponse(deleteRoomClientResponse, client);
+                handleDelete(roomId, client, "MainHall-" + ServerState.localId);
 
             } else { // failed to delete
                 // {"type" : "deleteroom", "roomid" : "jokes", "approved" : "false"}
@@ -51,20 +44,47 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
         }
     }
 
+    public void handleDelete(String roomId, Client client, String mainhall) {
+        // move client and other members to main-hall -> broadcast joinroom
+        moveMembersToMainHall(roomId, mainhall);
+        // inform other servers - {"type" : "deleteroom", "serverid" : "s1", "roomid" : "jokes"}
+        DeleteRoomServerRequest deleteRoomServerRequest = new DeleteRoomServerRequest(ServerState.localId, roomId);
+        DeleteRoomServerService.getInstance().broadcastRequest(deleteRoomServerRequest);
+        // delete room
+        ServerState.localRooms.remove(roomId);
+        ServerState.globalRooms.remove(roomId);
+
+        // response
+        DeleteRoomClientResponse deleteRoomClientResponse = new DeleteRoomClientResponse(roomId, true);
+        sendResponse(deleteRoomClientResponse, client);
+    }
+
     private boolean isCapable(Client client, String roomId) {
         return (roomId.equals(client.getRoom().getRoomId()) // client's current room
                 && (client.getRoom()).getOwner().getIdentity().equals(client.getIdentity())); // client is the owner
     }
 
-    private void moveMembersToMainHall(String roomId) {
+    private void moveMembersToMainHall(String roomId, String mainhall) {
         Room room = ServerState.localRooms.get(roomId);
         Room mainHall = ServerState.localRooms.get("MainHall-" + ServerState.localId);
 
         for (Client member : room.getMembers()) {
             // set main room as room of the member
             member.setRoom(mainHall);
+            // remove from room
+            room.removeMember(member);
+            // add to main hall
+            mainHall.addMember(member);
             // broadcast
-            RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(member.getIdentity(), roomId, "MainHall-" + ServerState.localId);
+
+            RoomChangeClientResponse roomChangeClientResponse;
+            if (room.getOwner() == member){ // if owner
+                roomChangeClientResponse = new RoomChangeClientResponse(member.getIdentity(), roomId, mainhall);
+            }
+            else {
+                roomChangeClientResponse = new RoomChangeClientResponse(member.getIdentity(), roomId, "MainHall-" + ServerState.localId);
+            }
+
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get(roomId));
         }
     }

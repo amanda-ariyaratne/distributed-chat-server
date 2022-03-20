@@ -68,7 +68,7 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
      * @return boolean
      */
     private boolean checkUniqueIdentity(String roomId, CreateRoomClientRequest request) {
-        boolean globallyRedundant = ServerState.globalRooms.contains(roomId);
+        boolean globallyRedundant = ServerState.globalRooms.containsKey(roomId);
         if (globallyRedundant) { // room-id already exists in server's global room list
             return false;
         } else { // check room-id with leader's list -> send request to leader
@@ -101,8 +101,8 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
 
             // broadcast to other servers
             AddRoomServerService addRoomServerService = AddRoomServerService.getInstance();
-            // {"type" : "addroom", "roomid" : "jokes"}
-            AddRoomServerRequest addRoomServerRequest = new AddRoomServerRequest(roomId);
+            // {"type" : "addroom", "serverid" : "s1", "roomid" : "jokes"}
+            AddRoomServerRequest addRoomServerRequest = new AddRoomServerRequest(roomId, ServerState.localId);
             addRoomServerService.broadcast(addRoomServerRequest);
 
             // remove client from main hall add to new room

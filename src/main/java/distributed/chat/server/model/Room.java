@@ -50,4 +50,12 @@ public class Room {
         }
         return false;
     }
+
+    public  synchronized boolean removeMember(Client client){
+        if (members.contains(client)) {
+            members.remove(client);
+            return true;
+        }
+        return false;
+    }
 }

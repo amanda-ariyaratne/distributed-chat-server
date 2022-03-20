@@ -30,7 +30,7 @@ public class ReserveRoomServerService extends AbstractServerService <ReserveRoom
     public void processRequest(ReserveRoomServerRequest request, Channel channel) {
         // if leader -> check the room validity
         if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
-            boolean isUnique = isUniqueIdentity(request.getRoomId());
+            boolean isUnique = isUniqueIdentity(request.getRoomId(), request.getServerId());
             // send response to slave
             // {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
             ReserveRoomServerResponse reserveRoomServerResponse = new ReserveRoomServerResponse(request.getRoomId(), isUnique);
@@ -41,10 +41,10 @@ public class ReserveRoomServerService extends AbstractServerService <ReserveRoom
         }
     }
 
-    private synchronized boolean isUniqueIdentity(String roomId) {
-        boolean isUnique = !ServerState.globalRooms.contains(roomId);
+    private synchronized boolean isUniqueIdentity(String roomId, String serverId) {
+        boolean isUnique = !ServerState.globalRooms.containsKey(roomId);
         if (isUnique)
-            ServerState.globalRooms.add(roomId);
+            ServerState.globalRooms.put(roomId, serverId);
         return isUnique;
     }
 }

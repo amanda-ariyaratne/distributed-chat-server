@@ -12,17 +12,18 @@ public enum MessageType {
     LIST,
     WHO,
 
-    ROOM_CHANGE, // Todo
-    ROOM_LIST, // Todo
-    ROOM_CONTENTS, // Todo
+    ROOM_CHANGE,
+    ROOM_LIST,
+    ROOM_CONTENTS,
 
 
     JOIN_ROOM,
-    ROUTE, // Todo
+    ROUTE,
     MOVE_JOIN,
-    SERVER_CHANGE, // Todo
+    SERVER_CHANGE,
     DELETE_ROOM,
     MESSAGE,
+    MESSAGE_RESPONSE,
     QUIT,
 
     CREATE_ROOM,

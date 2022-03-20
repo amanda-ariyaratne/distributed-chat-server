@@ -1,6 +1,5 @@
 package distributed.chat.server.service.client;
 
-import distributed.chat.server.Main;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
 import distributed.chat.server.model.ServerConfig;
@@ -8,8 +7,6 @@ import distributed.chat.server.model.message.request.client.JoinRoomClientReques
 import distributed.chat.server.model.message.response.client.RoomChangeClientResponse;
 import distributed.chat.server.model.message.response.client.RouteClientResponse;
 import distributed.chat.server.states.ServerState;
-
-import java.util.Objects;
 
 public class JoinRoomClientService extends AbstractClientService<JoinRoomClientRequest, RoomChangeClientResponse> {
     private static JoinRoomClientService instance;
@@ -37,10 +34,12 @@ public class JoinRoomClientService extends AbstractClientService<JoinRoomClientR
             String new_roomId = request.getRoomId();
 
             // check if the client is a room owner
-            if (!client.isAlready_room_owner()){
+            if (!client.isAlready_room_owner()) {
                 if (ServerState.localRooms.containsKey(new_roomId)) { // room exists in local rooms
                     // change room id of the client
                     client.setRoom(ServerState.localRooms.get(new_roomId));
+                    // remove from former room
+                    ServerState.localRooms.get(former_roomId).removeMember(client);
                     // add client to the room
                     ServerState.localRooms.get(new_roomId).addMember(client);
 
@@ -51,14 +50,21 @@ public class JoinRoomClientService extends AbstractClientService<JoinRoomClientR
                     //  - to the members of the new chat room and to the client joining the room
                     broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get(new_roomId));
 
-                } else if (ServerState.globalRooms.contains(new_roomId)) { // room is in a another server
-                    // TODO : if room in a another server
+                } else if (ServerState.globalRooms.containsKey(new_roomId)) { // room is in a another server
+
+                    // get other server info
+                    String other_server_id = ServerState.globalRooms.get(new_roomId);
+                    ServerConfig serverConfig = ServerState.servers.get(other_server_id);
+                    String host = serverConfig.getServer_address();
+                    int port = serverConfig.getClients_port();
+
                     // first replies to the client with a route message redirecting it to another server.
                     // {"type" : "route", "roomid" : "jokes", "host" : "122.134.2.4", "port" : "4445"}
-                    ServerConfig serverConfig = Main.servers.get("s2");
-                    String host = serverConfig.getServer_address();
-                    String port = String.valueOf(serverConfig.getClients_port());
+                    RouteClientResponse routeClientResponse = new RouteClientResponse(new_roomId, host, port);
+                    RouteClientService.getInstance().handleJoinRoomResponse(routeClientResponse, client);
 
+                    // remove from former room
+                    ServerState.localRooms.get(former_roomId).removeMember(client);
                     // server removes the client from its list
                     ServerState.localClients.remove(client.getIdentity());
 
@@ -67,15 +73,12 @@ public class JoinRoomClientService extends AbstractClientService<JoinRoomClientR
                     broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get(former_roomId));
 
 
-                    // the client closes its connection with server s1.
-
                 } else { // room does not exist -> join is not successful
                     // {"type" : "roomchange", "identity" : "Maria", "former" : "jokes", "roomid" : "jokes"}
                     RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), former_roomId, former_roomId);
                     sendResponse(roomChangeClientResponse, client);
                 }
-            }
-            else { // this client is a room owner
+            } else { // this client is a room owner
                 RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), former_roomId, former_roomId);
                 sendResponse(roomChangeClientResponse, client);
             }
