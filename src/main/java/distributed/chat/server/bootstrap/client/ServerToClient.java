@@ -34,6 +34,7 @@ public class ServerToClient {
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ServerToClientInitializer());
             ChannelFuture f = b.bind().sync();
+            System.out.println("Listening on client port " + port);
             f.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully().sync();

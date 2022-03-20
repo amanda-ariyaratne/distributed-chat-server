@@ -35,7 +35,7 @@ public class Main {
             System.out.println("Command line arguments are incorrect");
             return;
         }
-
+        System.out.println("Server id " + serverId);
         Map<String, ServerConfig> servers;
 
         try {
@@ -45,7 +45,7 @@ public class Main {
             System.out.println("IO Exception occurred");
             return;
         }
-
+        System.out.println("This is " + serverId);
         int portServerToClient = servers.get(serverId).getClients_port();
         int portServerToServer = servers.get(serverId).getCoordination_port();
 
@@ -66,13 +66,16 @@ public class Main {
                 new Thread(() -> {
                     try {
                         ServerAsClient serverAsClient = new ServerAsClient(
+                                configs.getServer_id(),
                                 configs.getServer_address(),
                                 configs.getCoordination_port()
                         );
+                        System.out.println("Trying to connect to " + configs.getServer_id() + " on port " + configs.getCoordination_port());
                         serverAsClient.start();
-                        ServerState.serverChannels.put(configs.getServer_id(), serverAsClient.getChannel());
+
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println("Connection failed for " + configs.getServer_id());
+                        // e.printStackTrace();
                     }
                 }).start();
             }

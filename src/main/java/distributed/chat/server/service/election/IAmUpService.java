@@ -49,11 +49,12 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
             new Thread(() -> {
                 try {
                     ServerAsClient serverAsClient = new ServerAsClient(
+                            configs.getServer_id(),
                             configs.getServer_address(),
                             configs.getCoordination_port()
                     );
                     serverAsClient.start();
-                    ServerState.serverChannels.put(configs.getServer_id(), serverAsClient.getChannel());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
