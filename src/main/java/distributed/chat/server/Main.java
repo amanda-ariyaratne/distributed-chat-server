@@ -4,21 +4,17 @@ import distributed.chat.server.bootstrap.server.ServerAsClient;
 import distributed.chat.server.bootstrap.client.ServerToClient;
 import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
+import distributed.chat.server.service.election.IAmUpService;
 import distributed.chat.server.states.ServerState;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-
-    public static Map<String, ServerConfig> servers;
 
     public static void main(String[] args) throws Exception {
 
@@ -40,7 +36,8 @@ public class Main {
             return;
         }
 
-        servers = new HashMap<>();
+        System.out.println("Server id " + serverId);
+        Map<String, ServerConfig> servers;
 
         try {
             servers = readServerConfgis(configFile);
@@ -49,7 +46,7 @@ public class Main {
             System.out.println("IO Exception occurred");
             return;
         }
-
+        System.out.println("This is " + serverId);
         int portServerToClient = servers.get(serverId).getClients_port();
         int portServerToServer = servers.get(serverId).getCoordination_port();
 
@@ -63,6 +60,30 @@ public class Main {
         });
         coordinatorThread.start();
 
+        for (Map.Entry<String, ServerConfig> server : servers.entrySet()) {
+            ServerConfig configs = server.getValue();
+
+            if (serverId != configs.getServer_id()) {
+                new Thread(() -> {
+                    try {
+                        ServerAsClient serverAsClient = new ServerAsClient(
+                                configs.getServer_id(),
+                                configs.getServer_address(),
+                                configs.getCoordination_port()
+                        );
+                        System.out.println("Trying to connect to " + configs.getServer_id() + " on port " + configs.getCoordination_port());
+                        serverAsClient.start();
+
+                    } catch (Exception e) {
+                        System.out.println("Connection failed for " + configs.getServer_id());
+                        // e.printStackTrace();
+                    }
+                }).start();
+            }
+        }
+
+        // TODO : Set Main Hall
+
         Thread clientThread = new Thread(() -> {
             try {
                 new ServerToClient(portServerToClient, finalServerId).start();
@@ -72,24 +93,8 @@ public class Main {
         });
         clientThread.start();
 
-        for (Map.Entry<String, ServerConfig> server : servers.entrySet()) {
-            ServerConfig configs = server.getValue();
-
-            if (portServerToServer != configs.getCoordination_port()) {
-                new Thread(() -> {
-                    try {
-                        ServerAsClient serverAsClient = new ServerAsClient(
-                                configs.getServer_address(),
-                                configs.getCoordination_port()
-                        );
-                        serverAsClient.start();
-                        ServerState.serverChannels.put(configs.getServer_id(), serverAsClient.getChannel());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }).start();
-            }
-        }
+        IAmUpService iAmUpService = IAmUpService.getInstance();
+        iAmUpService.broadcastIAmUpMessage();
 
     }
 

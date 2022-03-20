@@ -31,6 +31,7 @@ public class ServerToServer {
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ServerToServerInitializer());
             ChannelFuture f = b.bind().sync();
+            System.out.println("Listening on management port " + port);
             f.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully().sync();

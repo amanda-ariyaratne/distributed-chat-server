@@ -1,14 +1,22 @@
 package distributed.chat.server.model.message.election;
 
-import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
-public class NominationMessage extends AbstractMessage {
+public class NominationMessage extends FastBullyMessage {
 
     private String serverId;
 
     public NominationMessage(String serverId) {
         super(MessageType.NOMINATION);
         this.serverId = serverId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'nomination'" +
+                "serverId:'" + serverId + '\'' +
+                '}';
     }
 }
