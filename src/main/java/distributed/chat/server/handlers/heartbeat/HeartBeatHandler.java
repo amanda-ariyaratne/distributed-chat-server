@@ -29,7 +29,8 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                     }
                 }
             } else if (idleStateEvent.state() == IdleState.WRITER_IDLE) {
-                ctx.writeAndFlush(new HeartBeatMessage().toString());
+                HeartBeatMessage message = new HeartBeatMessage();
+                ctx.writeAndFlush(message.toString());
             }
         }
     }

@@ -5,7 +5,6 @@ import distributed.chat.server.bootstrap.client.ServerToClient;
 import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.service.election.IAmUpService;
-import distributed.chat.server.states.ServerState;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,15 +15,15 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         if (args.length != 4) {
             System.out.println("Command line arguments are missing");
             return;
         }
 
-        String serverId = "";
-        String configFile = "";
+        String serverId;
+        String configFile;
         if (args[0].equals("-i") || args[2].equals("-c")) {
             serverId = args[1];
             configFile = args[3];
@@ -62,7 +61,7 @@ public class Main {
         for (Map.Entry<String, ServerConfig> server : servers.entrySet()) {
             ServerConfig configs = server.getValue();
 
-            if (serverId != configs.getServer_id()) {
+            if (!serverId.equals(configs.getServer_id())) {
                 new Thread(() -> {
                     try {
                         ServerAsClient serverAsClient = new ServerAsClient(
@@ -75,7 +74,6 @@ public class Main {
 
                     } catch (Exception e) {
                         System.out.println("Connection failed for " + configs.getServer_id());
-                        // e.printStackTrace();
                     }
                 }).start();
             }
@@ -99,20 +97,18 @@ public class Main {
 
     private static Map<String, ServerConfig> readServerConfgis(String configFile) throws IOException {
         Map<String, ServerConfig> servers = new HashMap<>();
-        BufferedReader reader = new BufferedReader(new FileReader(configFile));
-        try {
+        try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
             String line;
-            String ls = System.getProperty("line.separator");
 
-            while((line = reader.readLine()) != null) {
-                Scanner s = new Scanner(line).useDelimiter("\\t");
-                String serverId = s.next();
-                ServerConfig server = new ServerConfig(serverId, s.next(), s.nextInt(), s.nextInt());
-                servers.put(serverId, server);
+            while ((line = reader.readLine()) != null) {
+                try (Scanner s = new Scanner(line)) {
+                    s.useDelimiter("\\t");
+                    String serverId = s.next();
+                    ServerConfig server = new ServerConfig(serverId, s.next(), s.nextInt(), s.nextInt());
+                    servers.put(serverId, server);
+                }
             }
             return servers;
-        } finally {
-            reader.close();
         }
     }
 }

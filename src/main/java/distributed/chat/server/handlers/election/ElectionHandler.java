@@ -13,6 +13,7 @@ public class ElectionHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof ElectionMessage){
             ElectionMessage message = (ElectionMessage) msg;
+            System.out.println("Received Election Message " + message);
             ElectionService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

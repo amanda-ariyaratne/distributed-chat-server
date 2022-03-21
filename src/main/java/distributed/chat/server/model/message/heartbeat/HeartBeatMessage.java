@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.heartbeat;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
@@ -11,6 +12,6 @@ public class HeartBeatMessage extends AbstractMessage {
 
     @Override
     public String toString() {
-        return "{type: 'heartbeat'}";
+        return "{type: '" + RequestConstants.HEARTBEAT + "'}";
     }
 }

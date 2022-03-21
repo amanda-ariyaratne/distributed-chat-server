@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.election;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 public class ViewMessage extends FastBullyMessage {
@@ -24,8 +25,8 @@ public class ViewMessage extends FastBullyMessage {
     @Override
     public String toString() {
         return "{" +
-                "type:'view'" +
-                "serverId:'" + serverId + '\'' +
+                "type:'" + RequestConstants.VIEW + "', " +
+                "serverId:'" + serverId + ", " +
                 "currentLeaderId:'" + currentLeaderId + '\'' +
                 '}';
     }

@@ -2,10 +2,10 @@ package distributed.chat.server;
 
 public final class RequestConstants {
 
-    public final static String NEW_IDENTITY = "newidentity";
+    public static final String NEW_IDENTITY = "newidentity";
 
-    public final static String RESERVE_IDENTITY = "reserveidentity";
-    public final static String RESERVE_IDENTITY_RESPONSE = "reserveidentityresponse";
+    public static final String RESERVE_IDENTITY = "reserveidentity";
+    public static final String RESERVE_IDENTITY_RESPONSE = "reserveidentityresponse";
 
     public static final String RESERVE_IDENTITY_CONFIRM = "reserveidentityconfirm";
     public static final String RESERVE_IDENTITY_CONFIRM_RESPONSE = "reserveidentityconfirmresponse";
@@ -13,15 +13,23 @@ public final class RequestConstants {
     public static final String ADD_IDENTITY = "addidentity";
     public static final String ADD_IDENTITY_RESPONSE = "addidentityresponse";
 
-    public final static String LIST = "list";
-    public final static String WHO = "who";
-    public final static String CREATE_ROOM = "createroom";
-    public final static String JOIN_ROOM = "joinroom";
-    public final static String MOVE_JOIN = "movejoin";
-    public final static String DELETE_ROOM = "deleteroom";
-    public final static String MESSAGE = "message";
-    public final static String QUIT = "quit";
+    public static final String LIST = "list";
+    public static final String WHO = "who";
+    public static final String CREATE_ROOM = "createroom";
+    public static final String JOIN_ROOM = "joinroom";
+    public static final String MOVE_JOIN = "movejoin";
+    public static final String DELETE_ROOM = "deleteroom";
+    public static final String MESSAGE = "message";
+    public static final String QUIT = "quit";
 
+    public static final String HEARTBEAT = "heartbeat";
+
+    public static final String I_AM_UP = "iamup";
+    public static final String ANSWER = "answer";
+    public static final String COORDINATOR = "coordinator";
+    public static final String ELECTION = "election";
+    public static final String NOMINATION = "nomination";
+    public static final String VIEW = "view";
 
     private RequestConstants() {
     }

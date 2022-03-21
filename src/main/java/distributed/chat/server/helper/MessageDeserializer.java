@@ -3,9 +3,10 @@ package distributed.chat.server.helper;
 import com.google.gson.*;
 import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.AbstractMessage;
+import distributed.chat.server.model.message.election.IAmUpMessage;
+import distributed.chat.server.model.message.heartbeat.HeartBeatMessage;
 import distributed.chat.server.model.message.request.client.*;
 import distributed.chat.server.model.message.request.server.*;
-import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
 import distributed.chat.server.model.message.response.server.AddIdentityServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveIdentityConfirmServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
@@ -85,6 +86,12 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 break;
             case RequestConstants.QUIT:
                 request = new QuitClientRequest();
+                break;
+            case RequestConstants.HEARTBEAT:
+                request = new HeartBeatMessage();
+                break;
+            case RequestConstants.I_AM_UP:
+                request = new IAmUpMessage(requestJson.get("serverId").getAsString());
                 break;
 
             default:

@@ -17,7 +17,7 @@ public class AddRoomInboundHandler extends ChannelInboundHandlerAdapter {
         if (request instanceof AddRoomServerRequest) {
             // request object
             AddRoomServerRequest addRoomServerRequest = (AddRoomServerRequest) msg;
-
+            System.out.println("Received Add Room Server Request " + addRoomServerRequest);
             // call service -> AddRoomServerService
             AddRoomServerService addRoomServerService = AddRoomServerService.getInstance();
             addRoomServerService.handleRequest(addRoomServerRequest,

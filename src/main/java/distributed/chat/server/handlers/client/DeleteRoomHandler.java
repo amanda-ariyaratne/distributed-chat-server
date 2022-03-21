@@ -3,7 +3,6 @@ package distributed.chat.server.handlers.client;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.request.client.AbstractClientRequest;
 import distributed.chat.server.model.message.request.client.DeleteRoomClientRequest;
-import distributed.chat.server.model.message.request.client.JoinRoomClientRequest;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
