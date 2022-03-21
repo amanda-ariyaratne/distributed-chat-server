@@ -85,7 +85,8 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
                 roomChangeClientResponse = new RoomChangeClientResponse(member.getIdentity(), roomId, "MainHall-" + ServerState.localId);
             }
 
-            JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get(roomId));
+            // broadcast to main-hall
+            JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get("MainHall-" + ServerState.localId));
         }
     }
 }

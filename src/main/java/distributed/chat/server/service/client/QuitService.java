@@ -15,10 +15,11 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
 
     private static QuitService instance;
 
-    private QuitService(){}
+    private QuitService() {
+    }
 
-    public static synchronized QuitService  getInstance(){
-        if (instance == null){
+    public static synchronized QuitService getInstance() {
+        if (instance == null) {
             instance = new QuitService();
         }
         return instance;
@@ -33,22 +34,23 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
         Client client = request.getSender();
         Room room = client.getRoom();
 
-        if (client.isAlready_room_owner()){ // already a room owner
+        if (client.isAlready_room_owner()) { // already a room owner
             // delete room
             DeleteRoomClientRequest deleteRoomClientRequest = new DeleteRoomClientRequest(room.getRoomId());
             deleteRoomClientRequest.setSender(client);
             DeleteRoomService.getInstance().handleDelete(room.getRoomId(), client, "");
-
-            // remove from client list
-            ServerState.localClients.remove(client.getIdentity());
-            ServerState.globalClients.remove(client.getIdentity());
-
-            // server closes the connection
-            ServerState.activeClients.remove(client.getCtx().channel().id());
-
-            // broadcast to other servers
-            QuitServerRequest quitServerRequest = new QuitServerRequest(client.getIdentity());
-            QuitServerService.getInstance().broadcastRequest(quitServerRequest);
         }
+
+        // remove from client list
+        ServerState.localClients.remove(client.getIdentity());
+        ServerState.globalClients.remove(client.getIdentity());
+
+        // server closes the connection
+        ServerState.activeClients.remove(client.getCtx().channel().id());
+
+        // broadcast to other servers
+        QuitServerRequest quitServerRequest = new QuitServerRequest(client.getIdentity());
+        QuitServerService.getInstance().broadcastRequest(quitServerRequest);
+
     }
 }
