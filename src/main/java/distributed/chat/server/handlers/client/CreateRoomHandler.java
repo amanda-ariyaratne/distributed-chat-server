@@ -13,23 +13,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
 
-//    @Override
-//    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-//        super.channelActive(ctx);
-//        // get activeClient
-//        // check if the client is already has a room
-//        //
-//        Client client = new Client(ctx);
-//        Room room = new Room()
-//        ServerState.activeRooms.put(ctx.channel().id(), client);
-//    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        super.channelInactive(ctx);
-        // client inactive -> delete room -> remove other clients and add them to mainhall
-    }
-
     /***
      * {"type" : "createroom", "roomid" : "jokes"}
      */

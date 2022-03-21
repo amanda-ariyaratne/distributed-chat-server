@@ -6,6 +6,7 @@ import distributed.chat.server.model.message.request.client.CreateRoomClientRequ
 import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
 import distributed.chat.server.model.message.request.server.ReserveRoomServerRequest;
 import distributed.chat.server.model.message.response.client.CreateRoomClientResponse;
+import distributed.chat.server.model.message.response.client.RoomChangeClientResponse;
 import distributed.chat.server.service.server.AddRoomServerService;
 import distributed.chat.server.service.server.ReserveRoomServerService;
 import distributed.chat.server.states.ServerState;
@@ -94,10 +95,10 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
         ServerState.reservedRooms.remove(roomId);
 
         if (approved) {
-            // TODO check
-            // create new room with new roomId and add to localRooms hashmap
+            // create new room with new roomId and add to localRooms hashmap and global rooms
             Room room = new Room(roomId, client);
             ServerState.localRooms.put(roomId, room);
+            ServerState.globalRooms.put(roomId, ServerState.localId);
 
             // broadcast to other servers
             AddRoomServerService addRoomServerService = AddRoomServerService.getInstance();
@@ -107,15 +108,20 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
 
             // remove client from main hall add to new room
             client.setRoom(ServerState.localRooms.get(roomId));
-            //TODO: move the client from mainhall to new room
+            ServerState.localRooms.get("MainHall-" + ServerState.localId).removeMember(client);
+            ServerState.localRooms.get(roomId).addMember(client);
+
+            // broadcast room change to room members
+            RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(
+                    client.getIdentity(),
+                    "MainHall-" + ServerState.localId,
+                    roomId);
+            JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, room);
         }
 
         // send response to client
         // {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
         CreateRoomClientResponse createRoomClientResponse = new CreateRoomClientResponse(roomId, approved);
         sendResponse(createRoomClientResponse, client);
-
-        // TODO : broadcast room change
-
     }
 }
