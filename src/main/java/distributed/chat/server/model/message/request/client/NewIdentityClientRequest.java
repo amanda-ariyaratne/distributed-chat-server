@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.request.client;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.MessageType;
 
@@ -28,7 +29,7 @@ public class NewIdentityClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.NEW_IDENTITY + '\'' +
+                "type:'" + RequestConstants.NEW_IDENTITY + '\'' +
                 ", identity:'" + identity + '\'' +
                 ", sender:" + sender +
                 '}';

@@ -13,6 +13,7 @@ public class AnswerHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof AnswerMessage){
             AnswerMessage message = (AnswerMessage) msg;
+            System.out.println("Received Answer Message " + message);
             AnswerService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.election;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 public class AnswerMessage extends FastBullyMessage {
@@ -18,7 +19,7 @@ public class AnswerMessage extends FastBullyMessage {
     @Override
     public String toString() {
         return "{" +
-                "type:'asnwer'" +
+                "type:'" + RequestConstants.ANSWER + "', " +
                 "serverId:'" + serverId + '\'' +
                 '}';
     }

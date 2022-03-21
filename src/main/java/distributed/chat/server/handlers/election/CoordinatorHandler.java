@@ -13,6 +13,7 @@ public class CoordinatorHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof CoordinatorMessage){
             CoordinatorMessage message = (CoordinatorMessage) msg;
+            System.out.println("Received Coordinator Message " + message);
             CoordinatorService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

@@ -24,6 +24,7 @@ public class ReserveRoomHandler extends ChannelInboundHandlerAdapter {
 
             // request object
             ReserveRoomServerRequest reserveRoomServerRequest = (ReserveRoomServerRequest) msg;
+            System.out.println("Received Reserve Room Server Request " + reserveRoomServerRequest);
 
             // check validity -> call service
             ReserveRoomServerService reserveRoomServerService = ReserveRoomServerService.getInstance();

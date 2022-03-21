@@ -13,10 +13,9 @@ import io.netty.util.CharsetUtil;
 public class ServerToClientInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
-    protected void initChannel(SocketChannel channel) throws Exception {
+    protected void initChannel(SocketChannel channel) {
         ChannelPipeline pipeline = channel.pipeline();
 
-        //Custom handler
         pipeline.addLast("json_decode", new JsonObjectDecoder());
         pipeline.addLast("string_encode", new StringEncoder(CharsetUtil.UTF_8));
         pipeline.addLast("pojo_decode", new MessageDecoder());

@@ -34,9 +34,10 @@ public class ServerToClient {
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ServerToClientInitializer());
             ChannelFuture f = b.bind().sync();
-            System.out.println("Listening on client port " + port);
+            System.out.println("Listening on service port " + port);
             f.channel().closeFuture().sync();
         } finally {
+            System.out.println("Shutting down");
             bossGroup.shutdownGracefully().sync();
             workerGroup.shutdownGracefully().sync();
         }

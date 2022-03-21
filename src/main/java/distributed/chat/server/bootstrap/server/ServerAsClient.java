@@ -35,6 +35,7 @@ public class ServerAsClient {
             this.channel = f.channel();
             ServerState.serverChannels.put(serverId, this.channel);
             f.channel().closeFuture().sync();
+            System.out.println("Connected to " + serverId);
         } finally {
             group.shutdownGracefully().sync();
         }

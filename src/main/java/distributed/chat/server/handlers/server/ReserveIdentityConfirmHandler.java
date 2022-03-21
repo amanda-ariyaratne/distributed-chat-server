@@ -15,6 +15,7 @@ public class ReserveIdentityConfirmHandler extends ChannelInboundHandlerAdapter 
 
         if (abstractServerResponse instanceof ReserveIdentityServerResponse){
             ReserveIdentityServerResponse response = (ReserveIdentityServerResponse) abstractServerResponse;
+            System.out.println("Received Reserve Identity Server response " + response);
 
             ReserveIdentityConfirmServerService.getInstance().processRequest(new ReserveIdentityConfirmServerRequest(
                     response.isReserved(),

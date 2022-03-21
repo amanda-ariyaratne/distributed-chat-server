@@ -14,6 +14,7 @@ public class ViewHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof ViewMessage){
             ViewMessage message = (ViewMessage) msg;
+            System.out.println("Received View Message " + message);
             ViewService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

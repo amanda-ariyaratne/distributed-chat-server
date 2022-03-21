@@ -1,6 +1,5 @@
 package distributed.chat.server.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,11 +11,8 @@ public class Room {
     public Room(String roomId, Client owner) {
         this.roomId = roomId;
         this.owner = owner;
-        this.members = new HashSet<>(){
-            {
-                add(owner);
-            }
-        };
+        this.members = new HashSet<>();
+        this.members.add(owner);
     }
 
     public String getRoomId() {

@@ -24,11 +24,13 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
             Client client = ServerState.activeClients.get(ctx.channel().id());
             // create message with new room id
             CreateRoomClientRequest createRoomClientRequest = (CreateRoomClientRequest) msg;
+            System.out.println("Received Create Room Client Request " + createRoomClientRequest);
             // set sender
             createRoomClientRequest.setSender(client);
             // add to reserved rooms
             String roomId = ((CreateRoomClientRequest) msg).getRoomId();
             ServerState.reservedRooms.put(roomId, client);
+            System.out.println("Reserved " + roomId);
             // validation and create room -> call service class
             CreateRoomService createRoomService = CreateRoomService.getInstance();
             createRoomService.processRequest(createRoomClientRequest);

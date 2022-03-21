@@ -34,13 +34,10 @@ public class ServerToServer {
             System.out.println("Listening on management port " + port);
             f.channel().closeFuture().sync();
         } finally {
+            System.out.println("Shutting down");
             bossGroup.shutdownGracefully().sync();
             workerGroup.shutdownGracefully().sync();
         }
-    }
-
-    public int getPort() {
-        return port;
     }
 
     public String getId() {

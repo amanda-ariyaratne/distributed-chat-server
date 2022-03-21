@@ -13,6 +13,7 @@ public class NominationHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof NominationMessage){
             NominationMessage message = (NominationMessage) msg;
+            System.out.println("Received Nomination Message " + message);
             NominationService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.response.client;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 public class CreateRoomClientResponse extends AbstractClientResponse {
@@ -25,7 +26,7 @@ public class CreateRoomClientResponse extends AbstractClientResponse {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.CREATE_ROOM + '\'' +
+                "type:'" + RequestConstants.CREATE_ROOM + '\'' +
                 ", roomid:'" + roomId + '\'' +
                 ", approved:" + approved +
                 '}';

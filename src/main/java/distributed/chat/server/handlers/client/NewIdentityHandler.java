@@ -31,9 +31,10 @@ public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
 
             NewIdentityClientRequest newIdentityClientRequest = (NewIdentityClientRequest) msg;
             newIdentityClientRequest.setSender(client);
+            System.out.println("Received New Identity Client Request " + msg);
 
             ServerState.reservedClients.put(newIdentityClientRequest.getIdentity(), client);
-
+            System.out.println("Reserved new identity " + newIdentityClientRequest.getIdentity());
             NewIdentityService newIdentityService = NewIdentityService.getInstance();
             newIdentityService.processRequest(newIdentityClientRequest);
         } else {

@@ -14,6 +14,7 @@ public class IAmUpHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof IAmUpMessage){
             IAmUpMessage message = (IAmUpMessage) msg;
+            System.out.println("Received IAmUp Message " + message);
             IAmUpService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);
