@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.response.client;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 import java.util.ArrayList;
@@ -23,4 +24,19 @@ public class RoomListClientResponse extends AbstractClientResponse {
         this.rooms.add(roomId);
     }
 
+    @Override
+    public String toString() {
+        String roomsStr = "";
+        for (int i = 0; i < rooms.size(); i++) {
+            if (i == rooms.size() - 1) {
+                roomsStr.concat("'" + rooms.get(i) + "'");
+            } else {
+                roomsStr.concat("'" + rooms.get(i) + "',");
+            }
+        }
+        return "{" +
+                "type:'" + RequestConstants.ROOM_LIST + '\'' +
+                ", rooms:[" + roomsStr + "]" +
+                '}';
+    }
 }

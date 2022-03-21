@@ -22,6 +22,16 @@ public final class RequestConstants {
     public static final String MESSAGE = "message";
     public static final String QUIT = "quit";
 
+    public static final String ADD_ROOM = "addroom";
+    public static final String DELETE_IDENTITY = "deleteidentity";
+    public static final String RESERVE_ROOM_CONFIRM = "reserveroomconfirm";
+    public static final String RESERVE_ROOM = "reserveroomid";
+    public static final String ROOM_CHANGE = "roomchange";
+    public static final String ROOM_CONTENTS = "roomcontents";
+    public static final String ROOM_LIST = "roomlist";
+    public static final String ROUTE = "route";
+    public static final String SERVER_CHANGE = "serverchange";
+
     public static final String HEARTBEAT = "heartbeat";
 
     public static final String I_AM_UP = "iamup";
@@ -30,6 +40,7 @@ public final class RequestConstants {
     public static final String ELECTION = "election";
     public static final String NOMINATION = "nomination";
     public static final String VIEW = "view";
+
 
     private RequestConstants() {
     }

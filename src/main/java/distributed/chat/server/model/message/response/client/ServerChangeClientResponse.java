@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.response.client;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 public class ServerChangeClientResponse extends AbstractClientResponse {
@@ -13,4 +14,12 @@ public class ServerChangeClientResponse extends AbstractClientResponse {
         this.serverId = serverId;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + RequestConstants.SERVER_CHANGE + '\'' +
+                ", approved:'" + approved + '\'' +
+                ", serverId:'" + serverId + '\'' +
+                '}';
+    }
 }

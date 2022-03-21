@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.response.client;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 public class RouteClientResponse extends AbstractClientResponse {
@@ -15,4 +16,13 @@ public class RouteClientResponse extends AbstractClientResponse {
         this.port = port;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "type:'" + RequestConstants.ROUTE + '\'' +
+                ", roomId:'" + roomId + '\'' +
+                ", host:'" + host + '\'' +
+                ", port:'" + port + '\'' +
+                '}';
+    }
 }

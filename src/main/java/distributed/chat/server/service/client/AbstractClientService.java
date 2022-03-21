@@ -5,11 +5,8 @@ import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
 import distributed.chat.server.model.message.request.client.AbstractClientRequest;
 import distributed.chat.server.model.message.response.client.AbstractClientResponse;
-import distributed.chat.server.states.ServerState;
-import io.netty.channel.*;
-
-import java.util.Map;
-import java.util.Set;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 
 public abstract class AbstractClientService<S extends AbstractClientRequest, T extends AbstractClientResponse> {
 
@@ -40,10 +37,7 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
     }
 
     public void sendResponse(T response, Client client) {
-        Gson gson = new Gson();
-        String responseJsonStr = gson.toJson(response);
-
-        final ChannelFuture f = client.getCtx().writeAndFlush(responseJsonStr + "\n");
+        final ChannelFuture f = client.getCtx().writeAndFlush(response + "\n");
         f.addListener((ChannelFutureListener) future -> {
             assert f == future;
         });

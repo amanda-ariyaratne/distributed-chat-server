@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.request.server;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 public class AddIdentityServerRequest extends AbstractServerRequest {
@@ -18,7 +19,7 @@ public class AddIdentityServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.ADD_IDENTITY + '\'' +
+                "type:'" + RequestConstants.ADD_IDENTITY + '\'' +
                 ", identity:'" + identity + '\'' +
                 '}';
     }

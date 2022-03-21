@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.request.server;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
@@ -25,7 +26,7 @@ public class DeleteRoomServerRequest extends AbstractMessage {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.DELETE_ROOM + '\'' +
+                "type:'" + RequestConstants.DELETE_ROOM + '\'' +
                 ", serverId:'" + serverId + '\'' +
                 ", roomId:'" + roomId + '\'' +
                 '}';
