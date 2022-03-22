@@ -31,21 +31,6 @@ public class ServerToClientInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("list",new ListHandler());
         pipeline.addLast("who",new WhoHandler());
         pipeline.addLast("message", new MessageHandler());
-
-        pipeline.addLast(new IdleStateHandler(
-                ServerState.heartBeatReadTimeout,
-                ServerState.heartBeatWriteTimeout,
-                0));
-        pipeline.addLast("heartbeat", new HeartBeatHandler());
-        pipeline.addLast(
-                new AnswerHandler(),
-                new CoordinatorHandler(),
-                new ElectionHandler(),
-                new IAmUpHandler(),
-                new NominationHandler(),
-                new ViewHandler()
-        );
-
         pipeline.addLast("exception", new ExceptionHandler());
     }
 }
