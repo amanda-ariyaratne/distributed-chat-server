@@ -46,7 +46,7 @@ public class SyncGlobalListsServerRequest extends AbstractServerRequest {
         return "{" +
                 "\"type\" : \"" + RequestConstants.SYNC_GLOBAL_LISTS + "\"" +
                 ", \"clients\" : " + clientStr +
-                ", \"rooms\" : " + roomStr + 
+                ", \"rooms\" : " + roomStr +
                 "}";
     }
 }

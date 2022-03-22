@@ -24,6 +24,8 @@ public class ServerToServerInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("pojo_decode", new MessageDecoder());
         pipeline.addLast("reserve_identity", new ReserveIdentityHandler());
         pipeline.addLast("reserve_room", new ReserveRoomHandler());
+        pipeline.addLast("delete_room", new DeleteRoomServerHandler());
+        pipeline.addLast("quit", new QuitRoomServerHandler());
         pipeline.addLast(new IdleStateHandler(
                 ServerState.heartBeatReadTimeout,
                 ServerState.heartBeatWriteTimeout,
@@ -37,8 +39,6 @@ public class ServerToServerInitializer extends ChannelInitializer<SocketChannel>
                 new NominationHandler(),
                 new ViewHandler()
         );
-        pipeline.addLast("delete_room", new DeleteRoomServerHandler());
-        pipeline.addLast("quit", new QuitRoomServerHandler());
         pipeline.addLast("exception", new ExceptionHandler());
     }
 }
