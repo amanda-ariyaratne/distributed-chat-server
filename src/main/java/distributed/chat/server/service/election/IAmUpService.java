@@ -64,10 +64,10 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
             }).start();
         }
 
-        if (ServerState.localId==ServerState.leaderId){
+        if (ServerState.localId == ServerState.leaderId){
             System.out.println("Sending Synced List");
             SyncGlobalListsServerRequest syncLists = new SyncGlobalListsServerRequest(
-                    (String[]) ServerState.globalClients.toArray(),
+                    ServerState.globalClients.toArray(new String[ServerState.globalClients.size()]),
                     ServerState.globalRooms
             );
             channel.writeAndFlush(syncLists.toString());

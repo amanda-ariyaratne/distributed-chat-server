@@ -43,7 +43,7 @@ public class Main {
             servers = readServerConfgis(configFile);
             ServerState.serverConfig = servers.get(serverId);
             ServerState.servers = servers;
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("IO Exception occurred");
