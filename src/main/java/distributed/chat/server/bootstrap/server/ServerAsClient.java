@@ -34,11 +34,10 @@ public class ServerAsClient {
                     .handler(new ServerAsClientInitializer());
             ChannelFuture f = b.connect().sync();
             this.channel = f.channel();
-            ServerState.serverChannels.put(serverId, this.channel);
-            System.out.println("Connected to " + serverId);
 
-            IAmUpService iAmUpService = IAmUpService.getInstance();
-            iAmUpService.broadcastIAmUpMessage();
+            ServerState.serverChannels.put(serverId, this.channel);
+            ServerState.serverAsClientThreadCount.getAndIncrement();
+            System.out.println("Connected to " + serverId);
 
             f.channel().closeFuture().sync();
         } finally {

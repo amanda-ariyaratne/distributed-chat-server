@@ -1,5 +1,6 @@
 package distributed.chat.server.handlers.server;
 
+import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.request.server.ReserveRoomServerRequest;
 import distributed.chat.server.service.server.ReserveRoomServerService;
@@ -19,7 +20,7 @@ public class ReserveRoomHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
-        AbstractServerRequest request = (AbstractServerRequest) msg;
+        AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof ReserveRoomServerRequest) {
 
             // request object

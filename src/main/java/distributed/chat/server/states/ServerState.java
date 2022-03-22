@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerState {
 
@@ -24,6 +25,8 @@ public class ServerState {
     public static Integer leaderPort;
     public static String localId;
     public static Integer localPort;
+
+    public static AtomicInteger serverAsClientThreadCount = new AtomicInteger(0);
 
     public static Map<ChannelId, Client> activeClients = new ConcurrentHashMap<>();
 

@@ -77,8 +77,19 @@ public class Main {
 
                     } catch (Exception e) {
                         System.out.println("Connection failed for " + configs.getServer_id());
+                    } finally {
+                        ServerState.serverAsClientThreadCount.getAndIncrement();
                     }
                 }).start();
+            }
+        }
+
+        while (true) {
+            if (ServerState.serverAsClientThreadCount.get() == servers.size()-1) {
+                System.out.println("I am up on MAin");
+                IAmUpService iAmUpService = IAmUpService.getInstance();
+                iAmUpService.broadcastIAmUpMessage();
+                break;
             }
         }
 
