@@ -11,12 +11,17 @@ import distributed.chat.server.service.server.AddRoomServerService;
 import distributed.chat.server.service.server.ReserveRoomServerService;
 import distributed.chat.server.states.ServerState;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 /***
  * Service Class for handling client request to create new rooms
  */
 public class CreateRoomService extends AbstractClientService<CreateRoomClientRequest, CreateRoomClientResponse> {
 
     private static CreateRoomService instance;
+    private Set<String> pendingIdentityRequests = new HashSet<>();
 
     public static synchronized CreateRoomService getInstance() {
         if (instance == null) {
@@ -35,13 +40,20 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
         System.out.println("Create room : process request");
         Client client = request.getSender();
         String roomId = request.getRoomId();
+        ArrayList<String> pendingRoomIdentityRequest = new ArrayList();
 
         boolean room_approved = false;
         synchronized (this) {
             if (!request.getSender().isAlready_room_owner()) { // check if client already a room owner
                 room_approved = approveIdentity(roomId, request);
             }
-            if (!room_approved && !ServerState.reservedRooms.containsKey(roomId)) {
+
+            if (room_approved) {
+                System.out.println("send response - accepted");
+                approveIdentityProcessed(true, roomId);
+            }
+            else if (!pendingIdentityRequests.contains(roomId)) {
+                System.out.println("send response - not accepted");
                 sendResponse(new CreateRoomClientResponse(roomId, false), client);
             }
         }
@@ -78,14 +90,20 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
             System.out.println("Create room : globally redundant room id");
             return false;
         } else { // check room-id with leader's list -> send request to leader
-            System.out.println("Create room : check room id with leaders list");
-            // request message object - {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
-            ReserveRoomServerRequest reserveRoomServerRequest = new ReserveRoomServerRequest(ServerState.serverConfig.getServer_id(), roomId);
-            // process request and get response
-            ReserveRoomServerService.getInstance().processRequest(
-                    reserveRoomServerRequest,
-                    ServerState.serverChannels.get(ServerState.leaderId)
-            );
+
+            if (ServerState.localId == ServerState.leaderId) {
+                System.out.println("Create room : check room id with leaders list");
+                // request message object - {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
+                ReserveRoomServerRequest reserveRoomServerRequest = new ReserveRoomServerRequest(ServerState.serverConfig.getServer_id(), roomId);
+                // process request and get response
+                ReserveRoomServerService.getInstance().processRequest(
+                        reserveRoomServerRequest,
+                        ServerState.serverChannels.get(ServerState.leaderId)
+                );
+            } else {
+                pendingIdentityRequests.add(roomId);
+            }
+
             return true;
         }
     }

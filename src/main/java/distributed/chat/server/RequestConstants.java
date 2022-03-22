@@ -41,6 +41,8 @@ public final class RequestConstants {
     public static final String NOMINATION                           = "nomination";
     public static final String VIEW                                 = "view";
 
+    public static final String SYNC_GLOBAL_LISTS                    = "syncgloballists";
+
 
     private RequestConstants() {
     }

@@ -4,6 +4,7 @@ import distributed.chat.server.bootstrap.server.ServerAsClient;
 import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.model.message.election.IAmUpMessage;
 import distributed.chat.server.model.message.election.ViewMessage;
+import distributed.chat.server.model.message.request.server.SyncGlobalListsServerRequest;
 import distributed.chat.server.states.ElectionStatus;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
@@ -61,6 +62,15 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
                     e.printStackTrace();
                 }
             }).start();
+        }
+
+        if (ServerState.localId==ServerState.leaderId){
+            System.out.println("Sending Synced List");
+            SyncGlobalListsServerRequest syncLists = new SyncGlobalListsServerRequest(
+                    (String[]) ServerState.globalClients.toArray(),
+                    ServerState.globalRooms
+            );
+            channel.writeAndFlush(syncLists.toString());
         }
 
         System.out.println("Sending View message");
