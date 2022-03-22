@@ -36,9 +36,9 @@ public class RoomContentsClientResponse extends AbstractClientResponse {
         String identitiesStr = "";
         for (int i = 0; i < identities.size(); i++) {
             if (i == identities.size() - 1) {
-                identitiesStr.concat("'" + identities.get(i) + "'");
+                identitiesStr = identitiesStr + "\"" + identities.get(i) + "\"";
             } else {
-                identitiesStr.concat("'" + identities.get(i) + "',");
+                identitiesStr = identitiesStr + "\"" + identities.get(i) + "\",";
             }
         }
         return "{" +

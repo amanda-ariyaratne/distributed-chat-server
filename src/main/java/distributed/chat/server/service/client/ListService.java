@@ -1,10 +1,8 @@
 package distributed.chat.server.service.client;
 
-import distributed.chat.server.model.message.election.CoordinatorMessage;
 import distributed.chat.server.model.message.request.client.ListClientRequest;
 import distributed.chat.server.model.message.response.client.RoomListClientResponse;
 import distributed.chat.server.states.ServerState;
-import io.netty.channel.Channel;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -29,7 +27,7 @@ public class ListService extends AbstractClientService<ListClientRequest, RoomLi
         // global room set to arraylist
         ArrayList<String> globalRoomList = new ArrayList<>();
         for (Map.Entry<String, String> room : ServerState.globalRooms.entrySet()) {
-            globalRoomList.add(ServerState.globalRooms.get(room.getKey()));
+            globalRoomList.add(room.getKey());
         }
         System.out.println("globalRoomList " + globalRoomList.size());
         // response obj
