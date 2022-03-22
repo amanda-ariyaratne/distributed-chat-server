@@ -121,6 +121,10 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
 
         if (approved) {
             System.out.println("Create room : approveIdentityProcessed : approved");
+
+            // set client as the owner
+            client.setAlready_room_owner(true);
+
             // create new room with new roomId and add to localRooms hashmap and global rooms
             Room room = new Room(roomId, client);
             ServerState.localRooms.put(roomId, room);
