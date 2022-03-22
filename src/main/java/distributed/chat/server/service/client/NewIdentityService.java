@@ -35,7 +35,10 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             approved = isUniqueIdentity(identity, request);
         }
 
-        if (!approved && !ServerState.reservedClients.containsKey(identity)){
+        if (approved) {
+            approveIdentityProcessed(true, identity);
+        }
+        else if (!ServerState.reservedClients.containsKey(identity)){
             System.out.println("send response");
             sendResponse(new NewIdentityClientResponse(false), client);
         }
@@ -74,20 +77,26 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         else return Character.isAlphabetic(identity.charAt(0));
     }
 
+    // Todo: change the fun name
     private boolean checkUniqueIdentity(String identity, NewIdentityClientRequest request) {
         System.out.println("check unique id");
-        boolean locallyRedundant = ServerState.globalClients.contains(identity);
+        boolean globallyRedundant = ServerState.globalClients.contains(identity);
 
-        if (locallyRedundant){
-            System.out.println("locally redundant");
+        if (globallyRedundant){
+            System.out.println("globally redundant");
             return true;
         }
         else {
             System.out.println("send reserveIdentityServerRequest");
-            ReserveIdentityServerService.getInstance().processRequest(
-                    new ReserveIdentityServerRequest(identity),
-                    ServerState.serverChannels.get(ServerState.leaderId)
-            );
+            if (ServerState.localId != ServerState.leaderId){
+                ReserveIdentityServerService.getInstance().processRequest(
+                        new ReserveIdentityServerRequest(identity),
+                        ServerState.serverChannels.get(ServerState.leaderId)
+                );
+
+            } else {
+                ServerState.reservedClients.remove(identity);
+            }
 
             return false;
         }
