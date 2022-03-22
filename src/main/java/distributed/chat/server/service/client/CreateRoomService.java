@@ -13,6 +13,7 @@ import distributed.chat.server.states.ServerState;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /***
@@ -40,19 +41,18 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
         System.out.println("Create room : process request");
         Client client = request.getSender();
         String roomId = request.getRoomId();
-        ArrayList<String> pendingRoomIdentityRequest = new ArrayList();
 
         boolean room_approved = false;
         synchronized (this) {
             if (!request.getSender().isAlready_room_owner()) { // check if client already a room owner
                 room_approved = approveIdentity(roomId, request);
             }
-
+            System.out.println("Approved = " + room_approved);
             if (room_approved) {
                 System.out.println("send response - accepted");
                 approveIdentityProcessed(true, roomId);
-            }
-            else if (!pendingIdentityRequests.contains(roomId)) {
+                pendingIdentityRequests.remove(roomId);
+            } else if (!pendingIdentityRequests.contains(roomId)) {
                 System.out.println("send response - not accepted");
                 sendResponse(new CreateRoomClientResponse(roomId, false), client);
             }
@@ -91,7 +91,7 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
             return false;
         } else { // check room-id with leader's list -> send request to leader
 
-            if (ServerState.localId != ServerState.leaderId) {
+            if (!Objects.equals(ServerState.localId, ServerState.leaderId)) {
                 System.out.println("Create room : check room id with leaders list");
                 // request message object - {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
                 ReserveRoomServerRequest reserveRoomServerRequest = new ReserveRoomServerRequest(ServerState.serverConfig.getServer_id(), roomId);
@@ -101,6 +101,7 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
                         ServerState.serverChannels.get(ServerState.leaderId)
                 );
             } else {
+                System.out.println("Create Room : add to pending room list");
                 pendingIdentityRequests.add(roomId);
             }
 
