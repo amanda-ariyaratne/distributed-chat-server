@@ -94,7 +94,7 @@ public class JoinRoomClientService extends AbstractClientService<JoinRoomClientR
     }
 
     public void broadCastRoomChangeMessage(RoomChangeClientResponse response, Room room) {
-        System.out.println("broadcast");
+        System.out.println("broadcast Room change");
         broadcast(response, room);
     }
 }

@@ -59,7 +59,10 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             System.out.println("client " + client);
             ServerState.localClients.put(identity, client);
             client.setIdentity(identity);
+
+            System.out.println("Add " + identity + " to MainHall");
             client.setRoom(ServerState.localRooms.get("MainHall-" + ServerState.localId));
+            ServerState.localRooms.get("MainHall-" + ServerState.localId).addMember(client);
             AddIdentityServerService.getInstance().broadcast(new AddIdentityServerRequest(identity));
         }
         System.out.println("send response");
