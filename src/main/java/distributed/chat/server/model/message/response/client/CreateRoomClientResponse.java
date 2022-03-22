@@ -28,7 +28,7 @@ public class CreateRoomClientResponse extends AbstractClientResponse {
         return "{" +
                 "\"type\":\"" + RequestConstants.CREATE_ROOM + '"' +
                 ", \"roomid\":\"" + roomId + '"' +
-                ", \"approved\":" + approved +
+                ", \"approved\":\"" + approved + '"' +
                 '}';
     }
 }
