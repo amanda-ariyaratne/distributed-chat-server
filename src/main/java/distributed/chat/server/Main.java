@@ -86,6 +86,7 @@ public class Main {
 
         while (true) {
             if (ServerState.serverAsClientThreadCount.get() == servers.size()-1) {
+                System.out.println("I am up on MAin");
                 IAmUpService iAmUpService = IAmUpService.getInstance();
                 iAmUpService.broadcastIAmUpMessage();
                 break;
