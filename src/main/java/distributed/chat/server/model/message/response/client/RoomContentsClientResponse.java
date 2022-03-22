@@ -42,10 +42,10 @@ public class RoomContentsClientResponse extends AbstractClientResponse {
             }
         }
         return "{" +
-                "type:'" + RequestConstants.ROOM_CONTENTS + '\'' +
-                ", roomid:'" + roomId + '\'' +
-                ", identities:[" + identitiesStr + "]" +
-                ", owner:'" + owner + '\'' +
+                "\"type\" : \"" + RequestConstants.ROOM_CONTENTS + '"' +
+                ", \"roomid\" : \"" + roomId + '"' +
+                ", \"identities\" : [" + identitiesStr + "]" +
+                ", \"owner\" : \"" + owner + '"' +
                 '}';
     }
 }

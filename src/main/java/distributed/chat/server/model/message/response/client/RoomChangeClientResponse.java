@@ -30,10 +30,10 @@ public class RoomChangeClientResponse extends AbstractClientResponse{
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.ROOM_CHANGE + '\'' +
-                ", identity:'" + identity + '\'' +
-                ", former:'" + former + '\'' +
-                ", roomId:'" + roomId + '\'' +
+                "\"type\" : \"" + RequestConstants.ROOM_CHANGE + '"' +
+                ", \"identity\" : \"" + identity + '"' +
+                ", \"former\" : \"" + former + '"' +
+                ", \"roomid\" : \"" + roomId + '"' +
                 '}';
     }
 }
