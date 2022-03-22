@@ -91,7 +91,7 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
             return false;
         } else { // check room-id with leader's list -> send request to leader
 
-            if (ServerState.localId == ServerState.leaderId) {
+            if (ServerState.localId != ServerState.leaderId) {
                 System.out.println("Create room : check room id with leaders list");
                 // request message object - {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
                 ReserveRoomServerRequest reserveRoomServerRequest = new ReserveRoomServerRequest(ServerState.serverConfig.getServer_id(), roomId);
