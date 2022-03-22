@@ -18,8 +18,6 @@ public class ServerToServer {
     public ServerToServer(int port, String id) {
         this.port = port;
         this.id = id;
-        ServerState.localId = id;
-        ServerState.localServerPort = port;
     }
 
     public void start() throws Exception {

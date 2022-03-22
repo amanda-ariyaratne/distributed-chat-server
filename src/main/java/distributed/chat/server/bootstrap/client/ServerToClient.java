@@ -18,7 +18,6 @@ public class ServerToClient {
     public ServerToClient(int port, String id) {
         this.port = port;
 
-        ServerState.localClientPort = port;
         ServerState.localRooms.put("MainHall-" + id, new Room("MainHall-" + id, null));
         ServerState.globalRooms.put(
                 "MainHall-" + id,

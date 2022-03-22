@@ -53,6 +53,10 @@ public class Main {
         int portServerToClient = servers.get(serverId).getClients_port();
         int portServerToServer = servers.get(serverId).getCoordination_port();
 
+        ServerState.localId = serverId;
+        ServerState.localServerPort = portServerToServer;
+        ServerState.localClientPort = portServerToClient;
+
         String finalServerId = serverId;
         Thread coordinatorThread = new Thread(() -> {
             try {
