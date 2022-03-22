@@ -44,9 +44,9 @@ public class SyncGlobalListsServerRequest extends AbstractServerRequest {
         roomStr.concat("]");
 
         return "{" +
-                "'type':'" + RequestConstants.SYNC_GLOBAL_LISTS + "'" +
-                ", 'clients':" + clientStr + "'" +
-                ", 'rooms':" + roomStr + "'" +
+                "\"type\" : \"" + RequestConstants.SYNC_GLOBAL_LISTS + "\"" +
+                ", \"clients\" : " + clientStr +
+                ", \"rooms\" : " + roomStr + 
                 "}";
     }
 }

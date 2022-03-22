@@ -26,9 +26,9 @@ public class ReserveIdentityConfirmServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "\"type\":\"" + RequestConstants.RESERVE_IDENTITY_CONFIRM + '"' +
-                ", \"identity\":\"" + identity + '"' +
-                ", \"reserved\":" + reserved +
+                "\"type\" : \"" + RequestConstants.RESERVE_IDENTITY_CONFIRM + '"' +
+                ", \"identity\" : \"" + identity + '"' +
+                ", \"reserved\" : " + reserved + '"' +
                 '}';
     }
 }

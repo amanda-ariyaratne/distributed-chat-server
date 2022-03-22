@@ -27,7 +27,7 @@ public class DeleteIdentityServerRequest extends AbstractMessage {
     public String toString() {
         return "{" +
                 "\"type\" : \"" + RequestConstants.DELETE_IDENTITY + '\"' +
-                ", \"serverId\" : \"" + serverId + '\"' +
+                ", \"serverid\" : \"" + serverId + '\"' +
                 ", \"identity\" : \"" + identity + '\"' +
                 '}';
     }
