@@ -106,6 +106,7 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 request = new HeartBeatMessage();
                 break;
             case RequestConstants.I_AM_UP:
+                System.out.println("I am up ");
                 request = new IAmUpMessage(requestJson.get("serverid").getAsString());
                 break;
             case RequestConstants.ANSWER:
