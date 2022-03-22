@@ -37,6 +37,7 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
     }
 
     public void sendResponse(T response, Client client) {
+        System.out.println(response.toString());
         final ChannelFuture f = client.getCtx().writeAndFlush(response + "\n");
         f.addListener((ChannelFutureListener) future -> {
             assert f == future;
