@@ -23,6 +23,7 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
     }
 
     public void broadcastIAmUpMessage() {
+        System.out.println("Broadcasting IAmUp Message to all servers");
         broadcast(new IAmUpMessage(ServerState.localId));
 
         synchronized (ServerState.electionLock) {
@@ -32,6 +33,7 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
 
         new Thread(() -> {
             try {
+                System.out.println("Waiting for View messages");
                 Thread.sleep(ServerState.viewTimeout);
                 ViewService viewService = ViewService.getInstance();
                 viewService.handleViewMessageReception();
@@ -60,6 +62,8 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
                 }
             }).start();
         }
+
+        System.out.println("Sending View message");
         ViewMessage vm = new ViewMessage(ServerState.localId, ServerState.leaderId);
         channel.writeAndFlush(vm.toString());
 

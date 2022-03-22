@@ -21,12 +21,14 @@ public class NominationService extends FastBullyService<NominationMessage> {
         synchronized (ServerState.electionLock) {
             ServerState.nominationMessage = message;
 
+            System.out.println("Sending Coordinator message");
             CoordinatorService coordinatorService = CoordinatorService.getInstance();
             coordinatorService.sendCoordinatorMessage();
         }
     }
 
     public void sendNominationMessage(String highestServerId) {
+        System.out.println("Sending Nomination message");
         ServerState.serverChannels.get(highestServerId).writeAndFlush(new NominationMessage(ServerState.localId).toString());
     }
 }

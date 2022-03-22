@@ -24,12 +24,13 @@ public class ElectionService extends FastBullyService<ElectionMessage> {
     }
 
     public void startElection() {
-
+        System.out.println("Starting election");
         synchronized (ServerState.electionLock) {
             ServerState.electionStatus = ElectionStatus.ELECTION_STARTED;
             ServerState.answerMessagesReceived = new ArrayList<>();
         }
 
+        System.out.println("sending election messages to higher servers");
         ElectionMessage em = new ElectionMessage(ServerState.localId);
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             if (server.getKey().compareTo(ServerState.localId) > 0) {
@@ -39,6 +40,7 @@ public class ElectionService extends FastBullyService<ElectionMessage> {
 
         new Thread(() -> {
             try {
+                System.out.println("Waiting for answer messages");
                 Thread.sleep(ServerState.answerTimeout);
                 AnswerService answerService = AnswerService.getInstance();
                 answerService.handleAnswerMessageReception(false);
@@ -50,8 +52,9 @@ public class ElectionService extends FastBullyService<ElectionMessage> {
 
     @Override
     public void processMessage(ElectionMessage message, Channel channel) {
-        // send asnwer message
+        // send answer message
         channel.writeAndFlush(new AnswerMessage(ServerState.localId).toString());
+        System.out.println("Sent Answer message");
 
         synchronized (ServerState.electionLock) {
             ServerState.coordinatorMessage = null;
@@ -60,9 +63,11 @@ public class ElectionService extends FastBullyService<ElectionMessage> {
 
         new Thread(() -> {
             try {
+                System.out.println("Waiting for Nomination message or Coordinator message");
                 Thread.sleep(ServerState.nominatorOrCoordinatorTimeout);
                 synchronized (ServerState.electionLock) {
                     if (ServerState.nominationMessage == null && ServerState.coordinatorMessage == null) {
+                        System.out.println("No Nomination message or Coordinator message received");
                         ElectionService electionService = ElectionService.getInstance();
                         electionService.startElection();
 

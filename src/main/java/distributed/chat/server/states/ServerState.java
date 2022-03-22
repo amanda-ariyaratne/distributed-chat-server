@@ -40,7 +40,7 @@ public class ServerState {
     public static Map<String, Channel> serverChannels = new ConcurrentHashMap<>();
 
     public static ElectionStatus electionStatus;
-    public static Object electionLock = new Object();
+    public static final Object electionLock = new Object();
     public static ArrayList<ViewMessage> viewMessagesReceived = new ArrayList<>();
     public static ArrayList<AnswerMessage> answerMessagesReceived = new ArrayList<>();
     public static CoordinatorMessage coordinatorMessage = null;

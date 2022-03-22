@@ -9,5 +9,6 @@ public class HeartBeatService {
         Channel channel = ServerState.serverChannels.get(serverId);
         channel.close();
         ServerState.serverChannels.remove(serverId);
+        System.out.println("Closed connection to " + serverId);
     }
 }
