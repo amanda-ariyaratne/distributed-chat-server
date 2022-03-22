@@ -4,7 +4,7 @@ import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.MessageType;
 
-public class DeleteRoomServerRequest extends AbstractMessage {
+public class DeleteRoomServerRequest extends AbstractServerRequest {
 
     private final String serverId;
     private final String roomId;

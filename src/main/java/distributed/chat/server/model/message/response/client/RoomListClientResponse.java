@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomListClientResponse extends AbstractClientResponse {
+    //{
+    //"type" : "roomlist",
+    //"rooms" : ["MainHall-s1", "MainHall-s2", "jokes"]
+    //}
 
     private List<String> rooms;
 

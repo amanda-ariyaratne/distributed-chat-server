@@ -3,7 +3,7 @@ package distributed.chat.server.helper;
 import com.google.gson.*;
 import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.AbstractMessage;
-import distributed.chat.server.model.message.election.IAmUpMessage;
+import distributed.chat.server.model.message.election.*;
 import distributed.chat.server.model.message.heartbeat.HeartBeatMessage;
 import distributed.chat.server.model.message.request.client.*;
 import distributed.chat.server.model.message.request.server.*;
@@ -93,7 +93,24 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
             case RequestConstants.I_AM_UP:
                 request = new IAmUpMessage(requestJson.get("serverId").getAsString());
                 break;
-
+            case RequestConstants.ANSWER:
+                request = new AnswerMessage(requestJson.get("serverId").getAsString());
+                break;
+            case RequestConstants.COORDINATOR:
+                request = new CoordinatorMessage(requestJson.get("serverId").getAsString());
+                break;
+            case RequestConstants.ELECTION:
+                request = new ElectionMessage(requestJson.get("serverId").getAsString());
+                break;
+            case RequestConstants.NOMINATION:
+                request = new NominationMessage(requestJson.get("serverId").getAsString());
+                break;
+            case RequestConstants.VIEW:
+                request = new ViewMessage(
+                        requestJson.get("serverId").getAsString(),
+                        requestJson.get("currentLeaderId").getAsString()
+                );
+                break;
             default:
                 throw new JsonParseException("Unexpected request type");
         }
