@@ -36,7 +36,7 @@ public class ServerAsClient {
             this.channel = f.channel();
             ServerState.serverChannels.put(serverId, this.channel);
             System.out.println("Connected to " + serverId);
-            
+
             IAmUpService iAmUpService = IAmUpService.getInstance();
             iAmUpService.broadcastIAmUpMessage();
 
