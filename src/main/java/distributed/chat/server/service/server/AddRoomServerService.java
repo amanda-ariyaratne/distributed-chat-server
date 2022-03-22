@@ -23,6 +23,7 @@ public class AddRoomServerService extends AbstractServerService<AddRoomServerReq
      * @param channel Channel
      */
     public void handleRequest(AddRoomServerRequest request, Channel channel){
+        System.out.println("AddRoomServerService : handle request");
         // add to leader's room list
         ServerState.globalRooms.put(request.getRoomId(), request.getServerId());
 

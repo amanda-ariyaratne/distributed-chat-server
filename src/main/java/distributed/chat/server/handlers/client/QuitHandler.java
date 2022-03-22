@@ -14,11 +14,13 @@ public class QuitHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // {"type":"quit"}
         AbstractClientRequest request = (AbstractClientRequest) msg;
-        if (request instanceof QuitClientRequest){
+        if (request instanceof QuitClientRequest) {
             Client client = ServerState.activeClients.get(ctx.channel().id());
 
             QuitClientRequest quitClientRequest = (QuitClientRequest) msg;
             quitClientRequest.setSender(client);
+
+            System.out.println("Quit Client Handler : msg " + quitClientRequest);
 
             QuitService.getInstance().processRequest(quitClientRequest);
 

@@ -20,6 +20,8 @@ public class WhoHandler extends ChannelInboundHandlerAdapter {
             WhoClientRequest whoClientRequest = (WhoClientRequest) msg;
             whoClientRequest.setSender(client);
 
+            System.out.println("Who Client request : "+ whoClientRequest);
+
             WhoService whoService = WhoService.getInstance();
             whoService.processRequest(whoClientRequest);
         } else {

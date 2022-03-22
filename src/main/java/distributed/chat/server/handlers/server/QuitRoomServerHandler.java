@@ -14,6 +14,7 @@ public class QuitRoomServerHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractServerRequest instanceof QuitServerRequest){
             QuitServerRequest request = (QuitServerRequest) abstractServerRequest;
+            System.out.println("QuitRoomServerHandler Request "+request);
             QuitServerService.getInstance().processRequest(request, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

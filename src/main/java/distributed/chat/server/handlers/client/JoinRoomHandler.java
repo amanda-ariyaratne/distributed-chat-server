@@ -14,11 +14,12 @@ public class JoinRoomHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         //{"type" : "joinroom", "roomid" : "jokes"}
         AbstractClientRequest request = (AbstractClientRequest) msg;
-        if (request instanceof JoinRoomClientRequest){
+        if (request instanceof JoinRoomClientRequest) {
             Client client = ServerState.activeClients.get(ctx.channel().id());
 
             JoinRoomClientRequest joinRoomClientRequest = (JoinRoomClientRequest) msg;
             joinRoomClientRequest.setSender(client);
+            System.out.println("Join room handler : mag = " + msg);
 
             JoinRoomClientService.getInstance().processRequest(joinRoomClientRequest);
 
