@@ -1,10 +1,13 @@
 package distributed.chat.server.service.client;
 
+import distributed.chat.server.model.message.election.CoordinatorMessage;
 import distributed.chat.server.model.message.request.client.ListClientRequest;
 import distributed.chat.server.model.message.response.client.RoomListClientResponse;
 import distributed.chat.server.states.ServerState;
+import io.netty.channel.Channel;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ListService extends AbstractClientService<ListClientRequest, RoomListClientResponse> {
 
@@ -25,10 +28,10 @@ public class ListService extends AbstractClientService<ListClientRequest, RoomLi
         System.out.println("ListService : process request");
         // global room set to arraylist
         ArrayList<String> globalRoomList = new ArrayList<>();
-        System.out.println("globalRoomList " + globalRoomList.size());
-        for (int i = 0; i < globalRoomList.size(); i++) {
-            globalRoomList.add(globalRoomList.get(i));
+        for (Map.Entry<String, String> room : ServerState.globalRooms.entrySet()) {
+            globalRoomList.add(ServerState.globalRooms.get(room.getKey()));
         }
+        System.out.println("globalRoomList " + globalRoomList.size());
         // response obj
         RoomListClientResponse roomListClientResponse = new RoomListClientResponse(globalRoomList);
         sendResponse(roomListClientResponse, request.getSender());
