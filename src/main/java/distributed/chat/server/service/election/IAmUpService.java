@@ -10,6 +10,7 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class IAmUpService extends FastBullyService<IAmUpMessage> {
     private static IAmUpService instance;
@@ -50,6 +51,11 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
         if (!ServerState.serverChannels.containsKey(message.getServerId())) {
             new Thread(() -> {
                 try {
+                    System.out.println("message id " + message.getServerId());
+                    for (Map.Entry<String, ServerConfig> config: ServerState.servers.entrySet()) {
+                        System.out.println(config.getKey() + "-" + config.getValue());
+                    }
+
                     ServerConfig configs = ServerState.servers.get(message.getServerId());
                     ServerAsClient serverAsClient = new ServerAsClient(
                             configs.getServer_id(),
