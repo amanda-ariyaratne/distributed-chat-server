@@ -1,7 +1,7 @@
 package distributed.chat.server.handlers.client;
 
 import distributed.chat.server.model.Client;
-import distributed.chat.server.model.message.request.client.AbstractClientRequest;
+import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.client.JoinRoomClientRequest;
 import distributed.chat.server.service.client.JoinRoomClientService;
 import distributed.chat.server.states.ServerState;
@@ -13,7 +13,7 @@ public class JoinRoomHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         //{"type" : "joinroom", "roomid" : "jokes"}
-        AbstractClientRequest request = (AbstractClientRequest) msg;
+        AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof JoinRoomClientRequest) {
             Client client = ServerState.activeClients.get(ctx.channel().id());
 
