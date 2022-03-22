@@ -27,7 +27,7 @@ public class DeleteRoomClientResponse extends AbstractClientResponse {
         return "{" +
                 "\"type\":\"" + RequestConstants.DELETE_ROOM + '"' +
                 ", \"roomid\":\"" + roomId + '"' +
-                ", approved:" + approved +
+                ", \"approved\":\"" + approved + '"' +
                 '}';
     }
 }
