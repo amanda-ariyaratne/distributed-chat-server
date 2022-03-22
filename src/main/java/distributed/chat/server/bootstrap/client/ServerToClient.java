@@ -17,9 +17,14 @@ public class ServerToClient {
 
     public ServerToClient(int port, String id) {
         this.port = port;
-        ServerState.localRooms.put("MainHall-" + id, new Room("MainHall-" + id, null));
         ServerState.localId = id;
         ServerState.localPort = port;
+        ServerState.localRooms.put("MainHall-" + id, new Room("MainHall-" + id, null));
+        ServerState.globalRooms.put(
+                "MainHall-" + id,
+                ServerState.localId
+        );
+
     }
 
     public void start() throws Exception {
