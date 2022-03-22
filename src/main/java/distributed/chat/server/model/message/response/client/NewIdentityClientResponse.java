@@ -19,8 +19,8 @@ public class NewIdentityClientResponse extends AbstractClientResponse {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.NEW_IDENTITY + '\'' +
-                ", approved:" + approved +
+                "'type':'" + RequestConstants.NEW_IDENTITY + '\'' +
+                ", 'approved':'" + approved + "'" +
                 '}';
     }
 }

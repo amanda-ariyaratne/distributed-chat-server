@@ -25,16 +25,15 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
     }
 
     public void broadcast(T response, Room room) {
-        Gson gson = new Gson();
-        String responseJsonStr = gson.toJson(response);
-
         System.out.println("Member length " + room.getMembers().size());
+        System.out.println(response.toString());
         for (Client member : room.getMembers()) {
-            final ChannelFuture f = member.getCtx().writeAndFlush(responseJsonStr + "\n");
+            final ChannelFuture f = member.getCtx().writeAndFlush(response + "\n");
             f.addListener((ChannelFutureListener) future -> {
                 assert f == future;
             });
         }
+        System.out.println("finish broadcast");
     }
 
     public void sendResponse(T response, Client client) {
