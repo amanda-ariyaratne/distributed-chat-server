@@ -10,8 +10,12 @@ import distributed.chat.server.service.server.AddIdentityServerService;
 import distributed.chat.server.service.server.ReserveIdentityServerService;
 import distributed.chat.server.states.ServerState;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class NewIdentityService extends AbstractClientService<NewIdentityClientRequest, NewIdentityClientResponse> {
 
+    private Set<String> pendingIdentityRequests = new HashSet<>();
     private static NewIdentityService instance;
 
     private NewIdentityService(){}
@@ -38,7 +42,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         if (approved) {
             approveIdentityProcessed(true, identity);
         }
-        else if (!ServerState.reservedClients.containsKey(identity)){
+        else if (!pendingIdentityRequests.contains(identity)){
             System.out.println("send response");
             sendResponse(new NewIdentityClientResponse(false), client);
         }
@@ -92,13 +96,12 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
 
             if (ServerState.localId != ServerState.leaderId){
                 System.out.println("send reserveIdentityServerRequest");
+                pendingIdentityRequests.add(identity);
                 ReserveIdentityServerService.getInstance().processRequest(
                         new ReserveIdentityServerRequest(identity),
                         ServerState.serverChannels.get(ServerState.leaderId)
                 );
 
-            } else {
-                ServerState.reservedClients.remove(identity);
             }
 
             return false;
