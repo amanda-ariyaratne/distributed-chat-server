@@ -16,11 +16,8 @@ public abstract class AbstractServerService <S extends AbstractServerRequest, T 
     public abstract void processRequest(S request, Channel channel);
 
     public void broadcast(S request) {
-        Gson gson = new Gson();
-        String requestJsonStr = gson.toJson(request);
-
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
-            final ChannelFuture f = ServerState.serverChannels.get(server.getKey()).writeAndFlush(requestJsonStr + "\n");
+            final ChannelFuture f = ServerState.serverChannels.get(server.getKey()).writeAndFlush(request + "\n");
             f.addListener((ChannelFutureListener) future -> {
                 assert f == future;
             });
