@@ -120,6 +120,7 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
 //                break;
             default:
                 System.out.println(requestJson.get("type").getAsString());
+                System.out.println(RequestConstants.ADD_IDENTITY);
                 throw new JsonParseException("Unexpected request type");
         }
         return request;
