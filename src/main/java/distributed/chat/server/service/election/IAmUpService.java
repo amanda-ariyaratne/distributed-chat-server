@@ -83,6 +83,7 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
                 System.out.println("Sending View message");
                 ViewMessage vm = new ViewMessage(ServerState.localId, ServerState.leaderId);
                 channel.writeAndFlush(vm.toString());
+                System.out.println("Sent view message");
                 break;
             }
         }
