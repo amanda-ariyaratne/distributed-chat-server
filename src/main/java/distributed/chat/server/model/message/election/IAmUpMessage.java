@@ -19,8 +19,8 @@ public class IAmUpMessage extends FastBullyMessage {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.I_AM_UP + "', " +
-                "serverId:'" + serverId + '\'' +
+                "\"type\" : \"" + RequestConstants.I_AM_UP + "\", " +
+                "\"serverid\" : \"" + serverId + '\"' +
                 '}';
     }
 }

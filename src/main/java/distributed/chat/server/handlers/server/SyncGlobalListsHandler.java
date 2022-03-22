@@ -1,7 +1,6 @@
 package distributed.chat.server.handlers.server;
 
 import distributed.chat.server.model.message.AbstractMessage;
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
 import distributed.chat.server.model.message.request.server.SyncGlobalListsServerRequest;
 import distributed.chat.server.service.server.SyncGlobalListsServerService;

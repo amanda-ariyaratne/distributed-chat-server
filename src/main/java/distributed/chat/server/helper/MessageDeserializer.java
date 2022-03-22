@@ -106,7 +106,7 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 request = new HeartBeatMessage();
                 break;
             case RequestConstants.I_AM_UP:
-                request = new IAmUpMessage(requestJson.get("serverId").getAsString());
+                request = new IAmUpMessage(requestJson.get("serverid").getAsString());
                 break;
             case RequestConstants.ANSWER:
                 request = new AnswerMessage(requestJson.get("serverId").getAsString());
@@ -122,7 +122,7 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 break;
             case RequestConstants.VIEW:
                 request = new ViewMessage(
-                        requestJson.get("serverId").getAsString(),
+                        requestJson.get("serverid").getAsString(),
                         requestJson.get("currentLeaderId").getAsString()
                 );
                 break;
