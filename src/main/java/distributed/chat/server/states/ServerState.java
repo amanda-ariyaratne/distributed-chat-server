@@ -24,7 +24,8 @@ public class ServerState {
     public static String leaderId;
     public static Integer leaderPort;
     public static String localId;
-    public static Integer localPort;
+    public static Integer localClientPort;
+    public static Integer localServerPort;
 
     public static AtomicInteger serverAsClientThreadCount = new AtomicInteger(0);
 

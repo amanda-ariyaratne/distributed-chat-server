@@ -1,6 +1,7 @@
 package distributed.chat.server.bootstrap.server;
 
 import distributed.chat.server.bootstrap.initializers.ServerToServerInitializer;
+import distributed.chat.server.states.ServerState;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -17,6 +18,8 @@ public class ServerToServer {
     public ServerToServer(int port, String id) {
         this.port = port;
         this.id = id;
+        ServerState.localId = id;
+        ServerState.localServerPort = port;
     }
 
     public void start() throws Exception {
@@ -31,6 +34,7 @@ public class ServerToServer {
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ServerToServerInitializer());
             ChannelFuture f = b.bind().sync();
+            ServerState.serverAsClientThreadCount.getAndIncrement();
             System.out.println("Listening on management port " + port);
             f.channel().closeFuture().sync();
         } finally {

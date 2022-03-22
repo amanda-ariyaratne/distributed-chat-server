@@ -87,8 +87,7 @@ public class Main {
         }
 
         while (true) {
-            if (ServerState.serverAsClientThreadCount.get() == servers.size()-1) {
-                System.out.println("I am up on MAin");
+            if (ServerState.serverAsClientThreadCount.get() == servers.size()) {
                 IAmUpService iAmUpService = IAmUpService.getInstance();
                 iAmUpService.broadcastIAmUpMessage();
                 break;
@@ -103,9 +102,6 @@ public class Main {
             }
         });
         clientThread.start();
-
-        System.out.println();
-
     }
 
     private static Map<String, ServerConfig> readServerConfgis(String configFile) throws IOException {
