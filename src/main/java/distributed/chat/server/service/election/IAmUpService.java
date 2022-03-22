@@ -84,6 +84,7 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
 
                 System.out.println("Sending View message");
                 ViewMessage vm = new ViewMessage(ServerState.localId, ServerState.leaderId);
+                System.out.println(vm);
                 channel.writeAndFlush(vm.toString());
                 System.out.println("Sent view message");
                 break;

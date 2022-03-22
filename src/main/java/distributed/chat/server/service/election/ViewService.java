@@ -27,7 +27,7 @@ public class ViewService extends FastBullyService<ViewMessage> {
     public void handleViewMessageReception() {
         if (ServerState.electionStatus == ElectionStatus.WAITING_FOR_VIEW) {
             synchronized (ServerState.electionLock) {
-                if (ServerState.viewMessagesReceived.size() == 0) {
+                if (ServerState.viewMessagesReceived.isEmpty()) {
                     System.out.println("viewMessagesReceived is empty");
                     // no view messages received
                     // this server is the coordinator
