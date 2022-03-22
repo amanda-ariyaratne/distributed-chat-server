@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.response.server;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 /***
@@ -28,9 +29,9 @@ public class ReserveRoomServerResponse extends AbstractServerResponse {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.RESERVE_ROOM_RESPONSE + '\'' +
-                ", roomId='" + roomId + '\'' +
-                ", reserved=" + reserved +
+                "\"type\" : \"" + RequestConstants.RESERVE_ROOM_RESPONSE + '"' +
+                ", \"roomid\" : \"" + roomId + '"' +
+                ", \"reserved\" : \"" + reserved + '"' +
                 '}';
     }
 }

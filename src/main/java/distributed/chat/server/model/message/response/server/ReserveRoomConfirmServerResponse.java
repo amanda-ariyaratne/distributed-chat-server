@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.response.server;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 public class ReserveRoomConfirmServerResponse extends AbstractServerResponse{
@@ -20,5 +21,14 @@ public class ReserveRoomConfirmServerResponse extends AbstractServerResponse{
 
     public boolean isReserved() {
         return reserved;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"type\" : \"" + RequestConstants.RESERVE_ROOM_CONFIRM_RESPONSE + '"' +
+                ", \"roomid\" : \"" + roomId + '"' +
+                ", \"reserved\" : \"" + reserved + '"' +
+                '}';
     }
 }
