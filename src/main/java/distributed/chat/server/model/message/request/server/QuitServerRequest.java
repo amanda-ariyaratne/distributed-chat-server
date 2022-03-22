@@ -8,7 +8,7 @@ public class QuitServerRequest extends AbstractServerRequest {
     private final String identity;
 
     public QuitServerRequest(String identity) {
-        super(MessageType.QUIT);
+        super(MessageType.QUIT_SERVER);
         this.identity = identity;
     }
 
@@ -19,7 +19,7 @@ public class QuitServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "\"type\" : \"" + RequestConstants.QUIT + '"' +
+                "\"type\" : \"" + RequestConstants.QUIT_SERVER + '"' +
                 "}";
     }
 }

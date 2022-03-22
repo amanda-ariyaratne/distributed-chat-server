@@ -87,6 +87,21 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
             case RequestConstants.QUIT:
                 request = new QuitClientRequest();
                 break;
+            case RequestConstants.QUIT_SERVER:
+                request = new QuitServerRequest(requestJson.get("identity").getAsString());
+                break;
+            case RequestConstants.ADD_ROOM:
+                request = new AddRoomServerRequest(
+                        requestJson.get("serverid").getAsString(),
+                        requestJson.get("roomid").getAsString()
+                );
+                break;
+            case RequestConstants.DELETE_IDENTITY:
+                request = new DeleteIdentityServerRequest(
+                        requestJson.get("serverid").getAsString(),
+                        requestJson.get("identity").getAsString()
+                );
+                break;
             case RequestConstants.HEARTBEAT:
                 request = new HeartBeatMessage();
                 break;
@@ -120,7 +135,6 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
 //                break;
             default:
                 System.out.println(requestJson.get("type").getAsString());
-                System.out.println(RequestConstants.ADD_IDENTITY);
                 throw new JsonParseException("Unexpected request type");
         }
         return request;

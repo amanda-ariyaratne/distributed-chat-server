@@ -27,7 +27,6 @@ public class AddRoomServerService extends AbstractServerService<AddRoomServerReq
         // add to leader's room list
         ServerState.globalRooms.put(request.getRoomId(), request.getServerId());
 
-        // TODO : broadcast to all the servers
     }
 
     @Override

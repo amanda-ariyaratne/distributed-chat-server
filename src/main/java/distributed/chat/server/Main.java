@@ -91,8 +91,7 @@ public class Main {
         });
         clientThread.start();
 
-        IAmUpService iAmUpService = IAmUpService.getInstance();
-        iAmUpService.broadcastIAmUpMessage();
+        System.out.println();
 
     }
 
