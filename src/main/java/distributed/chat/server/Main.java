@@ -53,6 +53,10 @@ public class Main {
         int portServerToClient = servers.get(serverId).getClients_port();
         int portServerToServer = servers.get(serverId).getCoordination_port();
 
+        ServerState.localId = serverId;
+        ServerState.localServerPort = portServerToServer;
+        ServerState.localClientPort = portServerToClient;
+
         String finalServerId = serverId;
         Thread coordinatorThread = new Thread(() -> {
             try {
@@ -87,8 +91,7 @@ public class Main {
         }
 
         while (true) {
-            if (ServerState.serverAsClientThreadCount.get() == servers.size()-1) {
-                System.out.println("I am up on MAin");
+            if (ServerState.serverAsClientThreadCount.get() == servers.size()) {
                 IAmUpService iAmUpService = IAmUpService.getInstance();
                 iAmUpService.broadcastIAmUpMessage();
                 break;
@@ -103,9 +106,6 @@ public class Main {
             }
         });
         clientThread.start();
-
-        System.out.println();
-
     }
 
     private static Map<String, ServerConfig> readServerConfgis(String configFile) throws IOException {
