@@ -40,10 +40,10 @@ public class MoveJoinClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.MOVE_JOIN + '\'' +
-                ", former:'" + former + '\'' +
-                ", roomid:'" + roomid + '\'' +
-                ", identity:'" + identity + '\'' +
+                " \"type\" : \"" + MessageType.MOVE_JOIN + '\"' +
+                ", \"former\" : \"" + former + '\"' +
+                ", \"roomid\" : \"" + roomid + '\"' +
+                ", \"identity\" : \"" + identity + '\"' +
                 '}';
     }
 }

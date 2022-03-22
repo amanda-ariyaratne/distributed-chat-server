@@ -28,8 +28,8 @@ public class MessageClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.MESSAGE + '\'' +
-                ", content:'" + content + '\'' +
+                " \"type\" : \"" + MessageType.MESSAGE + '\"' +
+                ", \"content\" : \"" + content + '\"' +
                 '}';
     }
 }

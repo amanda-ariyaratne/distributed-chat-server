@@ -28,8 +28,8 @@ public class DeleteRoomClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.DELETE_ROOM + '\'' +
-                ", roomId:'" + roomId + '\'' +
+                "\"type\" : \"" + MessageType.DELETE_ROOM + '\"' +
+                ", \"roomId\" : \"" + roomId + '\"' +
                 '}';
     }
 }
