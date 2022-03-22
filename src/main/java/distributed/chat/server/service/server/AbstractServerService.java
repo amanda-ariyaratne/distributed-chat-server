@@ -17,6 +17,7 @@ public abstract class AbstractServerService <S extends AbstractServerRequest, T 
 
     public void broadcast(S request) {
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
+            System.out.println("Broadcast to : "+server.getKey());
             final ChannelFuture f = ServerState.serverChannels.get(server.getKey()).writeAndFlush(request + "\n");
             f.addListener((ChannelFutureListener) future -> {
                 assert f == future;
