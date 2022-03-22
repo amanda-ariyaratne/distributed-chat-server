@@ -48,9 +48,9 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
     @Override
     public void processMessage(IAmUpMessage message, Channel channel) {
         if (!ServerState.serverChannels.containsKey(message.getServerId())) {
-            ServerConfig configs = ServerState.servers.get(message.getServerId());
             new Thread(() -> {
                 try {
+                    ServerConfig configs = ServerState.servers.get(message.getServerId());
                     ServerAsClient serverAsClient = new ServerAsClient(
                             configs.getServer_id(),
                             configs.getServer_address(),
