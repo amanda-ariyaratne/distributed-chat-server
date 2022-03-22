@@ -29,8 +29,8 @@ public class AddRoomServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.ADD_ROOM + '\'' +
-                ", roomId:'" + roomId + '\'' +
+                "\"type\" : \"" + RequestConstants.ADD_ROOM + '\"' +
+                ", \"roomId\" : \"" + roomId + '\"' +
                 '}';
     }
 }

@@ -23,7 +23,7 @@ public class ListClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.LIST + '\'' +
+                " \"type\" : \"" + MessageType.LIST + '\"' +
                 "}";
     }
 }
