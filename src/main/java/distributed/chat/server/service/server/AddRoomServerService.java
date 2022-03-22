@@ -1,11 +1,11 @@
 package distributed.chat.server.service.server;
 
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
+import distributed.chat.server.model.message.response.server.AddRoomServerResponse;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
-public class AddRoomServerService extends AbstractServerService{
+public class AddRoomServerService extends AbstractServerService<AddRoomServerRequest, AddRoomServerResponse> {
 
     private static AddRoomServerService instance;
 
@@ -16,14 +16,6 @@ public class AddRoomServerService extends AbstractServerService{
         return instance;
     }
 
-    @Override
-    public void processRequest(AbstractServerRequest request, Channel channel) {
-        // Todo: check response type -> AbstractServerResponse
-        // send to leader
-        sendRequest(request, channel);
-        // get response from leader
-    }
-
     /***
      * Leader's Side AddRoomServerRequest Handling
      *
@@ -32,8 +24,13 @@ public class AddRoomServerService extends AbstractServerService{
      */
     public void handleRequest(AddRoomServerRequest request, Channel channel){
         // add to leader's room list
-        ServerState.globalRooms.add(request.getRoomId());
+        ServerState.globalRooms.put(request.getRoomId(), request.getServerId());
 
-        // broadcast to all the servers
+        // TODO : broadcast to all the servers
+    }
+
+    @Override
+    public void processRequest(AddRoomServerRequest request, Channel channel) {
+
     }
 }

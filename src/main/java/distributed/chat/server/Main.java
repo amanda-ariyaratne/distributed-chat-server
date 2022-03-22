@@ -34,6 +34,7 @@ public class Main {
             System.out.println("Command line arguments are incorrect");
             return;
         }
+
         System.out.println("Server id " + serverId);
         Map<String, ServerConfig> servers;
 
