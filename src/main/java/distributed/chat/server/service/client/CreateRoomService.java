@@ -120,6 +120,12 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
         Client client = ServerState.reservedRooms.get(roomId);
         ServerState.reservedRooms.remove(roomId);
 
+        System.out.println("Create room : approveIdentityProcessed : send response to client");
+        // send response to client
+        // {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
+        CreateRoomClientResponse createRoomClientResponse = new CreateRoomClientResponse(roomId, approved);
+        sendResponse(createRoomClientResponse, client);
+
         if (approved) {
             System.out.println("Create room : approveIdentityProcessed : approved");
 
@@ -149,10 +155,6 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
                     roomId);
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, room);
         }
-        System.out.println("Create room : approveIdentityProcessed : send response to client");
-        // send response to client
-        // {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
-        CreateRoomClientResponse createRoomClientResponse = new CreateRoomClientResponse(roomId, approved);
-        sendResponse(createRoomClientResponse, client);
+
     }
 }
