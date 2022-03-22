@@ -40,13 +40,13 @@ public class SyncGlobalListsServerRequest extends AbstractServerRequest {
             roomStr.concat("{'" + room.getKey() + "'"
                     + ":'" + room.getValue() + "'}, ");
         }
-        roomStr = roomStr.substring(0, roomStr.length()-2);
-        roomStr.concat("]");
+        String roomStrFinal = roomStr.substring(0, -2);
+        roomStrFinal.concat("]");
 
         return "{" +
                 "\"type\" : \"" + RequestConstants.SYNC_GLOBAL_LISTS + "\"" +
                 ", \"clients\" : " + clientStr +
-                ", \"rooms\" : " + roomStr +
+                ", \"rooms\" : " + roomStrFinal +
                 "}";
     }
 }
