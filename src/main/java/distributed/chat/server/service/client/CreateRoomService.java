@@ -148,12 +148,16 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
             ServerState.localRooms.get("MainHall-" + ServerState.localId).removeMember(client);
             ServerState.localRooms.get(roomId).addMember(client);
 
-            // broadcast room change to room members
+            // broadcast
             RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(
                     client.getIdentity(),
                     "MainHall-" + ServerState.localId,
                     roomId);
+            // broadcast room change to new room members
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, room);
+
+            // broadcast room change to mainhall members
+            JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get("MainHall-" + ServerState.localId));
         }
 
     }
