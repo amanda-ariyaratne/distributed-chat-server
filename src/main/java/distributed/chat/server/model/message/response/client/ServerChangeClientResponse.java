@@ -17,9 +17,9 @@ public class ServerChangeClientResponse extends AbstractClientResponse {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.SERVER_CHANGE + '\'' +
-                ", approved:'" + approved + '\'' +
-                ", serverId:'" + serverId + '\'' +
+                "\"type\" : \"" + RequestConstants.SERVER_CHANGE + '"' +
+                ", \"approved\" : \"" + approved + '"' +
+                ", \"serverid\" : \"" + serverId + '"' +
                 '}';
     }
 }

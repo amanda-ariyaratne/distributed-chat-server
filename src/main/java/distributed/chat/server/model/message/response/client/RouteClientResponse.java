@@ -19,10 +19,10 @@ public class RouteClientResponse extends AbstractClientResponse {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.ROUTE + '\'' +
-                ", roomId:'" + roomId + '\'' +
-                ", host:'" + host + '\'' +
-                ", port:'" + port + '\'' +
+                "\"type\" : \"" + RequestConstants.ROUTE + '"' +
+                ", \"roomid\" : \"" + roomId + '"' +
+                ", \"host\" : \"" + host + '"' +
+                ", \"port\" : \"" + port + '"' +
                 '}';
     }
 }

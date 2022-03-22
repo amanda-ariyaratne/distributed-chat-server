@@ -39,8 +39,8 @@ public class RoomListClientResponse extends AbstractClientResponse {
             }
         }
         return "{" +
-                "type:'" + RequestConstants.ROOM_LIST + '\'' +
-                ", rooms:[" + roomsStr + "]" +
+                "\"type\" : \"" + RequestConstants.ROOM_LIST + '"' +
+                ", \"rooms\" : [" + roomsStr + "]" +
                 '}';
     }
 }
