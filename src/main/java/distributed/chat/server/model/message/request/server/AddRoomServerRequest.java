@@ -30,7 +30,7 @@ public class AddRoomServerRequest extends AbstractServerRequest {
     public String toString() {
         return "{" +
                 "\"type\" : \"" + RequestConstants.ADD_ROOM + '\"' +
-                ", \"roomId\" : \"" + roomId + '\"' +
+                ", \"roomid\" : \"" + roomId + '\"' +
                 '}';
     }
 }

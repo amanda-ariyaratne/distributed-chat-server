@@ -25,9 +25,9 @@ public class DeleteRoomServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "\"type\":\"" + RequestConstants.DELETE_ROOM + '"' +
-                ", \"serverId\":\"" + serverId + '"' +
-                ", \"roomId\":\"" + roomId + '"' +
+                "\"type\" : \"" + RequestConstants.DELETE_ROOM + '"' +
+                ", \"serverid\" : \"" + serverId + '"' +
+                ", \"roomid\" : \"" + roomId + '"' +
                 '}';
     }
 }
