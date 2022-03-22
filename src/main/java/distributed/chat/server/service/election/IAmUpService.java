@@ -11,6 +11,9 @@ import io.netty.channel.Channel;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class IAmUpService extends FastBullyService<IAmUpMessage> {
     private static IAmUpService instance;
@@ -49,6 +52,7 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
     @Override
     public void processMessage(IAmUpMessage message, Channel channel) {
         if (!ServerState.serverChannels.containsKey(message.getServerId())) {
+            ServerState.isConnectionSet.getAndSet(false);
             new Thread(() -> {
                 try {
                     ServerConfig configs = ServerState.servers.get(message.getServerId());
@@ -65,18 +69,22 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
             }).start();
         }
 
-        if (ServerState.localId == ServerState.leaderId){
-            System.out.println("Sending Synced List");
-            SyncGlobalListsServerRequest syncLists = new SyncGlobalListsServerRequest(
-                    ServerState.globalClients.toArray(new String[ServerState.globalClients.size()]),
-                    ServerState.globalRooms
-            );
-            channel.writeAndFlush(syncLists.toString());
+        while (true) {
+            if (ServerState.isConnectionSet.get()) {
+                if (Objects.equals(ServerState.localId, ServerState.leaderId)){
+                    System.out.println("Sending Synced List");
+                    SyncGlobalListsServerRequest syncLists = new SyncGlobalListsServerRequest(
+                            ServerState.globalClients.toArray(new String[ServerState.globalClients.size()]),
+                            ServerState.globalRooms
+                    );
+                    channel.writeAndFlush(syncLists.toString());
+                }
+
+                System.out.println("Sending View message");
+                ViewMessage vm = new ViewMessage(ServerState.localId, ServerState.leaderId);
+                channel.writeAndFlush(vm.toString());
+            }
+            break;
         }
-
-        System.out.println("Sending View message");
-        ViewMessage vm = new ViewMessage(ServerState.localId, ServerState.leaderId);
-        channel.writeAndFlush(vm.toString());
-
     }
 }
