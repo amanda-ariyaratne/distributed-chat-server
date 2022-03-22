@@ -1,6 +1,7 @@
 package distributed.chat.server.bootstrap.initializers;
 
 import distributed.chat.server.handlers.client.*;
+import distributed.chat.server.handlers.server.ExceptionHandler;
 import distributed.chat.server.helper.MessageDecoder;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -26,6 +27,6 @@ public class ServerToClientInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("list",new ListHandler());
         pipeline.addLast("who",new WhoHandler());
         pipeline.addLast("message", new MessageHandler());
-
+        pipeline.addLast("exception", new ExceptionHandler());
     }
 }

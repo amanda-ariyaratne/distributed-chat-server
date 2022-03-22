@@ -1,10 +1,7 @@
 package distributed.chat.server.bootstrap.initializers;
 
-import distributed.chat.server.handlers.server.AddRoomInboundHandler;
-import distributed.chat.server.handlers.server.ReserveRoomConfirmHandler;
+import distributed.chat.server.handlers.server.*;
 import distributed.chat.server.helper.MessageDecoder;
-import distributed.chat.server.handlers.server.AddIdentityHandler;
-import distributed.chat.server.handlers.server.ReserveIdentityConfirmHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -25,5 +22,6 @@ public class ServerAsClientInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("reserve_identity_confirm", new ReserveIdentityConfirmHandler());
         pipeline.addLast("add_room", new AddRoomInboundHandler());
         pipeline.addLast("reserve_room_confirm", new ReserveRoomConfirmHandler());
+        pipeline.addLast("exception", new ExceptionHandler());
     }
 }

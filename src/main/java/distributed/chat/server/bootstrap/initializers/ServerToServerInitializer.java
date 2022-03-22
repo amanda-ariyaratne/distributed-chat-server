@@ -1,12 +1,9 @@
 package distributed.chat.server.bootstrap.initializers;
 
-import distributed.chat.server.handlers.server.DeleteRoomServerHandler;
-import distributed.chat.server.handlers.server.QuitRoomServerHandler;
-import distributed.chat.server.handlers.server.ReserveRoomHandler;
+import distributed.chat.server.handlers.server.*;
 import distributed.chat.server.handlers.election.*;
 import distributed.chat.server.handlers.heartbeat.HeartBeatHandler;
 import distributed.chat.server.helper.MessageDecoder;
-import distributed.chat.server.handlers.server.ReserveIdentityHandler;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -42,5 +39,6 @@ public class ServerToServerInitializer extends ChannelInitializer<SocketChannel>
         );
         pipeline.addLast("delete_room", new DeleteRoomServerHandler());
         pipeline.addLast("quit", new QuitRoomServerHandler());
+        pipeline.addLast("exception", new ExceptionHandler());
     }
 }
