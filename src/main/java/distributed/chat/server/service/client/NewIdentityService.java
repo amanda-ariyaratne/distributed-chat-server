@@ -51,6 +51,8 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
 
         if (isApproved) {
             System.out.println("is approved ");
+            System.out.println("identity " + identity);
+            System.out.println("client " + client);
             ServerState.localClients.put(identity, client);
             client.setIdentity(identity);
             client.setRoom(ServerState.localRooms.get("MainHall-" + ServerState.localId));
@@ -87,8 +89,9 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             return true;
         }
         else {
-            System.out.println("send reserveIdentityServerRequest");
+
             if (ServerState.localId != ServerState.leaderId){
+                System.out.println("send reserveIdentityServerRequest");
                 ReserveIdentityServerService.getInstance().processRequest(
                         new ReserveIdentityServerRequest(identity),
                         ServerState.serverChannels.get(ServerState.leaderId)
