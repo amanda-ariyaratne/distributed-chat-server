@@ -26,9 +26,9 @@ public class CreateRoomClientResponse extends AbstractClientResponse {
     @Override
     public String toString() {
         return "{" +
-                "\"type\":\"" + RequestConstants.CREATE_ROOM + '"' +
-                ", \"roomid\":\"" + roomId + '"' +
-                ", \"approved\":\"" + approved + '"' +
+                "\"type\":\"" + RequestConstants.CREATE_ROOM + "\"" +
+                ", \"roomid\":\"" + roomId + "\"" +
+                ", \"approved\":\"" + Boolean.toString(approved) + "\"" +
                 '}';
     }
 }
