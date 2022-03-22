@@ -25,6 +25,7 @@ public class QuitServerService extends AbstractServerService<QuitServerRequest, 
     }
 
     public void broadcastRequest(QuitServerRequest request){
+        System.out.println("QuitServerService : broadcast to other servers");
         broadcast(request);
     }
 }

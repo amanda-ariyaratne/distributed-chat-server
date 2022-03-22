@@ -42,6 +42,12 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
             deleteRoomClientRequest.setSender(client);
             DeleteRoomService.getInstance().handleDelete(room.getRoomId(), client, "");
         }
+        else{
+            // room change response to client
+            System.out.println("client is not an room owner");
+            RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), room.getRoomId(), "");
+            sendResponse(roomChangeClientResponse, client);
+        }
 
         System.out.println("remove client from list");
         // remove from client list
