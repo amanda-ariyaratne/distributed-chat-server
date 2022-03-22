@@ -5,6 +5,7 @@ import distributed.chat.server.bootstrap.client.ServerToClient;
 import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.service.election.IAmUpService;
+import distributed.chat.server.states.ServerState;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -40,6 +41,7 @@ public class Main {
 
         try {
             servers = readServerConfgis(configFile);
+            ServerState.serverConfig = servers.get(serverId);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("IO Exception occurred");
