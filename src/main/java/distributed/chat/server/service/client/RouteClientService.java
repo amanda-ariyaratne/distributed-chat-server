@@ -23,7 +23,8 @@ public class RouteClientService extends AbstractClientService<JoinRoomClientRequ
 
     }
 
-    public void handleJoinRoomResponse(RouteClientResponse response, Client client){
+    public void handleJoinRoomResponse(RouteClientResponse response, Client client) {
+        System.out.println("RouteClientService : " + response);
         sendResponse(response, client);
     }
 }

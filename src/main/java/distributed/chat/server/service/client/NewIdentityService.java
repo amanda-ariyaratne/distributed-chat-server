@@ -25,30 +25,35 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
 
     @Override
     public void processRequest(NewIdentityClientRequest request) {
+        System.out.println("NewIdentityService : processRequest");
         String identity = request.getIdentity();
         Client client = request.getSender();
         boolean approved;
         synchronized (this){
-            ServerState.reservedClients.put(identity, client); // TODO : no need to add to reservedClients map twice ???
+            System.out.println("add to reserved clients");
+            ServerState.reservedClients.put(identity, client);
             approved = isUniqueIdentity(identity, request);
         }
 
         if (!approved && !ServerState.reservedClients.containsKey(identity)){
+            System.out.println("send response");
             sendResponse(new NewIdentityClientResponse(false), client);
         }
     }
 
     public synchronized void approveIdentityProcessed(boolean isApproved, String identity){
+        System.out.println("approve identity processed");
         Client client = ServerState.reservedClients.get(identity);
         ServerState.reservedClients.remove(identity);
 
         if (isApproved) {
+            System.out.println("is approved ");
             ServerState.localClients.put(identity, client);
             client.setIdentity(identity);
             client.setRoom(ServerState.localRooms.get("MainHall-" + ServerState.localId));
             AddIdentityServerService.getInstance().broadcast(new AddIdentityServerRequest(identity));
         }
-
+        System.out.println("send response");
         sendResponse(new NewIdentityClientResponse(isApproved), client);
         JoinRoomClientService.getInstance().broadCastRoomChangeMessage(new RoomChangeClientResponse(
                 identity,
@@ -70,13 +75,15 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     }
 
     private boolean checkUniqueIdentity(String identity, NewIdentityClientRequest request) {
+        System.out.println("check unique id");
         boolean locallyRedundant = ServerState.globalClients.contains(identity);
-        boolean isReservedIdentity = ServerState.reservedClients.containsKey(identity); // TODO: ??
 
-        if (locallyRedundant || isReservedIdentity){
+        if (locallyRedundant){
+            System.out.println("locally redundant");
             return true;
         }
         else {
+            System.out.println("send reserveIdentityServerRequest");
             ReserveIdentityServerService.getInstance().processRequest(
                     new ReserveIdentityServerRequest(identity),
                     ServerState.serverChannels.get(ServerState.leaderId)

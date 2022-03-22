@@ -28,15 +28,19 @@ public class ReserveRoomServerService extends AbstractServerService <ReserveRoom
      */
     @Override
     public void processRequest(ReserveRoomServerRequest request, Channel channel) {
+        System.out.println("ReserveRoomServerService : process request");
         // if leader -> check the room validity
         if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
+            System.out.println("if leader");
             boolean isUnique = isUniqueIdentity(request.getRoomId(), request.getServerId());
             // send response to slave
             // {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
             ReserveRoomServerResponse reserveRoomServerResponse = new ReserveRoomServerResponse(request.getRoomId(), isUnique);
             sendResponse(reserveRoomServerResponse, channel);
+            System.out.println("response : "+reserveRoomServerResponse);
         }
         else { // if slave -> send to leader
+            System.out.println("not leader");
             sendRequest(request, ServerState.serverChannels.get(ServerState.leaderId));
         }
     }

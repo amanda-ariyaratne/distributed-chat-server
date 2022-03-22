@@ -22,6 +22,7 @@ public class ListService extends AbstractClientService<ListClientRequest, RoomLi
 
     @Override
     public void processRequest(ListClientRequest request) {
+        System.out.println("ListService : process request");
         // global room set to arraylist
         ArrayList<String> globalRoomList = new ArrayList<>(ServerState.globalRooms.size());
         globalRoomList.addAll(ServerState.globalRooms.keySet());
@@ -29,5 +30,7 @@ public class ListService extends AbstractClientService<ListClientRequest, RoomLi
         // response obj
         RoomListClientResponse roomListClientResponse = new RoomListClientResponse(globalRoomList);
         sendResponse(roomListClientResponse, request.getSender());
+
+        System.out.println("response : " + roomListClientResponse);
     }
 }

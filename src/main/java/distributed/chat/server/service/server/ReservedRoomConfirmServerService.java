@@ -24,9 +24,11 @@ public class ReservedRoomConfirmServerService  extends AbstractServerService<Res
      */
     @Override
     public void processRequest(ReserveRoomConfirmServerRequest request, Channel channel) {
+        System.out.println("ReservedRoomConfirmServerService : Process request");
         // get Create Room Identity Service
         CreateRoomService createRoomService = CreateRoomService.getInstance();
         // approve identity of room
+        System.out.println("approve identity");
         createRoomService.approveIdentityProcessed(request.isReserved(), request.getRoomId());
     }
 }

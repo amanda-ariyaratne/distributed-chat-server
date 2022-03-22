@@ -1,5 +1,7 @@
 package distributed.chat.server.bootstrap.initializers;
 
+import distributed.chat.server.handlers.server.DeleteRoomServerHandler;
+import distributed.chat.server.handlers.server.QuitRoomServerHandler;
 import distributed.chat.server.handlers.server.ReserveRoomHandler;
 import distributed.chat.server.handlers.election.*;
 import distributed.chat.server.handlers.heartbeat.HeartBeatHandler;
@@ -38,5 +40,7 @@ public class ServerToServerInitializer extends ChannelInitializer<SocketChannel>
                 new NominationHandler(),
                 new ViewHandler()
         );
+        pipeline.addLast("delete_room", new DeleteRoomServerHandler());
+        pipeline.addLast("quit", new QuitRoomServerHandler());
     }
 }

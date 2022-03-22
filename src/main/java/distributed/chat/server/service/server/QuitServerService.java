@@ -20,6 +20,7 @@ public class QuitServerService extends AbstractServerService<QuitServerRequest, 
 
     @Override
     public void processRequest(QuitServerRequest request, Channel channel) {
+        System.out.println("QuitServerService : process request");
         ServerState.globalRooms.remove(request.getIdentity());
     }
 
