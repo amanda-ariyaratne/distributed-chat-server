@@ -34,11 +34,12 @@ public class RoomListClientResponse extends AbstractClientResponse {
         for (int i = 0; i < rooms.size(); i++) {
             System.out.println("i " + i);
             if (i == rooms.size() - 1) {
-                roomsStr.concat("'" + rooms.get(i) + "'");
+                roomsStr = roomsStr.concat("'" + rooms.get(i) + "'");
             } else {
-                roomsStr.concat("'" + rooms.get(i) + "',");
+                roomsStr = roomsStr.concat("'" + rooms.get(i) + "',");
             }
         }
+        System.out.println("roomStr " + roomsStr);
         return "{" +
                 "\"type\" : \"" + RequestConstants.ROOM_LIST + '"' +
                 ", \"rooms\" : [" + roomsStr + "]" +

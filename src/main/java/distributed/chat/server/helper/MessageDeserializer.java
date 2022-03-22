@@ -112,12 +112,12 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 );
                 break;
 
-            case RequestConstants.SYNC_GLOBAL_LISTS:
-                request = new SyncGlobalListsServerRequest(
-                        requestJson.get("clients").getAsString(),
-                        requestJson.get("rooms").getAsString()
-                );
-                break;
+//            case RequestConstants.SYNC_GLOBAL_LISTS:
+//                request = new SyncGlobalListsServerRequest(
+//                        requestJson.get("clients").getAsString(),
+//                        requestJson.get("rooms").getAsString()
+//                );
+//                break;
             default:
                 throw new JsonParseException("Unexpected request type");
         }
