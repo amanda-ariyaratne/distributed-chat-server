@@ -23,11 +23,15 @@ public class ReserveIdentityServerService extends AbstractServerService<ReserveI
 
     @Override
     public void processRequest(ReserveIdentityServerRequest request, Channel channel) {
+        System.out.println("ReserveIdentityServerService : process request");
         if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
+            System.out.println("if leader");
             boolean isUnique = isUniqueIdentity(request.getIdentity());
+            System.out.println("is unique"+isUnique);
             sendResponse(new ReserveIdentityServerResponse(request.getIdentity(), isUnique), channel);
 
         } else {
+            System.out.println("not leader");
             sendRequest(request, ServerState.serverChannels.get(ServerState.leaderId));
         }
     }

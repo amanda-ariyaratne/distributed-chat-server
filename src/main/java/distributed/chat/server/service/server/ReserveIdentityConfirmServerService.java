@@ -20,6 +20,7 @@ public class ReserveIdentityConfirmServerService extends AbstractServerService<R
 
     @Override
     public void processRequest(ReserveIdentityConfirmServerRequest request, Channel channel) {
+        System.out.println("ReserveIdentityConfirmServerService : process request");
         NewIdentityService.getInstance().approveIdentityProcessed(request.isReserved(), request.getIdentity());
     }
 }

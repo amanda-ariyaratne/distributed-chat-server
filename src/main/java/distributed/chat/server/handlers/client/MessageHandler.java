@@ -20,6 +20,8 @@ public class MessageHandler extends ChannelInboundHandlerAdapter {
             MessageClientRequest messageClientRequest = (MessageClientRequest) msg;
             messageClientRequest.setSender(client);
 
+            System.out.println("MessageHandler :"+messageClientRequest);
+
             MessageService.getInstance().processRequest(messageClientRequest);
 
         } else {

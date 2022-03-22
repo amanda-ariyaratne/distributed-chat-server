@@ -8,10 +8,11 @@ public class MessageService extends AbstractClientService<MessageClientRequest, 
 
     private static MessageService instance;
 
-    private MessageService(){}
+    private MessageService() {
+    }
 
-    public static synchronized MessageService  getInstance(){
-        if (instance == null){
+    public static synchronized MessageService getInstance() {
+        if (instance == null) {
             instance = new MessageService();
         }
         return instance;
@@ -19,11 +20,14 @@ public class MessageService extends AbstractClientService<MessageClientRequest, 
 
     @Override
     public void processRequest(MessageClientRequest request) {
+        System.out.println("MessageService : processRequest");
         String content = request.getContent();
         String identity = request.getSender().getIdentity();
         Room room = request.getSender().getRoom();
         // broadcast response
         MessageClientResponse messageClientResponse = new MessageClientResponse(content, identity);
         broadcast(messageClientResponse, room);
+
+        System.out.println("broadcast : " + messageClientResponse);
     }
 }

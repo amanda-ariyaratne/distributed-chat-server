@@ -27,10 +27,12 @@ public class MoveJoinService extends AbstractClientService<MoveJoinClientRequest
      */
     @Override
     public void processRequest(MoveJoinClientRequest request) {
+        System.out.println("MoveJoinService : process request");
         Client client = request.getSender();
         String roomId = request.getRoomid();
         String former_roomId = request.getFormer();
         if (ServerState.localRooms.containsKey(roomId)) { // if room exists
+            System.out.println("if room exists");
             // add to client list
             ServerState.localClients.put(client.getIdentity(), client);
             // add to room
@@ -43,13 +45,20 @@ public class MoveJoinService extends AbstractClientService<MoveJoinClientRequest
             ServerChangeClientResponse serverChangeClientResponse = new ServerChangeClientResponse(true, ServerState.localId);
             sendResponse(serverChangeClientResponse, client);
 
+            System.out.println(" room change client response: " + roomChangeClientResponse);
+            System.out.println("server change client response : " + serverChangeClientResponse);
+
         } else { // room does not exist
+            System.out.println("room does not exist");
             // the server places the client in its MainHall chat room
             Room mainhall = ServerState.localRooms.get("MainHall-" + ServerState.localId);
             mainhall.addMember(client);
+
+            System.out.println("add to main hall "+ServerState.localId);
             // server broadcasts a roomchange message with the roomid as the MainHall-s2
             RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), former_roomId, roomId);
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, mainhall);
+            System.out.println("response " + roomChangeClientResponse);
         }
     }
 

@@ -14,9 +14,9 @@ public class DeleteRoomHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // {"type" : "deleteroom", "roomid" : "jokes"}
         AbstractClientRequest request = (AbstractClientRequest) msg;
-        if (request instanceof DeleteRoomClientRequest){
+        if (request instanceof DeleteRoomClientRequest) {
             Client client = ServerState.activeClients.get(ctx.channel().id());
-
+            System.out.println("delete room handler : msg " + msg);
             DeleteRoomClientRequest deleteRoomClientRequest = (DeleteRoomClientRequest) msg;
             deleteRoomClientRequest.setSender(client);
 
