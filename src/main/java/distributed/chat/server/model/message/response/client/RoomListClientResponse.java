@@ -32,6 +32,7 @@ public class RoomListClientResponse extends AbstractClientResponse {
     public String toString() {
         String roomsStr = "";
         for (int i = 0; i < rooms.size(); i++) {
+            System.out.println("i " + i);
             if (i == rooms.size() - 1) {
                 roomsStr.concat("'" + rooms.get(i) + "'");
             } else {
