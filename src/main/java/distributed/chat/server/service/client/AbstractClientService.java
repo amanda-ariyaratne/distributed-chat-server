@@ -28,6 +28,7 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
         Gson gson = new Gson();
         String responseJsonStr = gson.toJson(response);
 
+        System.out.println("Member length " + room.getMembers().size());
         for (Client member : room.getMembers()) {
             final ChannelFuture f = member.getCtx().writeAndFlush(responseJsonStr + "\n");
             f.addListener((ChannelFutureListener) future -> {
