@@ -29,7 +29,7 @@ public class DeleteRoomClientRequest extends AbstractClientRequest {
     public String toString() {
         return "{" +
                 "\"type\" : \"" + MessageType.DELETE_ROOM + '\"' +
-                ", \"roomId\" : \"" + roomId + '\"' +
+                ", \"roomid\" : \"" + roomId + '\"' +
                 '}';
     }
 }

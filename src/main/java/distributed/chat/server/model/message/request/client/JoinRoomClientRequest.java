@@ -30,7 +30,7 @@ public class JoinRoomClientRequest extends AbstractClientRequest {
     public String toString() {
         return "{" +
                 " \"type\" : \"" + MessageType.JOIN_ROOM + '\"' +
-                ", \"roomId\" : \"" + roomId + '\"' +
+                ", \"roomid\" : \"" + roomId + '\"' +
                 '}';
     }
 }
