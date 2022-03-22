@@ -43,6 +43,8 @@ public enum MessageType {
     COORDINATOR,
     ELECTION,
     ANSWER,
-    NOMINATION
+    NOMINATION,
+
+    SYNC_GLOBAL_LISTS
 
 }
