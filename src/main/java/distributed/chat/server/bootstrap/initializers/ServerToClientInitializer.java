@@ -1,8 +1,7 @@
 package distributed.chat.server.bootstrap.initializers;
 
-import distributed.chat.server.handlers.client.CreateRoomHandler;
+import distributed.chat.server.handlers.client.*;
 import distributed.chat.server.helper.MessageDecoder;
-import distributed.chat.server.handlers.client.NewIdentityHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -21,5 +20,12 @@ public class ServerToClientInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("pojo_decode", new MessageDecoder());
         pipeline.addLast("new_identity", new NewIdentityHandler());
         pipeline.addLast("create_room",new CreateRoomHandler());
+        pipeline.addLast("join_room",new JoinRoomHandler());
+        pipeline.addLast("move_join",new MoveJoinHandler());
+        pipeline.addLast("delete_room",new DeleteRoomHandler());
+        pipeline.addLast("list",new ListHandler());
+        pipeline.addLast("who",new WhoHandler());
+        pipeline.addLast("message", new MessageHandler());
+
     }
 }
