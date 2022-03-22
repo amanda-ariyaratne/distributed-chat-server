@@ -53,6 +53,7 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
     public void processMessage(IAmUpMessage message, Channel channel) {
         if (!ServerState.serverChannels.containsKey(message.getServerId())) {
             ServerState.isConnectionSet.getAndSet(false);
+            System.out.println("isConnectionSet false");
             new Thread(() -> {
                 try {
                     ServerConfig configs = ServerState.servers.get(message.getServerId());
@@ -71,7 +72,8 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
 
         while (true) {
             if (ServerState.isConnectionSet.get()) {
-                if (Objects.equals(ServerState.localId, ServerState.leaderId)){
+                System.out.println("isConnectionSet true");
+                if (ServerState.localId.equals(ServerState.leaderId)){
                     System.out.println("Sending Synced List");
                     SyncGlobalListsServerRequest syncLists = new SyncGlobalListsServerRequest(
                             ServerState.globalClients.toArray(new String[ServerState.globalClients.size()]),
