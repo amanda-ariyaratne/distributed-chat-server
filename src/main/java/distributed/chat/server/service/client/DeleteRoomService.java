@@ -68,6 +68,8 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
         // delete room
         ServerState.localRooms.remove(roomId);
 
+        // remove client from being a room owner
+        client.setAlready_room_owner(false);
     }
 
     private boolean isCapable(Client client, String roomId) {
