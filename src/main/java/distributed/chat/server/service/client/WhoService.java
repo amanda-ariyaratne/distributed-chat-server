@@ -42,7 +42,7 @@ public class WhoService extends AbstractClientService<WhoClientRequest, RoomCont
                 members_ids.add(member.getIdentity());
             }
             // response
-            RoomContentsClientResponse roomContentsClientResponse = new RoomContentsClientResponse(room.getRoomId(),members_ids , room.getOwner().getIdentity());
+            RoomContentsClientResponse roomContentsClientResponse = new RoomContentsClientResponse(room.getRoomId(), members_ids, room.getOwner() == null ? "" : room.getOwner().getIdentity());
             sendResponse(roomContentsClientResponse, request.getSender());
 
             System.out.println("response : "+ roomContentsClientResponse);
