@@ -23,9 +23,12 @@ public final class RequestConstants {
     public static final String QUIT                                 = "quit";
 
     public static final String ADD_ROOM                             = "addroom";
+    public static final String ADD_ROOM_RESPONSE                    = "addroomresponse";
     public static final String DELETE_IDENTITY                      = "deleteidentity";
     public static final String RESERVE_ROOM_CONFIRM                 = "reserveroomconfirm";
     public static final String RESERVE_ROOM                         = "reserveroomid";
+    public static final String RESERVE_ROOM_RESPONSE                = "reserveroomresponse";
+    public static final String RESERVE_ROOM_CONFIRM_RESPONSE        = "reserveroomconfirmresponse";
     public static final String ROOM_CHANGE                          = "roomchange";
     public static final String ROOM_CONTENTS                        = "roomcontents";
     public static final String ROOM_LIST                            = "roomlist";

@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.response.server;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
 public class AddRoomServerResponse extends AbstractServerResponse{
@@ -19,8 +20,8 @@ public class AddRoomServerResponse extends AbstractServerResponse{
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.ADD_ROOM_RESPONSE + '\'' +
-                ", added:" + added +
+                "\"type\" : \"" + RequestConstants.ADD_ROOM_RESPONSE + '"' +
+                ", \"added\" : \"" + added + '"' +
                 '}';
     }
 }
