@@ -36,6 +36,8 @@ public class ServerState {
     public static Map<String, String> globalRooms = new ConcurrentHashMap<>(); // String key= room-id, value=serverId
     public static Map<String, Client> reservedRooms = new ConcurrentHashMap<>(); // key = room-id
 
+    public static final Object globalRoomListLock = new Object();
+
     public static Map<String, ServerConfig> servers;
     public static Map<String, Channel> serverChannels = new ConcurrentHashMap<>();
 

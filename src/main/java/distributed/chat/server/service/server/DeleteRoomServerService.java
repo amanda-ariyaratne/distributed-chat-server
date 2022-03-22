@@ -20,7 +20,9 @@ public class DeleteRoomServerService extends AbstractServerService<DeleteRoomSer
 
     @Override
     public void processRequest(DeleteRoomServerRequest request, Channel channel) {
-        ServerState.globalRooms.remove(request.getRoomId());
+        synchronized (ServerState.globalRoomListLock){
+            ServerState.globalRooms.remove(request.getRoomId());
+        }
     }
 
     public void broadcastRequest(DeleteRoomServerRequest request) {

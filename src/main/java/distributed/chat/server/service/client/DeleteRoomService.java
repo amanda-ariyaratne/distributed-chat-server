@@ -30,7 +30,7 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
     @Override
     public void processRequest(DeleteRoomClientRequest request) {
         System.out.println("DeleteRoomService : process request");
-        synchronized (this) {
+        synchronized (ServerState.globalRoomListLock) {
             Client client = request.getSender();
             String roomId = request.getRoomId();
 
