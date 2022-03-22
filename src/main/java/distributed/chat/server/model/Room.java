@@ -12,7 +12,9 @@ public class Room {
         this.roomId = roomId;
         this.owner = owner;
         this.members = new HashSet<>();
-        this.members.add(owner);
+        if (owner != null) {
+            this.members.add(owner);
+        }
     }
 
     public String getRoomId() {
