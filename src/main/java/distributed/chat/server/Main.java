@@ -79,8 +79,6 @@ public class Main {
             }
         }
 
-        // TODO : Set Main Hall
-
         Thread clientThread = new Thread(() -> {
             try {
                 new ServerToClient(portServerToClient, finalServerId).start();
