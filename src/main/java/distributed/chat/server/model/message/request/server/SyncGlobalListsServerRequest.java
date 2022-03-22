@@ -3,6 +3,7 @@ package distributed.chat.server.model.message.request.server;
 import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.message.MessageType;
 
+import java.util.Iterator;
 import java.util.Map;
 
 public class SyncGlobalListsServerRequest extends AbstractServerRequest {
@@ -35,18 +36,22 @@ public class SyncGlobalListsServerRequest extends AbstractServerRequest {
         }
         clientStr.concat("]");
 
+        Iterator it = rooms.entrySet().iterator();
         String roomStr = "[";
-        for (Map.Entry<String, String> room : rooms.entrySet()) {
+        while (it.hasNext()) {
+            Map.Entry<String, String> room = (Map.Entry)it.next();
             roomStr.concat("{'" + room.getKey() + "'"
-                    + ":'" + room.getValue() + "'}, ");
+                    + ":'" + room.getValue() + "'}");
+
+            if (it.hasNext())
+                roomStr.concat(", ");
         }
-        String roomStrFinal = roomStr.substring(0, -2);
-        roomStrFinal.concat("]");
+        roomStr.concat("]");
 
         return "{" +
                 "\"type\" : \"" + RequestConstants.SYNC_GLOBAL_LISTS + "\"" +
                 ", \"clients\" : " + clientStr +
-                ", \"rooms\" : " + roomStrFinal +
+                ", \"rooms\" : " + roomStr +
                 "}";
     }
 }
