@@ -29,8 +29,8 @@ public class JoinRoomClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.JOIN_ROOM + '\'' +
-                ", roomId:'" + roomId + '\'' +
+                " \"type\" : \"" + MessageType.JOIN_ROOM + '\"' +
+                ", \"roomid\" : \"" + roomId + '\"' +
                 '}';
     }
 }

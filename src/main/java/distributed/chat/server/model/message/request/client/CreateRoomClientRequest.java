@@ -32,8 +32,8 @@ public class CreateRoomClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.CREATE_ROOM + '\'' +
-                ", roomId:'" + roomId + '\'' +
+                "\"type\" : \"" + MessageType.CREATE_ROOM + '\"' +
+                ", \"roomid\" : \"" + roomId + '\"' +
                 '}';
 
     }

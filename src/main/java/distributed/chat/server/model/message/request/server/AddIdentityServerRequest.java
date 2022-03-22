@@ -19,8 +19,8 @@ public class AddIdentityServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "\"type\":\"" + RequestConstants.ADD_IDENTITY + '"' +
-                ", \"identity\":\"" + identity + '"' +
+                "\"type\" : \"" + RequestConstants.ADD_IDENTITY + '\"' +
+                ", \"identity\" : \"" + identity + '\"' +
                 '}';
     }
 }
