@@ -15,8 +15,8 @@ public class ElectionMessage extends FastBullyMessage {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.ELECTION + "', " +
-                "serverId:'" + serverId + '\'' +
+                "\"type\" : \"" + RequestConstants.ELECTION + "\", " +
+                "\"serverid\" : \"" + serverId + '\"' +
                 '}';
     }
 }

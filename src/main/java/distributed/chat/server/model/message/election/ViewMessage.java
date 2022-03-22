@@ -25,9 +25,9 @@ public class ViewMessage extends FastBullyMessage {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.VIEW + "', " +
-                "serverId:'" + serverId + ", " +
-                "currentLeaderId:'" + currentLeaderId + '\'' +
+                "\"type\" : \"" + RequestConstants.VIEW + "\", " +
+                "\"serverid\" : \"" + serverId + "\", " +
+                "\"currentleaderid\" : \"" + currentLeaderId + '\"' +
                 '}';
     }
 }
