@@ -9,6 +9,8 @@ import distributed.chat.server.model.message.response.client.RoomChangeClientRes
 import distributed.chat.server.service.server.DeleteRoomServerService;
 import distributed.chat.server.states.ServerState;
 
+import java.util.Iterator;
+
 public class DeleteRoomService extends AbstractClientService<DeleteRoomClientRequest, DeleteRoomClientResponse> {
     private static DeleteRoomService instance;
 
@@ -95,11 +97,12 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get(roomId));
         }
 
-        for (Client member : room.getMembers()) {
+        for (Iterator<Client> i = room.getMembers().iterator(); i.hasNext();) {
+            Client member = i.next();
             // set main room as room of the member
             member.setRoom(mainHall);
             // remove from room
-            room.removeMember(member);
+            i.remove();
             // add to main hall
             mainHall.addMember(member);
         }
