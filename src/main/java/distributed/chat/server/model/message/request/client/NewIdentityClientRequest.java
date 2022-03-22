@@ -29,9 +29,9 @@ public class NewIdentityClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.NEW_IDENTITY + '\'' +
-                ", identity:'" + identity + '\'' +
-                ", sender:" + sender +
+                "\"type\":\"" + RequestConstants.NEW_IDENTITY + '"' +
+                ", \"identity\":\"" + identity + '"' +
+                ", \"sender\":" + sender +
                 '}';
     }
 }

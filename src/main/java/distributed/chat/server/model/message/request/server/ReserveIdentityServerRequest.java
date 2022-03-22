@@ -19,8 +19,8 @@ public class ReserveIdentityServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.RESERVE_IDENTITY + '\'' +
-                ", identity:'" + identity + '\'' +
+                "\"type\":\"" + RequestConstants.RESERVE_IDENTITY + '"' +
+                ", \"identity\":\"" + identity + '"' +
                 '}';
     }
 }

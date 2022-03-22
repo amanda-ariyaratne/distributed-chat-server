@@ -25,7 +25,7 @@ public class WhoClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.WHO + '\'' +
+                "\"type\":\"" + RequestConstants.WHO + '"' +
                 "}";
     }
 }

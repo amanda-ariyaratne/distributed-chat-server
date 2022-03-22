@@ -24,7 +24,7 @@ public class QuitClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.QUIT + '\'' +
+                "\"type\":\"" + RequestConstants.QUIT + '"' +
                 "}";
     }
 }

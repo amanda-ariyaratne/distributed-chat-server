@@ -29,9 +29,9 @@ public class ReserveRoomServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.RESERVE_ROOM + '\'' +
-                ", serverId:'" + serverId + '\'' +
-                ", roomId:'" + roomId + '\'' +
+                "\"type\":\"" + RequestConstants.RESERVE_ROOM + '"' +
+                ", \"serverId\":\"" + serverId + '"' +
+                ", \"roomId\":\"" + roomId + '"' +
                 '}';
     }
 }

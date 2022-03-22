@@ -18,7 +18,7 @@ public class QuitServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.QUIT + '\'' +
+                "\"type\":\"" + MessageType.QUIT + '"' +
                 "}";
     }
 }

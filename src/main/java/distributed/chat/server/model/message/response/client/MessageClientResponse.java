@@ -24,9 +24,9 @@ public class MessageClientResponse extends AbstractClientResponse {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + MessageType.MESSAGE_RESPONSE + '\'' +
-                ", identity:'" + identity + '\'' +
-                ", content:'" + content + '\'' +
+                "\"type\":\"" + MessageType.MESSAGE_RESPONSE + '"' +
+                ", \"identity\":\"" + identity + '"' +
+                ", \"content\":\"" + content + '"' +
                 '}';
     }
 }
