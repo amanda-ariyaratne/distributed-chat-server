@@ -85,7 +85,7 @@ public class Main {
         }
 
         while (true) {
-            if (ServerState.serverAsClientThreadCount.get() == servers.size()) {
+            if (ServerState.serverAsClientThreadCount.get() == servers.size()-1) {
                 IAmUpService iAmUpService = IAmUpService.getInstance();
                 iAmUpService.broadcastIAmUpMessage();
                 break;
