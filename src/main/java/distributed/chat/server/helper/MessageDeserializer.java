@@ -23,7 +23,7 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
         final JsonObject requestJson = jsonElement.getAsJsonObject();
 
         AbstractMessage request;
-
+        System.out.println(requestJson.get("type").getAsString());
         switch (requestJson.get("type").getAsString()) {
             case RequestConstants.NEW_IDENTITY:
                 request = new NewIdentityClientRequest(requestJson.get("identity").getAsString());
