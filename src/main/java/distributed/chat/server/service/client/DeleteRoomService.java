@@ -49,11 +49,14 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
 
     public void handleDelete(String roomId, Client client, String mainhall) {
         System.out.println("DeleteRoomService : handle delete");
-        // move client and other members to main-hall -> broadcast joinroom
-        moveMembersToMainHall(roomId, mainhall);
+
         // inform other servers - {"type" : "deleteroom", "serverid" : "s1", "roomid" : "jokes"}
         DeleteRoomServerRequest deleteRoomServerRequest = new DeleteRoomServerRequest(ServerState.localId, roomId);
         DeleteRoomServerService.getInstance().broadcastRequest(deleteRoomServerRequest);
+
+        // move client and other members to main-hall -> broadcast joinroom
+        moveMembersToMainHall(roomId, mainhall);
+
         // delete room
         ServerState.localRooms.remove(roomId);
         ServerState.globalRooms.remove(roomId);
@@ -76,13 +79,6 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
         Room mainHall = ServerState.localRooms.get("MainHall-" + ServerState.localId);
 
         for (Client member : room.getMembers()) {
-            // set main room as room of the member
-            member.setRoom(mainHall);
-            // remove from room
-            room.removeMember(member);
-            // add to main hall
-            mainHall.addMember(member);
-            // broadcast
 
             RoomChangeClientResponse roomChangeClientResponse;
             if (room.getOwner() == member){ // if owner
@@ -94,6 +90,15 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
 
             // broadcast to main-hall
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get("MainHall-" + ServerState.localId));
+        }
+
+        for (Client member : room.getMembers()) {
+            // set main room as room of the member
+            member.setRoom(mainHall);
+            // remove from room
+            room.removeMember(member);
+            // add to main hall
+            mainHall.addMember(member);
         }
     }
 }
