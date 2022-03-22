@@ -31,12 +31,12 @@ public enum MessageType {
     RESERVE_ROOM_RESPONSE,
     RESERVE_ROOM_CONFIRM,
     RESERVE_ROOM_CONFIRM_RESPONSE,
-    ADD_ROOM, // Todo
-    ADD_ROOM_RESPONSE, // Todo
+    ADD_ROOM,
+    ADD_ROOM_RESPONSE,
 
-    DELETE_IDENTITY, // Todo
+    DELETE_IDENTITY,
 
-    HEARTBEAT, // TODO
+    HEARTBEAT,
 
     I_AM_UP,
     VIEW,
@@ -45,6 +45,6 @@ public enum MessageType {
     ANSWER,
     NOMINATION,
 
-    SYNC_GLOBAL_LISTS
+    QUIT_SERVER, SYNC_GLOBAL_LISTS
 
 }

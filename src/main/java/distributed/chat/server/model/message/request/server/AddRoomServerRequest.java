@@ -31,6 +31,7 @@ public class AddRoomServerRequest extends AbstractServerRequest {
         return "{" +
                 "\"type\" : \"" + RequestConstants.ADD_ROOM + '\"' +
                 ", \"roomid\" : \"" + roomId + '\"' +
+                ", \"serverid\" : \"" + serverId + '\"' +
                 '}';
     }
 }

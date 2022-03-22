@@ -1,6 +1,7 @@
 package distributed.chat.server.bootstrap.server;
 
 import distributed.chat.server.bootstrap.initializers.ServerAsClientInitializer;
+import distributed.chat.server.service.election.IAmUpService;
 import distributed.chat.server.states.ServerState;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -34,8 +35,12 @@ public class ServerAsClient {
             ChannelFuture f = b.connect().sync();
             this.channel = f.channel();
             ServerState.serverChannels.put(serverId, this.channel);
-            f.channel().closeFuture().sync();
             System.out.println("Connected to " + serverId);
+
+            IAmUpService iAmUpService = IAmUpService.getInstance();
+            iAmUpService.broadcastIAmUpMessage();
+
+            f.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();
         }

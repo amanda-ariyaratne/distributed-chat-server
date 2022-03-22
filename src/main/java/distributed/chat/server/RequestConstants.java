@@ -46,6 +46,7 @@ public final class RequestConstants {
 
     public static final String SYNC_GLOBAL_LISTS                    = "syncgloballists";
     public static final String MESSAGE_RESPONSE                     = "message";
+    public static final String QUIT_SERVER                          = "quitserver";
 
 
     private RequestConstants() {
