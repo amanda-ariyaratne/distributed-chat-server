@@ -1,7 +1,6 @@
 package distributed.chat.server.bootstrap.server;
 
 import distributed.chat.server.bootstrap.initializers.ServerAsClientInitializer;
-import distributed.chat.server.service.election.IAmUpService;
 import distributed.chat.server.states.ServerState;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -37,7 +36,7 @@ public class ServerAsClient {
 
             ServerState.serverChannels.put(serverId, this.channel);
             ServerState.serverAsClientThreadCount.getAndIncrement();
-            System.out.println("Connected to " + serverId);
+            System.out.println("INFO: " + ServerState.localId + " Connected to " + serverId);
 
             f.channel().closeFuture().sync();
         } finally {

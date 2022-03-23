@@ -8,6 +8,9 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling request of room participant list
+ */
 public class WhoHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -20,7 +23,7 @@ public class WhoHandler extends ChannelInboundHandlerAdapter {
             WhoClientRequest whoClientRequest = (WhoClientRequest) msg;
             whoClientRequest.setSender(client);
 
-            System.out.println("\nWho Client request : "+ whoClientRequest);
+            System.out.println("INFO: " + "who request from "+ client.getIdentity() + " of the room " + client.getRoom());
 
             WhoService whoService = WhoService.getInstance();
             whoService.processRequest(whoClientRequest);

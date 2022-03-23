@@ -8,6 +8,9 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling request of list of chat rooms
+ */
 public class ListHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -19,9 +22,8 @@ public class ListHandler extends ChannelInboundHandlerAdapter {
             ListClientRequest listClientRequest = (ListClientRequest) msg;
             listClientRequest.setSender(client);
 
-            System.out.println("\nProcessing List Handler request : "+listClientRequest);
+            System.out.println("INFO: " + "list of chat rooms request from "+ client.getIdentity());
 
-            // get service
             ListService listService = ListService.getInstance();
             listService.processRequest(listClientRequest);
         } else {

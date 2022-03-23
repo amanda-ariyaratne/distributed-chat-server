@@ -8,11 +8,13 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling quit client request
+ */
 public class QuitHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        // {"type":"quit"}
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof QuitClientRequest) {
             Client client = ServerState.activeClients.get(ctx.channel().id());
@@ -20,7 +22,7 @@ public class QuitHandler extends ChannelInboundHandlerAdapter {
             QuitClientRequest quitClientRequest = (QuitClientRequest) msg;
             quitClientRequest.setSender(client);
 
-            System.out.println("\nQuit Client Handler : request = " + quitClientRequest);
+            System.out.println("INFO: " + "quit request from "+ client.getIdentity());
 
             QuitService.getInstance().processRequest(quitClientRequest);
 

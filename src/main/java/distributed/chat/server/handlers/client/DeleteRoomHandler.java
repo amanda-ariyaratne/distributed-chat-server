@@ -8,20 +8,22 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling delete room
+ */
 public class DeleteRoomHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        // {"type" : "deleteroom", "roomid" : "jokes"}
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof DeleteRoomClientRequest) {
             Client client = ServerState.activeClients.get(ctx.channel().id());
-            System.out.println("\nDelete room handler : msg " + msg);
             DeleteRoomClientRequest deleteRoomClientRequest = (DeleteRoomClientRequest) msg;
             deleteRoomClientRequest.setSender(client);
 
-            DeleteRoomService.getInstance().processRequest(deleteRoomClientRequest);
+            System.out.println("INFO: " + "delete room request from "+ client.getIdentity() + " for the room " + deleteRoomClientRequest.getRoomId());
 
+            DeleteRoomService.getInstance().processRequest(deleteRoomClientRequest);
         } else {
             ctx.fireChannelRead(msg);
         }

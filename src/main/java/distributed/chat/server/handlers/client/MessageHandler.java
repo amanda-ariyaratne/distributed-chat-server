@@ -8,11 +8,13 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling messages sent to a room
+ */
 public class MessageHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        // {"type" : "message", "content" : "Hi there!"}
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof MessageClientRequest){
             Client client = ServerState.activeClients.get(ctx.channel().id());
@@ -20,7 +22,7 @@ public class MessageHandler extends ChannelInboundHandlerAdapter {
             MessageClientRequest messageClientRequest = (MessageClientRequest) msg;
             messageClientRequest.setSender(client);
 
-            System.out.println("\nProcessing MessageHandler :"+messageClientRequest);
+            System.out.println("INFO: " + "message request from "+ client.getIdentity() + " to the room " + client.getRoom());
 
             MessageService.getInstance().processRequest(messageClientRequest);
 

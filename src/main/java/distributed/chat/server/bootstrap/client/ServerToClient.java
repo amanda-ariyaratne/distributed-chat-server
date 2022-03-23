@@ -2,8 +2,6 @@ package distributed.chat.server.bootstrap.client;
 
 import distributed.chat.server.bootstrap.initializers.ServerToClientInitializer;
 import distributed.chat.server.model.Room;
-import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
-import distributed.chat.server.service.server.AddRoomServerService;
 import distributed.chat.server.states.ServerState;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -37,10 +35,10 @@ public class ServerToClient {
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ServerToClientInitializer());
             ChannelFuture f = b.bind().sync();
-            System.out.println("Listening on service port " + port);
+            System.out.println("INFO: " + ServerState.localId + " listening on service port " + port);
             f.channel().closeFuture().sync();
         } finally {
-            System.out.println("Shutting down");
+            System.out.println("WARN: Shutting down");
             bossGroup.shutdownGracefully().sync();
             workerGroup.shutdownGracefully().sync();
         }
