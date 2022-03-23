@@ -53,6 +53,7 @@ public class Main {
         int portServerToServer = servers.get(serverId).getCoordination_port();
 
         ServerState.localId = serverId;
+        ServerState.leaderId = serverId;
         ServerState.localServerPort = portServerToServer;
         ServerState.localClientPort = portServerToClient;
 

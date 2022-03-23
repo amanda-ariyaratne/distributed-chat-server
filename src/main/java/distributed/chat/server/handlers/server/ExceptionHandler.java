@@ -1,5 +1,6 @@
 package distributed.chat.server.handlers.server;
 
+import distributed.chat.server.service.election.ElectionService;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -20,11 +21,11 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
                 ServerState.serverChannels.remove(server.getKey());
                 System.out.println(server.getKey() + " channel closed");
             }
-//            if (server.getKey().equals(ServerState.leaderId)) {
-//                System.out.println(server.getKey() + " was the coordinator.");
-//                ElectionService electionService = ElectionService.getInstance();
-//                electionService.startElection();
-//            }
+            if (server.getKey().equals(ServerState.leaderId)) {
+                System.out.println(server.getKey() + " was the coordinator.");
+                ElectionService electionService = ElectionService.getInstance();
+                electionService.startElection();
+            }
         }
     }
 
