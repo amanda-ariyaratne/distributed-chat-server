@@ -5,6 +5,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import java.net.SocketException;
 import java.util.Map;
 
 public class ExceptionHandler extends ChannelInboundHandlerAdapter {
@@ -29,6 +30,10 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
+        if (cause instanceof SocketException) {
+            ctx.close();
+        } else {
+            cause.printStackTrace();
+        }
     }
 }
