@@ -3,6 +3,7 @@ package distributed.chat.server.handlers.client;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.client.CreateRoomClientRequest;
+import distributed.chat.server.model.message.response.client.CreateRoomClientResponse;
 import distributed.chat.server.service.client.CreateRoomService;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
@@ -20,20 +21,24 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof CreateRoomClientRequest) {
-            // get active client
             Client client = ServerState.activeClients.get(ctx.channel().id());
-            // create message with new room id
-            CreateRoomClientRequest createRoomClientRequest = (CreateRoomClientRequest) msg;
-            System.out.println("Received Create Room Client Request " + createRoomClientRequest);
-            // set sender
-            createRoomClientRequest.setSender(client);
-            // add to reserved rooms
             String roomId = ((CreateRoomClientRequest) msg).getRoomId();
-            ServerState.reservedRooms.put(roomId, client);
-            System.out.println("Reserved " + roomId);
-            // validation and create room -> call service class
             CreateRoomService createRoomService = CreateRoomService.getInstance();
-            createRoomService.processRequest(createRoomClientRequest);
+
+            if (ServerState.serverChannels.size() >= ServerState.servers.size()/2) {
+                CreateRoomClientRequest createRoomClientRequest = (CreateRoomClientRequest) msg;
+                createRoomClientRequest.setSender(client);
+                System.out.println("Processing Create Room Client Request " + createRoomClientRequest);
+
+                ServerState.reservedRooms.put(roomId, client);
+                System.out.println("Reserved " + roomId);
+
+                createRoomService.processRequest(createRoomClientRequest);
+
+            } else {
+                createRoomService.sendResponse(new CreateRoomClientResponse(roomId, false), client);
+            }
+
         } else {
             ctx.fireChannelRead(msg);
         }

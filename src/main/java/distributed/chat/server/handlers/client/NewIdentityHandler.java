@@ -3,6 +3,7 @@ package distributed.chat.server.handlers.client;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.client.NewIdentityClientRequest;
+import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
 import distributed.chat.server.service.client.NewIdentityService;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
@@ -27,16 +28,21 @@ public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof NewIdentityClientRequest){
+            NewIdentityClientRequest newIdentityClientRequest = (NewIdentityClientRequest) msg;
             Client client = ServerState.activeClients.get(ctx.channel().id());
 
-            NewIdentityClientRequest newIdentityClientRequest = (NewIdentityClientRequest) msg;
             newIdentityClientRequest.setSender(client);
-            System.out.println("Received New Identity Client Request " + msg);
 
-//            ServerState.reservedClients.put(newIdentityClientRequest.getIdentity(), client);
-            System.out.println("Reserved new identity " + newIdentityClientRequest.getIdentity());
             NewIdentityService newIdentityService = NewIdentityService.getInstance();
-            newIdentityService.processRequest(newIdentityClientRequest);
+
+            if (ServerState.serverChannels.size() >= ServerState.servers.size()/2) {
+                System.out.println("Processing New Identity Client Request " + msg);
+                newIdentityService.processRequest(newIdentityClientRequest);
+            } else {
+                System.out.println("Rejecting New Identity Client Request " + msg);
+                newIdentityService.sendResponse(new NewIdentityClientResponse(false), client);
+            }
+
         } else {
             ctx.fireChannelRead(msg);
         }
