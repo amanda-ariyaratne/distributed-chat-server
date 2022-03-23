@@ -35,19 +35,26 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
         Client client = request.getSender();
         Room room = client.getRoom();
 
+        QuitServerRequest quitServerRequest;
+
         if (client.isAlready_room_owner()) { // already a room owner
             System.out.println("client already a owner");
             // delete room
             DeleteRoomClientRequest deleteRoomClientRequest = new DeleteRoomClientRequest(room.getRoomId());
             deleteRoomClientRequest.setSender(client);
             DeleteRoomService.getInstance().handleDelete(room.getRoomId(), client, "");
-        } else {
+
+            quitServerRequest = new QuitServerRequest(client.getIdentity(), room.getRoomId());
+        } else { // not a owner
             // room change response to client
             System.out.println("client is not an room owner");
             room.removeMember(client);
             System.out.println("Current room member no = " + room.getMembers().size());
             RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), room.getRoomId(), "");
             sendResponse(roomChangeClientResponse, client);
+
+            quitServerRequest = new QuitServerRequest(client.getIdentity(), "");
+
         }
 
         System.out.println("remove client from list");
@@ -62,7 +69,6 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
 
         System.out.println("broadcast to other servers");
         // broadcast to other servers
-        QuitServerRequest quitServerRequest = new QuitServerRequest(client.getIdentity());
         QuitServerService.getInstance().broadcastRequest(quitServerRequest);
 
     }
