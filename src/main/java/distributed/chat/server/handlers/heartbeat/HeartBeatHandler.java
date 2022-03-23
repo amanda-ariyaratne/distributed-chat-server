@@ -14,16 +14,11 @@ import java.util.Map;
 public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("Channel is inactive");
-    }
-
-    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof HeartBeatMessage){
             HeartBeatMessage message = (HeartBeatMessage) msg;
-            System.out.println(message);
+            System.out.println("Received heartbeat message " + message);
         } else {
             ctx.fireChannelRead(msg);
         }
@@ -31,9 +26,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void userEventTriggered(final ChannelHandlerContext ctx, final Object evt) {
-        System.out.println("userEventTriggered");
         if (evt instanceof IdleStateEvent) {
-            System.out.println("evt instanceof IdleStateEvent");
             final IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
             if (idleStateEvent.state() == IdleState.READER_IDLE) {
                 System.out.println("Did not receive heartbeat message");
@@ -52,12 +45,9 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                     }
                 }
             } else if (idleStateEvent.state() == IdleState.WRITER_IDLE) {
-                System.out.println("Sending heartbeat message");
                 HeartBeatMessage message = new HeartBeatMessage(ServerState.localId);
                 ctx.writeAndFlush(message.toString());
             }
-        } else {
-            System.out.println("NOT evt instanceof IdleStateEvent");
         }
     }
 
