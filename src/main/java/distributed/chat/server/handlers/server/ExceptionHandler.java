@@ -5,6 +5,7 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.handler.codec.CorruptedFrameException;
 
 import java.net.SocketException;
 import java.util.Map;
@@ -20,11 +21,12 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
                 ctx.close();
                 ServerState.serverChannels.remove(server.getKey());
                 System.out.println(server.getKey() + " channel closed");
-            }
-            if (server.getKey().equals(ServerState.leaderId)) {
-                System.out.println(server.getKey() + " was the coordinator.");
-                ElectionService electionService = ElectionService.getInstance();
-                electionService.startElection();
+
+                if (server.getKey().equals(ServerState.leaderId)) {
+                    System.out.println(server.getKey() + " was the coordinator.");
+                    ElectionService electionService = ElectionService.getInstance();
+                    electionService.startElection();
+                }
             }
         }
     }
@@ -33,7 +35,8 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         if (cause instanceof SocketException) {
             ctx.close();
-        } else {
+        } else if (cause instanceof CorruptedFrameException) {}
+        else {
             cause.printStackTrace();
         }
     }
