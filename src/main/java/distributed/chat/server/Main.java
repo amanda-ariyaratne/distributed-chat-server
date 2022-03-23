@@ -54,8 +54,10 @@ public class Main {
 
         ServerState.localId = serverId;
         ServerState.leaderId = serverId;
+        ServerState.leaderPort = portServerToServer;
         ServerState.localServerPort = portServerToServer;
         ServerState.localClientPort = portServerToClient;
+
 
         String finalServerId = serverId;
         Thread coordinatorThread = new Thread(() -> {

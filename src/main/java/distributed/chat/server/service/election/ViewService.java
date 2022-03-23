@@ -37,11 +37,14 @@ public class ViewService extends FastBullyService<ViewMessage> {
                     boolean isHighest = true;
                     for (int i = 0; i < ServerState.viewMessagesReceived.size(); i++) {
                         ViewMessage vm = ServerState.viewMessagesReceived.get(i);
-                        if (ServerState.leaderId == null || vm.getCurrentLeaderId().compareTo(ServerState.leaderId) > 0) {
-                            ServerState.leaderId = vm.getCurrentLeaderId();
-                        }
-                        if (vm.getServerId().compareTo(ServerState.localId) > 0) {
-                            isHighest = false;
+
+                        if (vm.getCurrentLeaderId() != null) {
+                            if (ServerState.leaderId == null || vm.getCurrentLeaderId().compareTo(ServerState.leaderId) > 0) {
+                                ServerState.leaderId = vm.getCurrentLeaderId();
+                            }
+                            if (vm.getServerId().compareTo(ServerState.localId) > 0) {
+                                isHighest = false;
+                            }
                         }
                     }
                     if (isHighest) {
