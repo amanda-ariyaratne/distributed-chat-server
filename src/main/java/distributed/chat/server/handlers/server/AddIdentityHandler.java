@@ -1,6 +1,7 @@
 package distributed.chat.server.handlers.server;
 
 import distributed.chat.server.model.message.AbstractMessage;
+import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.request.server.AddIdentityServerRequest;
 import distributed.chat.server.service.server.AddIdentityServerService;
 import io.netty.channel.ChannelHandlerContext;

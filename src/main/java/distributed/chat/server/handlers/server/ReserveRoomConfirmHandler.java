@@ -2,6 +2,7 @@ package distributed.chat.server.handlers.server;
 
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.server.ReserveRoomConfirmServerRequest;
+import distributed.chat.server.model.message.response.server.AbstractServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveRoomServerResponse;
 import distributed.chat.server.service.server.ReservedRoomConfirmServerService;
 import io.netty.channel.ChannelHandlerContext;

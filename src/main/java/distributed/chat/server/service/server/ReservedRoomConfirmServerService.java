@@ -29,6 +29,6 @@ public class ReservedRoomConfirmServerService  extends AbstractServerService<Res
         CreateRoomService createRoomService = CreateRoomService.getInstance();
         // approve identity of room
         System.out.println("approve identity");
-        createRoomService.approveIdentityProcessed(request.isReserved(), request.getRoomId());
+        createRoomService.approveRoomIdProcessed(request.isReserved(), request.getRoomId());
     }
 }
