@@ -30,7 +30,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                     }
                 }
             } else if (idleStateEvent.state() == IdleState.WRITER_IDLE) {
-                HeartBeatMessage message = new HeartBeatMessage();
+                HeartBeatMessage message = new HeartBeatMessage(ServerState.localId);
                 ctx.writeAndFlush(message.toString());
             }
         }
