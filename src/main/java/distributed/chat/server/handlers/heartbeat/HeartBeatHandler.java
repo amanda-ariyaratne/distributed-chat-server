@@ -2,10 +2,11 @@ package distributed.chat.server.handlers.heartbeat;
 
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.heartbeat.HeartBeatMessage;
-import distributed.chat.server.model.message.request.client.ListClientRequest;
 import distributed.chat.server.service.election.ElectionService;
 import distributed.chat.server.states.ServerState;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 
@@ -18,7 +19,6 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof HeartBeatMessage){
             HeartBeatMessage message = (HeartBeatMessage) msg;
-//            System.out.println("Received heartbeat message " + message);
         } else {
             ctx.fireChannelRead(msg);
         }

@@ -4,16 +4,11 @@ import distributed.chat.server.bootstrap.server.ServerAsClient;
 import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.model.message.election.IAmUpMessage;
 import distributed.chat.server.model.message.election.ViewMessage;
-import distributed.chat.server.model.message.request.server.SyncGlobalListsServerRequest;
 import distributed.chat.server.states.ElectionStatus;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class IAmUpService extends FastBullyService<IAmUpMessage> {
     private static IAmUpService instance;
