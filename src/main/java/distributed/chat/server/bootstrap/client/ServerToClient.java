@@ -2,6 +2,8 @@ package distributed.chat.server.bootstrap.client;
 
 import distributed.chat.server.bootstrap.initializers.ServerToClientInitializer;
 import distributed.chat.server.model.Room;
+import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
+import distributed.chat.server.service.server.AddRoomServerService;
 import distributed.chat.server.states.ServerState;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -22,6 +24,7 @@ public class ServerToClient {
                 "MainHall-" + id,
                 ServerState.localId
         );
+//        AddRoomServerService.getInstance().broadcast(new AddRoomServerRequest("MainHall-" + id, id));
     }
 
     public void start() throws Exception {

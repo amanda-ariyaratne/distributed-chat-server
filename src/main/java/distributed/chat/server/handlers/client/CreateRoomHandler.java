@@ -28,7 +28,7 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
             if (ServerState.serverChannels.size() >= ServerState.servers.size()/2) {
                 CreateRoomClientRequest createRoomClientRequest = (CreateRoomClientRequest) msg;
                 createRoomClientRequest.setSender(client);
-                System.out.println("Processing Create Room Client Request " + createRoomClientRequest);
+                System.out.println("\nProcessing Create Room Client Request " + createRoomClientRequest);
 
                 ServerState.reservedRooms.put(roomId, client);
                 System.out.println("Reserved " + roomId);

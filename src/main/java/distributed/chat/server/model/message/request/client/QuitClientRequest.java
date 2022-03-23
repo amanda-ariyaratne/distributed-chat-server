@@ -10,6 +10,7 @@ public class QuitClientRequest extends AbstractClientRequest {
     private Client sender;
 
     public QuitClientRequest() {
+        //{"type" : "quit"}
         super(MessageType.QUIT);
     }
 

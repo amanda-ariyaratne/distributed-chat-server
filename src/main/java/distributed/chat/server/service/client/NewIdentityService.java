@@ -49,9 +49,12 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     }
 
     public synchronized void approveIdentityProcessed(boolean reserved, String identity){
-        System.out.println("approve identity leader approval " + reserved);
+        System.out.println("approve identity leader approval " + !reserved);
         Client client = ServerState.reservedClients.get(identity);
         ServerState.reservedClients.remove(identity);
+
+        System.out.println("send response = " + !reserved);
+        sendResponse(new NewIdentityClientResponse(!reserved), client);
 
         if (!reserved) {
             ServerState.localClients.put(identity, client);
@@ -69,8 +72,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
                     "MainHall-" + ServerState.localId
             ), ServerState.localRooms.get("MainHall-" + ServerState.localId));
         }
-        System.out.println("send response " + !reserved);
-        sendResponse(new NewIdentityClientResponse(!reserved), client);
+
 
     }
 

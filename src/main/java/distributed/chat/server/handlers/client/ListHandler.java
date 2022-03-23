@@ -19,7 +19,7 @@ public class ListHandler extends ChannelInboundHandlerAdapter {
             ListClientRequest listClientRequest = (ListClientRequest) msg;
             listClientRequest.setSender(client);
 
-            System.out.println("ListHandler : "+listClientRequest);
+            System.out.println("\nProcessing List Handler request : "+listClientRequest);
 
             // get service
             ListService listService = ListService.getInstance();
