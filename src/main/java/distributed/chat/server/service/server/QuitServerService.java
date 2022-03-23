@@ -18,6 +18,11 @@ public class QuitServerService extends AbstractServerService<QuitServerRequest, 
         return instance;
     }
 
+    /***
+     *
+     * @param request {"type" : "quit", "identity" : "name"}
+     * @param channel channel
+     */
     @Override
     public void processRequest(QuitServerRequest request, Channel channel) {
         System.out.println("QuitServerService : process request");

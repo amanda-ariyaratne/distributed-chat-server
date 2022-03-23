@@ -20,7 +20,7 @@ public class QuitHandler extends ChannelInboundHandlerAdapter {
             QuitClientRequest quitClientRequest = (QuitClientRequest) msg;
             quitClientRequest.setSender(client);
 
-            System.out.println("Quit Client Handler : msg " + quitClientRequest);
+            System.out.println("\nQuit Client Handler : request = " + quitClientRequest);
 
             QuitService.getInstance().processRequest(quitClientRequest);
 

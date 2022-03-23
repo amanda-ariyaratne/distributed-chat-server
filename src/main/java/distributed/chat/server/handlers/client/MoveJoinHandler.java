@@ -20,7 +20,7 @@ public class MoveJoinHandler extends ChannelInboundHandlerAdapter {
             MoveJoinClientRequest moveJoinClientRequest = (MoveJoinClientRequest) msg;
             moveJoinClientRequest.setSender(client);
 
-            System.out.println("MoveJoinHandler : "+moveJoinClientRequest);
+            System.out.println("\nMoveJoinHandler : "+moveJoinClientRequest);
 
             MoveJoinService.getInstance().processRequest(moveJoinClientRequest);
 

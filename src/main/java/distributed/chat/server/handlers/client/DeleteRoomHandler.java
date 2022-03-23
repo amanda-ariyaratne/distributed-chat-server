@@ -16,7 +16,7 @@ public class DeleteRoomHandler extends ChannelInboundHandlerAdapter {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof DeleteRoomClientRequest) {
             Client client = ServerState.activeClients.get(ctx.channel().id());
-            System.out.println("delete room handler : msg " + msg);
+            System.out.println("\nDelete room handler : msg " + msg);
             DeleteRoomClientRequest deleteRoomClientRequest = (DeleteRoomClientRequest) msg;
             deleteRoomClientRequest.setSender(client);
 
