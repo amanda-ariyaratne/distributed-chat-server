@@ -5,7 +5,6 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.timeout.IdleState;
 
 import java.util.Map;
 
@@ -22,6 +21,7 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
                 // TODO : stop write requests
             }
             if (server.getKey().equals(ServerState.leaderId)) {
+                System.out.println("Channel Inactive detected");
                 System.out.println(server.getKey() + " was the coordinator.");
                 ElectionService electionService = ElectionService.getInstance();
                 electionService.startElection();
