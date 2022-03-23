@@ -14,6 +14,11 @@ import java.util.Map;
 public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
 
     @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("Channel is inactive");
+    }
+
+    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof HeartBeatMessage){
