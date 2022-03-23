@@ -7,10 +7,7 @@ import distributed.chat.server.model.message.election.*;
 import distributed.chat.server.model.message.heartbeat.HeartBeatMessage;
 import distributed.chat.server.model.message.request.client.*;
 import distributed.chat.server.model.message.request.server.*;
-import distributed.chat.server.model.message.response.server.AddIdentityServerResponse;
-import distributed.chat.server.model.message.response.server.ReserveIdentityConfirmServerResponse;
-import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
-import distributed.chat.server.model.message.response.server.ReserveRoomConfirmServerResponse;
+import distributed.chat.server.model.message.response.server.*;
 
 import java.lang.reflect.Type;
 
@@ -76,6 +73,12 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                         requestJson.get("serverid").getAsString(),
                         requestJson.get("roomid").getAsString()
                         );
+                break;
+            case RequestConstants.RESERVE_ROOM_RESPONSE:
+                request = new ReserveRoomServerResponse(
+                        requestJson.get("roomid").getAsString(),
+                        requestJson.get("reserved").getAsBoolean()
+                );
                 break;
             case RequestConstants.RESERVE_ROOM_CONFIRM:
                 request = new ReserveRoomConfirmServerRequest(

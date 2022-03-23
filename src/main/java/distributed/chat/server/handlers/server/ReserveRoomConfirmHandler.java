@@ -21,7 +21,7 @@ public class ReserveRoomConfirmHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerResponse instanceof ReserveRoomServerResponse) {
             // request object : {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
             ReserveRoomServerResponse response = (ReserveRoomServerResponse) abstractServerResponse;
-            System.out.println("Received Rseserve Room Server Response " + response);
+            System.out.println("\nReceived Rseserve Room Server Response " + response);
             // get service
             ReservedRoomConfirmServerService reservedRoomConfirmServerService = ReservedRoomConfirmServerService.getInstance();
             // call service
