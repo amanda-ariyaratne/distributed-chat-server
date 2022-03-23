@@ -22,6 +22,7 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
 
     public void broadcast(T response, Room room) {
         System.out.println("Member length " + room.getMembers().size());
+        System.out.println(response.toString());
         for (Client member : room.getMembers()) {
             final ChannelFuture f = member.getCtx().writeAndFlush(response.toString());
             f.addListener((ChannelFutureListener) future -> {
