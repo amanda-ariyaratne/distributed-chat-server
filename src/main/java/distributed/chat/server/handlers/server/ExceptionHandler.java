@@ -26,8 +26,10 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
                     ElectionService electionService = ElectionService.getInstance();
                     electionService.startElection();
                 }
+                break;
             }
         }
+
         ctx.close();
     }
 
