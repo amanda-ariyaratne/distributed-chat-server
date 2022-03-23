@@ -112,10 +112,10 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
     /***
      * Called from Reserved Room Confirm Server Service
      *
-     * @param approved boolean
+     * @param reserved boolean
      * @param roomId String
      */
-    public void approveIdentityProcessed(boolean approved, String roomId) {
+    public void approveIdentityProcessed(boolean reserved, String roomId) {
         System.out.println("Create room : approveIdentityProcessed");
         Client client = ServerState.reservedRooms.get(roomId);
         ServerState.reservedRooms.remove(roomId);
@@ -123,10 +123,10 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
         System.out.println("Create room : approveIdentityProcessed : send response to client");
         // send response to client
         // {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
-        CreateRoomClientResponse createRoomClientResponse = new CreateRoomClientResponse(roomId, approved);
+        CreateRoomClientResponse createRoomClientResponse = new CreateRoomClientResponse(roomId, !reserved);
         sendResponse(createRoomClientResponse, client);
 
-        if (approved) {
+        if (!reserved) {
             System.out.println("Create room : approveIdentityProcessed : approved");
 
             // set client as the owner
