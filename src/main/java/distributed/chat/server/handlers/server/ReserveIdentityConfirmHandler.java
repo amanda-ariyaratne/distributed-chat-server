@@ -1,5 +1,6 @@
 package distributed.chat.server.handlers.server;
 
+import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.server.ReserveIdentityConfirmServerRequest;
 import distributed.chat.server.model.message.response.server.AbstractServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
@@ -11,7 +12,7 @@ public class ReserveIdentityConfirmHandler extends ChannelInboundHandlerAdapter 
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        AbstractServerResponse abstractServerResponse = (AbstractServerResponse) msg;
+        AbstractMessage abstractServerResponse = (AbstractMessage) msg;
 
         if (abstractServerResponse instanceof ReserveIdentityServerResponse){
             ReserveIdentityServerResponse response = (ReserveIdentityServerResponse) abstractServerResponse;

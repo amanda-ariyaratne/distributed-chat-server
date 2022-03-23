@@ -36,7 +36,6 @@ public class Main {
             return;
         }
 
-        System.out.println("Server id " + serverId);
         Map<String, ServerConfig> servers;
 
         try {

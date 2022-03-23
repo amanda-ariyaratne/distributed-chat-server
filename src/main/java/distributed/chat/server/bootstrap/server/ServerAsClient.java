@@ -37,8 +37,6 @@ public class ServerAsClient {
 
             ServerState.serverChannels.put(serverId, this.channel);
             ServerState.serverAsClientThreadCount.getAndIncrement();
-            ServerState.isConnectionSet.getAndSet(true);
-            System.out.println("isConnectionSet true");
             System.out.println("Connected to " + serverId);
 
             f.channel().closeFuture().sync();

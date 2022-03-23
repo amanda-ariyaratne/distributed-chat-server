@@ -52,8 +52,6 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
     @Override
     public void processMessage(IAmUpMessage message, Channel channel) {
         if (!ServerState.serverChannels.containsKey(message.getServerId())) {
-            ServerState.isConnectionSet.getAndSet(false);
-            System.out.println("isConnectionSet false");
             new Thread(() -> {
                 try {
                     ServerConfig configs = ServerState.servers.get(message.getServerId());
@@ -70,25 +68,18 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
             }).start();
         }
 
-        while (true) {
-            if (ServerState.isConnectionSet.get()) {
-                System.out.println("isConnectionSet true");
-                if (ServerState.localId.equals(ServerState.leaderId)){
-                    System.out.println("Sending Synced List");
-                    SyncGlobalListsServerRequest syncLists = new SyncGlobalListsServerRequest(
-                            ServerState.globalClients.toArray(new String[ServerState.globalClients.size()]),
-                            ServerState.globalRooms
-                    );
-                    channel.writeAndFlush(syncLists.toString());
-                }
+        System.out.println("Sending View message");
+        ViewMessage vm = new ViewMessage(ServerState.localId, ServerState.leaderId);
+        channel.writeAndFlush(vm.toString());
+        System.out.println("Sent view message");
 
-                System.out.println("Sending View message");
-                ViewMessage vm = new ViewMessage(ServerState.localId, ServerState.leaderId);
-                System.out.println(vm);
-                channel.writeAndFlush(vm.toString());
-                System.out.println("Sent view message");
-                break;
-            }
-        }
+//        if (ServerState.localId.equals(ServerState.leaderId)){
+//            System.out.println("Sending Synced List");
+//            SyncGlobalListsServerRequest syncLists = new SyncGlobalListsServerRequest(
+//                    ServerState.globalClients.toArray(new String[ServerState.globalClients.size()]),
+//                    ServerState.globalRooms
+//            );
+//            channel.writeAndFlush(syncLists.toString());
+//        }
     }
 }
