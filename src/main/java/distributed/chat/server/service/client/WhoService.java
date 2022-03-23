@@ -37,15 +37,13 @@ public class WhoService extends AbstractClientService<WhoClientRequest, RoomCont
 
             // get members in room
             ArrayList<String> members_ids = new ArrayList<>();
-            System.out.println("members = "+members_ids);
+            System.out.println("No of Members = "+ room.getMembers().size());
             for (Client member : room.getMembers()){
                 members_ids.add(member.getIdentity());
             }
             // response
             RoomContentsClientResponse roomContentsClientResponse = new RoomContentsClientResponse(room.getRoomId(), members_ids, room.getOwner() == null ? "" : room.getOwner().getIdentity());
             sendResponse(roomContentsClientResponse, request.getSender());
-
-            System.out.println("response : "+ roomContentsClientResponse);
         }
     }
 }
