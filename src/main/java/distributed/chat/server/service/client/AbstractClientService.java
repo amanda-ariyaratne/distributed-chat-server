@@ -1,6 +1,5 @@
 package distributed.chat.server.service.client;
 
-import com.google.gson.Gson;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
 import distributed.chat.server.model.message.request.client.AbstractClientRequest;

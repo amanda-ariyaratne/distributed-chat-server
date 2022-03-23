@@ -1,7 +1,5 @@
 package distributed.chat.server.service.server;
 
-import com.google.gson.Gson;
-
 import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.response.server.AbstractServerResponse;
 import distributed.chat.server.states.ServerState;
