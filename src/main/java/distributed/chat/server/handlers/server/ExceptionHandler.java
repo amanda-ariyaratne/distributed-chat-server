@@ -10,6 +10,9 @@ import io.netty.handler.codec.CorruptedFrameException;
 import java.net.SocketException;
 import java.util.Map;
 
+/***
+ * Inbound Handler for handling exception
+ */
 public class ExceptionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
