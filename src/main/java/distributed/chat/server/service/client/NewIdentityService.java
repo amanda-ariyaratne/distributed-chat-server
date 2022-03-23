@@ -10,6 +10,8 @@ import distributed.chat.server.service.server.AddIdentityServerService;
 import distributed.chat.server.service.server.ReserveIdentityServerService;
 import distributed.chat.server.states.ServerState;
 
+import java.util.Objects;
+
 public class NewIdentityService extends AbstractClientService<NewIdentityClientRequest, NewIdentityClientResponse> {
 
     private static NewIdentityService instance;
@@ -27,31 +29,31 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     public void processRequest(NewIdentityClientRequest request) {
         String identity = request.getIdentity();
         Client client = request.getSender();
-        boolean approved;
+        boolean approved = false;
         synchronized (this){
             if (isValidValue(identity)){
                 approved = !checkReservedIdentity(identity, request);
-            } else {
-                approved = false;
-            }
-        }
+                if (approved) {
+                    approveIdentityProcessed(false, identity);
+                }
+                else if (!ServerState.reservedClients.containsKey(identity) && (Objects.equals(ServerState.localId, ServerState.leaderId))){
+                    System.out.println("send already taken or reserved response");
+                    sendResponse(new NewIdentityClientResponse(false), client);
+                }
 
-        if (approved) {
-            approveIdentityProcessed(false, identity);
-        }
-        else if (!ServerState.reservedClients.containsKey(identity)){
-            System.out.println("send already taken or reserved response");
-            sendResponse(new NewIdentityClientResponse(false), client);
+            } else {
+                System.out.println("invalid format");
+                sendResponse(new NewIdentityClientResponse(false), client);
+            }
         }
     }
 
     public synchronized void approveIdentityProcessed(boolean reserved, String identity){
-        System.out.println("approve identity processed");
+        System.out.println("approve identity leader approval " + reserved);
         Client client = ServerState.reservedClients.get(identity);
         ServerState.reservedClients.remove(identity);
 
         if (!reserved) {
-            System.out.println("approved " + identity);
             ServerState.localClients.put(identity, client);
             ServerState.globalClients.add(identity);
             client.setIdentity(identity);
