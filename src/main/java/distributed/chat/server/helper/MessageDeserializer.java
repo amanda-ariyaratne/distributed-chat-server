@@ -103,27 +103,27 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 );
                 break;
             case RequestConstants.HEARTBEAT:
-                request = new HeartBeatMessage();
+                request = new HeartBeatMessage(requestJson.get("serverid").getAsString());
                 break;
             case RequestConstants.I_AM_UP:
-                request = new IAmUpMessage(requestJson.get("serverId").getAsString());
+                request = new IAmUpMessage(requestJson.get("serverid").getAsString());
                 break;
             case RequestConstants.ANSWER:
-                request = new AnswerMessage(requestJson.get("serverId").getAsString());
+                request = new AnswerMessage(requestJson.get("serverid").getAsString());
                 break;
             case RequestConstants.COORDINATOR:
-                request = new CoordinatorMessage(requestJson.get("serverId").getAsString());
+                request = new CoordinatorMessage(requestJson.get("serverid").getAsString());
                 break;
             case RequestConstants.ELECTION:
-                request = new ElectionMessage(requestJson.get("serverId").getAsString());
+                request = new ElectionMessage(requestJson.get("serverid").getAsString());
                 break;
             case RequestConstants.NOMINATION:
-                request = new NominationMessage(requestJson.get("serverId").getAsString());
+                request = new NominationMessage(requestJson.get("serverid").getAsString());
                 break;
             case RequestConstants.VIEW:
                 request = new ViewMessage(
-                        requestJson.get("serverId").getAsString(),
-                        requestJson.get("currentLeaderId").getAsString()
+                        requestJson.get("serverid").getAsString(),
+                        requestJson.get("currentleaderid").getAsString()
                 );
                 break;
 

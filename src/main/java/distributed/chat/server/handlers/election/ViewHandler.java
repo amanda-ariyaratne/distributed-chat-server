@@ -11,7 +11,6 @@ public class ViewHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         AbstractMessage abstractMessage = (AbstractMessage) msg;
-
         if (abstractMessage instanceof ViewMessage){
             ViewMessage message = (ViewMessage) msg;
             System.out.println("Received View Message " + message);

@@ -19,8 +19,8 @@ public class AnswerMessage extends FastBullyMessage {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.ANSWER + "', " +
-                "serverId:'" + serverId + '\'' +
+                "\"type\" : \"" + RequestConstants.ANSWER + "\", " +
+                "\"serverid\" : \"" + serverId + '\"' +
                 '}';
     }
 }

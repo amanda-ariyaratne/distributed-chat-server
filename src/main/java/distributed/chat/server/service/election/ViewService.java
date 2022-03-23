@@ -27,7 +27,7 @@ public class ViewService extends FastBullyService<ViewMessage> {
     public void handleViewMessageReception() {
         if (ServerState.electionStatus == ElectionStatus.WAITING_FOR_VIEW) {
             synchronized (ServerState.electionLock) {
-                if (ServerState.viewMessagesReceived.size() == 0) {
+                if (ServerState.viewMessagesReceived.isEmpty()) {
                     System.out.println("viewMessagesReceived is empty");
                     // no view messages received
                     // this server is the coordinator
@@ -37,7 +37,7 @@ public class ViewService extends FastBullyService<ViewMessage> {
                     boolean isHighest = true;
                     for (int i = 0; i < ServerState.viewMessagesReceived.size(); i++) {
                         ViewMessage vm = ServerState.viewMessagesReceived.get(i);
-                        if (vm.getCurrentLeaderId().compareTo(ServerState.leaderId) > 0) {
+                        if (ServerState.leaderId == null || vm.getCurrentLeaderId().compareTo(ServerState.leaderId) > 0) {
                             ServerState.leaderId = vm.getCurrentLeaderId();
                         }
                         if (vm.getServerId().compareTo(ServerState.localId) > 0) {

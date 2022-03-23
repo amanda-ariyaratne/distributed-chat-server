@@ -31,7 +31,6 @@ public class NewIdentityClientRequest extends AbstractClientRequest {
         return "{" +
                 "\"type\":\"" + RequestConstants.NEW_IDENTITY + '"' +
                 ", \"identity\":\"" + identity + '"' +
-                ", \"sender\":" + sender +
                 '}';
     }
 }

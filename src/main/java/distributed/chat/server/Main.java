@@ -36,12 +36,13 @@ public class Main {
             return;
         }
 
-        System.out.println("Server id " + serverId);
         Map<String, ServerConfig> servers;
 
         try {
             servers = readServerConfgis(configFile);
             ServerState.serverConfig = servers.get(serverId);
+            ServerState.servers = servers;
+
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("IO Exception occurred");
@@ -50,6 +51,10 @@ public class Main {
         System.out.println("This is " + serverId);
         int portServerToClient = servers.get(serverId).getClients_port();
         int portServerToServer = servers.get(serverId).getCoordination_port();
+
+        ServerState.localId = serverId;
+        ServerState.localServerPort = portServerToServer;
+        ServerState.localClientPort = portServerToClient;
 
         String finalServerId = serverId;
         Thread coordinatorThread = new Thread(() -> {
@@ -85,8 +90,7 @@ public class Main {
         }
 
         while (true) {
-            if (ServerState.serverAsClientThreadCount.get() == servers.size()-1) {
-                System.out.println("I am up on MAin");
+            if (ServerState.serverAsClientThreadCount.get() == servers.size()) {
                 IAmUpService iAmUpService = IAmUpService.getInstance();
                 iAmUpService.broadcastIAmUpMessage();
                 break;
@@ -101,9 +105,6 @@ public class Main {
             }
         });
         clientThread.start();
-
-        System.out.println();
-
     }
 
     private static Map<String, ServerConfig> readServerConfgis(String configFile) throws IOException {

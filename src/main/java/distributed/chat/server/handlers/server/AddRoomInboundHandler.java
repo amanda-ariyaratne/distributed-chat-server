@@ -23,6 +23,8 @@ public class AddRoomInboundHandler extends ChannelInboundHandlerAdapter {
             AddRoomServerService addRoomServerService = AddRoomServerService.getInstance();
             addRoomServerService.handleRequest(addRoomServerRequest,
                     ServerState.serverChannels.get(ServerState.serverConfig.getServer_id()));
+        } else {
+            ctx.fireChannelRead(msg);
         }
     }
 }

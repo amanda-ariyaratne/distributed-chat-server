@@ -16,8 +16,8 @@ public class NominationMessage extends FastBullyMessage {
     @Override
     public String toString() {
         return "{" +
-                "type:'" + RequestConstants.NOMINATION + "', " +
-                "serverId:'" + serverId + '\'' +
+                "\"type\" : \"" + RequestConstants.NOMINATION + "\", " +
+                "\"serverid\" : \"" + serverId + '\"' +
                 '}';
     }
 }
