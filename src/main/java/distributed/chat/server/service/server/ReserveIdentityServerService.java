@@ -25,8 +25,7 @@ public class ReserveIdentityServerService extends AbstractServerService<ReserveI
         if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
             System.out.println("if leader");
             boolean reserved = !isUniqueIdentity(request.getIdentity());
-            System.out.println("is unique"+ !reserved);
-
+            System.out.println("is unique "+ !reserved);
             sendResponse(new ReserveIdentityServerResponse(request.getIdentity(), reserved), channel);
         } else {
             System.out.println("not leader");
