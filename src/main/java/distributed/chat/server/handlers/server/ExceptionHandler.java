@@ -18,7 +18,6 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             Channel c = ServerState.serverChannels.get(server.getKey());
             if (c.equals(ctx.channel())) {
-                ctx.close();
                 ServerState.serverChannels.remove(server.getKey());
                 System.out.println(server.getKey() + " channel closed");
 
@@ -29,6 +28,7 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
                 }
             }
         }
+        ctx.close();
     }
 
     @Override
