@@ -33,7 +33,6 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 request = new ReserveIdentityServerRequest(requestJson.get("identity").getAsString());
                 break;
             case RequestConstants.RESERVE_IDENTITY_RESPONSE:
-                System.out.println(requestJson);
                 request = new ReserveIdentityServerResponse(
                         requestJson.get("identity").getAsString(),
                         requestJson.get("reserved").getAsBoolean()

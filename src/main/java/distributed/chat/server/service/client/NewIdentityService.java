@@ -63,7 +63,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             ServerState.localRooms.get("MainHall-" + ServerState.localId).addMember(client);
             AddIdentityServerService.getInstance().broadcast(new AddIdentityServerRequest(identity));
         }
-        System.out.println("send response");
+        System.out.println("send response " + !reserved);
         sendResponse(new NewIdentityClientResponse(!reserved), client);
         JoinRoomClientService.getInstance().broadCastRoomChangeMessage(new RoomChangeClientResponse(
                 identity,
