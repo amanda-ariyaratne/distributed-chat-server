@@ -35,6 +35,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             if (isValidValue(identity)) {
                 approved = !checkReservedIdentity(identity, request);
                 if (approved) { // if leader
+                    ServerState.reservedClients.put(identity, request.getSender());
                     approveIdentityProcessed(false, identity);
                 } else if (!ServerState.reservedClients.containsKey(identity) && (Objects.equals(ServerState.localId, ServerState.leaderId))) {
                     System.out.println("send already taken or reserved response");
