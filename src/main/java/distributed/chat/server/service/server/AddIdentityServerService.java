@@ -20,6 +20,8 @@ public class AddIdentityServerService extends AbstractServerService<AddIdentityS
     @Override
     public void processRequest(AddIdentityServerRequest request, Channel channel) {
         System.out.println("AddIdentityServerService : process request");
-        ServerState.globalClients.add(request.getIdentity());
+        synchronized (this) {
+            ServerState.globalClients.add(request.getIdentity());
+        }
     }
 }

@@ -35,10 +35,6 @@ public class ReserveIdentityServerService extends AbstractServerService<ReserveI
     }
 
     private synchronized boolean isUniqueIdentity(String identity) {
-        boolean isUnique = !ServerState.globalClients.contains(identity);
-//        Todo
-        if (isUnique)
-            ServerState.globalClients.add(identity);
-        return isUnique;
+        return !ServerState.globalClients.contains(identity);
     }
 }

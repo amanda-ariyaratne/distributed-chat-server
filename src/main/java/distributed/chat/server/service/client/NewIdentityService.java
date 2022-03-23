@@ -29,7 +29,11 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         Client client = request.getSender();
         boolean approved;
         synchronized (this){
-            approved = isUniqueIdentity(identity, request);
+            if (isValidValue(identity)){
+                approved = !checkReservedIdentity(identity, request);
+            } else {
+                approved = false;
+            }
         }
 
         if (approved) {
@@ -68,20 +72,12 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         ), ServerState.localRooms.get("MainHall-" + ServerState.localId));
     }
 
-    private boolean isUniqueIdentity(String identity, NewIdentityClientRequest request) {
-        if (isValidValue(identity)) {
-            return !checkUniqueIdentity(identity, request);
-        }
-        return false;
-    }
-
     private boolean isValidValue(String identity) {
         if (identity.length() < 3 || identity.length() > 16) return false;
         else return Character.isAlphabetic(identity.charAt(0));
     }
 
-    // Todo: change the fun name
-    private boolean checkUniqueIdentity(String identity, NewIdentityClientRequest request) {
+    private boolean checkReservedIdentity(String identity, NewIdentityClientRequest request) {
         System.out.println("check unique id");
         boolean globallyRedundant = ServerState.globalClients.contains(identity);
         boolean alreadyReservedIdentity = ServerState.reservedClients.containsKey(identity);
@@ -99,9 +95,8 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
                         new ReserveIdentityServerRequest(identity),
                         ServerState.serverChannels.get(ServerState.leaderId)
                 );
-
+                return true;
             }
-
             return false;
         }
     }
