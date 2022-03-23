@@ -35,6 +35,8 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
                 createRoomService.processRequest(createRoomClientRequest);
 
             } else {
+                System.out.println("WARN: Minimum required number of servers missing");
+                System.out.println("WARN: Rejecting New room Request");
                 createRoomService.sendResponse(new CreateRoomClientResponse(roomId, false), client);
             }
 

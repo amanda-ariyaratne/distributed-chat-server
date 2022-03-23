@@ -23,20 +23,15 @@ public class MessageService extends AbstractClientService<MessageClientRequest, 
 
     @Override
     public void processRequest(MessageClientRequest request) {
-        System.out.println("MessageService : processRequest");
         String content = request.getContent();
         String identity = request.getSender().getIdentity();
         Room room = request.getSender().getRoom();
         // broadcast response
         MessageClientResponse messageClientResponse = new MessageClientResponse(content, identity);
         broadcast(messageClientResponse, room, request.getSender());
-
-        System.out.println("broadcast : " + messageClientResponse);
     }
 
     public void broadcast(MessageClientResponse response, Room room, Client sender) {
-        System.out.println("Member length " + room.getMembers().size());
-        System.out.println(response.toString());
         for (Client member : room.getMembers()) {
             if (member != sender){
                 final ChannelFuture f = member.getCtx().writeAndFlush(response + "\n");
@@ -45,6 +40,5 @@ public class MessageService extends AbstractClientService<MessageClientRequest, 
                 });
             }
         }
-        System.out.println("finish broadcast");
     }
 }

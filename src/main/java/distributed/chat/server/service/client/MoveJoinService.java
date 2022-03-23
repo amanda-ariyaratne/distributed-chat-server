@@ -27,12 +27,10 @@ public class MoveJoinService extends AbstractClientService<MoveJoinClientRequest
      */
     @Override
     public void processRequest(MoveJoinClientRequest request) {
-        System.out.println("MoveJoinService : process request");
         Client client = request.getSender();
         String roomId = request.getRoomid();
         String former_roomId = request.getFormer();
         if (ServerState.localRooms.containsKey(roomId)) { // if room exists
-            System.out.println("if room exists");
             // add to client list
             ServerState.localClients.put(client.getIdentity(), client);
             // add to room

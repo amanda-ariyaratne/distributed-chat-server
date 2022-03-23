@@ -8,6 +8,9 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling reserve requests
+ */
 public class ReserveIdentityHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -18,10 +21,11 @@ public class ReserveIdentityHandler extends ChannelInboundHandlerAdapter {
             ReserveIdentityServerRequest request = (ReserveIdentityServerRequest) abstractServerRequest;
 
             if (ServerState.serverChannels.size() >= ServerState.servers.size()/2) {
-                System.out.println("Process Reserve Identity Server Request " + request);
+                System.out.println("INFO: " + "recieved reserve request for " + request.getIdentity());
                 ReserveIdentityServerService.getInstance().processRequest(request, ctx.channel());
             } else {
-                System.out.println("Reject Reserve Identity Server Request " + request);
+                System.out.println("WARN: Minimum required number of servers missing");
+                System.out.println("WARN: " + "reject reserve request for " + request.getIdentity());
                 ReserveIdentityServerService.getInstance().sendResponse(
                         new ReserveIdentityServerResponse(request.getIdentity(), true), ctx.channel());
             }
