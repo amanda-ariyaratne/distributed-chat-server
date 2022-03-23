@@ -6,6 +6,9 @@ import distributed.chat.server.service.election.AnswerService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for answering to an election request
+ */
 public class AnswerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -13,7 +16,9 @@ public class AnswerHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof AnswerMessage){
             AnswerMessage message = (AnswerMessage) msg;
-            System.out.println("Received Answer Message " + message);
+
+            System.out.println("INFO: " + "answer response from "+ message.getServerId());
+
             AnswerService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

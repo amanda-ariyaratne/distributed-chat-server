@@ -6,6 +6,9 @@ import distributed.chat.server.service.election.CoordinatorService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for electing as coordinator message from the coordinator
+ */
 public class CoordinatorHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -13,7 +16,7 @@ public class CoordinatorHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof CoordinatorMessage){
             CoordinatorMessage message = (CoordinatorMessage) msg;
-            System.out.println("Received Coordinator Message " + message);
+            System.out.println("INFO: " + "coordinator response from "+ message.getServerId());
             CoordinatorService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

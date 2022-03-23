@@ -6,6 +6,9 @@ import distributed.chat.server.service.election.ElectionService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for starting an election
+ */
 public class ElectionHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -13,7 +16,7 @@ public class ElectionHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof ElectionMessage){
             ElectionMessage message = (ElectionMessage) msg;
-            System.out.println("Received Election Message " + message);
+            System.out.println("INFO: " + "election started by "+ message.getServerId());
             ElectionService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);
