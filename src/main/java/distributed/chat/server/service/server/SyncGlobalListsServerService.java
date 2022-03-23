@@ -5,6 +5,7 @@ import distributed.chat.server.model.message.response.server.AbstractServerRespo
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -25,12 +26,14 @@ public class SyncGlobalListsServerService extends AbstractServerService<SyncGlob
     public void processRequest(SyncGlobalListsServerRequest request, Channel channel) {
         if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
             synchronized (this){
-                for (String client: request.getClients()) {
-                    ServerState.globalClients.add(client);
-                }
+                System.out.println("\nSync : Add Clients");
+                ServerState.globalClients.addAll(Arrays.asList(request.getClients()));
+
+                System.out.println("\nSync : Add rooms");
                 for (Map.Entry<String, String> room : request.getRooms().entrySet()) {
-                    if (ServerState.globalRooms.containsKey(room.getKey()))
+                    if (!ServerState.globalRooms.containsKey(room.getKey())) {
                         ServerState.globalRooms.put(room.getKey(), room.getValue());
+                    }
                 }
             };
         }
