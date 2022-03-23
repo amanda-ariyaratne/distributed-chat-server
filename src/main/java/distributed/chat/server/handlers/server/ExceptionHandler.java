@@ -14,11 +14,10 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        System.out.println("Channel Inactive detected");
+        System.out.println("WARNING: Server Channel inactive detected");
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             Channel c = ServerState.serverChannels.get(server.getKey());
             if (c.equals(ctx.channel())) {
-                ctx.close();
                 ServerState.serverChannels.remove(server.getKey());
                 System.out.println(server.getKey() + " channel closed");
 
@@ -27,8 +26,11 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
                     ElectionService electionService = ElectionService.getInstance();
                     electionService.startElection();
                 }
+                break;
             }
         }
+
+        ctx.close();
     }
 
     @Override

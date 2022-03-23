@@ -152,7 +152,6 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                         requestJson.get("currentleaderid").getAsString()
                 );
                 break;
-
 //            case RequestConstants.SYNC_GLOBAL_LISTS:
 //                request = new SyncGlobalListsServerRequest(
 //                        requestJson.get("clients").getAsString(),

@@ -26,7 +26,6 @@ public class SyncGlobalListsServerRequest extends AbstractServerRequest {
 
     @Override
     public String toString() {
-        //Todo: list array
         String clientStr = "[";
         for (int i = 0; i < clients.length; i++) {
             clientStr.concat("'" + clients[i] + "'");
