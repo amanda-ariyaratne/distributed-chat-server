@@ -19,6 +19,8 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
         if (request instanceof HeartBeatMessage){
             HeartBeatMessage message = (HeartBeatMessage) msg;
             System.out.println(message);
+        } else {
+            ctx.fireChannelRead(msg);
         }
     }
 
@@ -26,6 +28,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
     public void userEventTriggered(final ChannelHandlerContext ctx, final Object evt) {
         System.out.println("userEventTriggered");
         if (evt instanceof IdleStateEvent) {
+            System.out.println("evt instanceof IdleStateEvent");
             final IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
             if (idleStateEvent.state() == IdleState.READER_IDLE) {
                 System.out.println("Did not receive heartbeat message");
@@ -48,6 +51,8 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                 HeartBeatMessage message = new HeartBeatMessage(ServerState.localId);
                 ctx.writeAndFlush(message.toString());
             }
+        } else {
+            System.out.println("NOT evt instanceof IdleStateEvent");
         }
     }
 
