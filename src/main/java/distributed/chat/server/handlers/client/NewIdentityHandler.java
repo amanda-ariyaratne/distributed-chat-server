@@ -28,6 +28,8 @@ public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof NewIdentityClientRequest){
+            System.out.println("New Identity Client Request");
+
             NewIdentityClientRequest newIdentityClientRequest = (NewIdentityClientRequest) msg;
             Client client = ServerState.activeClients.get(ctx.channel().id());
 
