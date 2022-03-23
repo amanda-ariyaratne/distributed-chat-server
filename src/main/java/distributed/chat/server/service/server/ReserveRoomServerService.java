@@ -32,10 +32,10 @@ public class ReserveRoomServerService extends AbstractServerService <ReserveRoom
         // if leader -> check the room validity
         if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
             System.out.println("if leader");
-            boolean isUnique = isUniqueIdentity(request.getRoomId(), request.getServerId());
+            boolean reserved = !isUniqueIdentity(request.getRoomId(), request.getServerId());
             // send response to slave
             // {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
-            ReserveRoomServerResponse reserveRoomServerResponse = new ReserveRoomServerResponse(request.getRoomId(), isUnique);
+            ReserveRoomServerResponse reserveRoomServerResponse = new ReserveRoomServerResponse(request.getRoomId(), reserved);
             sendResponse(reserveRoomServerResponse, channel);
             System.out.println("response : "+reserveRoomServerResponse);
         }

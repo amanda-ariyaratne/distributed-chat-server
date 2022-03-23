@@ -41,12 +41,12 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         }
     }
 
-    public synchronized void approveIdentityProcessed(boolean isApproved, String identity){
+    public synchronized void approveIdentityProcessed(boolean reserved, String identity){
         System.out.println("approve identity processed");
         Client client = ServerState.reservedClients.get(identity);
         ServerState.reservedClients.remove(identity);
 
-        if (isApproved) {
+        if (!reserved) {
             System.out.println("is approved ");
             System.out.println("identity " + identity);
             System.out.println("client " + client);
@@ -60,7 +60,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             AddIdentityServerService.getInstance().broadcast(new AddIdentityServerRequest(identity));
         }
         System.out.println("send response");
-        sendResponse(new NewIdentityClientResponse(isApproved), client);
+        sendResponse(new NewIdentityClientResponse(!reserved), client);
         JoinRoomClientService.getInstance().broadCastRoomChangeMessage(new RoomChangeClientResponse(
                 identity,
                 "",
