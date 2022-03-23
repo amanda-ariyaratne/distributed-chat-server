@@ -37,7 +37,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         }
 
         if (approved) {
-            approveIdentityProcessed(true, identity);
+            approveIdentityProcessed(false, identity);
         }
         else if (!ServerState.reservedClients.containsKey(identity)){
             System.out.println("send already taken or reserved response");
@@ -51,9 +51,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         ServerState.reservedClients.remove(identity);
 
         if (!reserved) {
-            System.out.println("is approved ");
-            System.out.println("identity " + identity);
-            System.out.println("client " + client);
+            System.out.println("approved " + identity);
             ServerState.localClients.put(identity, client);
             ServerState.globalClients.add(identity);
             client.setIdentity(identity);
@@ -62,14 +60,16 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             client.setRoom(ServerState.localRooms.get("MainHall-" + ServerState.localId));
             ServerState.localRooms.get("MainHall-" + ServerState.localId).addMember(client);
             AddIdentityServerService.getInstance().broadcast(new AddIdentityServerRequest(identity));
+
+            JoinRoomClientService.getInstance().broadCastRoomChangeMessage(new RoomChangeClientResponse(
+                    identity,
+                    "",
+                    "MainHall-" + ServerState.localId
+            ), ServerState.localRooms.get("MainHall-" + ServerState.localId));
         }
         System.out.println("send response " + !reserved);
         sendResponse(new NewIdentityClientResponse(!reserved), client);
-        JoinRoomClientService.getInstance().broadCastRoomChangeMessage(new RoomChangeClientResponse(
-                identity,
-                "",
-                "MainHall-" + ServerState.localId
-        ), ServerState.localRooms.get("MainHall-" + ServerState.localId));
+
     }
 
     private boolean isValidValue(String identity) {
