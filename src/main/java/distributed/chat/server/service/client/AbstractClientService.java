@@ -13,11 +13,8 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
     public abstract void processRequest(S request);
 
     public void broadcast(S request, Room room) {
-        Gson gson = new Gson();
-        String requestJsonStr = gson.toJson(request);
-
         for (Client member : room.getMembers()) {
-            final ChannelFuture f = member.getCtx().writeAndFlush(requestJsonStr + "\n");
+            final ChannelFuture f = member.getCtx().writeAndFlush(request.toString());
             f.addListener((ChannelFutureListener) future -> {
                 assert f == future;
             });
@@ -26,9 +23,8 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
 
     public void broadcast(T response, Room room) {
         System.out.println("Member length " + room.getMembers().size());
-        System.out.println(response.toString());
         for (Client member : room.getMembers()) {
-            final ChannelFuture f = member.getCtx().writeAndFlush(response + "\n");
+            final ChannelFuture f = member.getCtx().writeAndFlush(response.toString());
             f.addListener((ChannelFutureListener) future -> {
                 assert f == future;
             });
@@ -38,7 +34,7 @@ public abstract class AbstractClientService<S extends AbstractClientRequest, T e
 
     public void sendResponse(T response, Client client) {
         System.out.println(response.toString());
-        final ChannelFuture f = client.getCtx().writeAndFlush(response + "\n");
+        final ChannelFuture f = client.getCtx().writeAndFlush(response.toString());
         f.addListener((ChannelFutureListener) future -> {
             assert f == future;
         });
