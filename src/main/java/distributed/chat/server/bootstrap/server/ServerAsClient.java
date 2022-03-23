@@ -38,6 +38,7 @@ public class ServerAsClient {
             ServerState.serverChannels.put(serverId, this.channel);
             ServerState.serverAsClientThreadCount.getAndIncrement();
             System.out.println("Connected to " + serverId);
+            ServerState.globalRooms.put("MainHall-"+serverId, serverId);
 
             f.channel().closeFuture().sync();
         } finally {
