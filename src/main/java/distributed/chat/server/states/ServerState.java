@@ -59,6 +59,6 @@ public class ServerState {
     public static int nominatorOrCoordinatorTimeout = 5000;
 
     public static int heartBeatReadTimeout = 50;
-    public static int heartBeatWriteTimeout = 40;
+    public static int heartBeatWriteTimeout = 20;
 
 }
