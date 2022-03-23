@@ -15,7 +15,7 @@ public class AddIdentityHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractServerRequest instanceof AddIdentityServerRequest){
             AddIdentityServerRequest request = (AddIdentityServerRequest) abstractServerRequest;
-            System.out.println("Received Add Identity Server Request " + request);
+            System.out.println("\nReceived Add Identity Server Request " + request);
             AddIdentityServerService.getInstance().processRequest(request, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

@@ -22,6 +22,7 @@ public abstract class AbstractServerService<S extends AbstractServerRequest, T e
                 assert f == future;
             });
         }
+        System.out.println("Broadcast ended");
     }
 
     public void sendRequest(S request, Channel channel) {

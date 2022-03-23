@@ -30,8 +30,8 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
                 createRoomClientRequest.setSender(client);
                 System.out.println("\nProcessing Create Room Client Request " + createRoomClientRequest);
 
-                ServerState.reservedRooms.put(roomId, client);
-                System.out.println("Reserved " + roomId);
+//                ServerState.reservedRooms.put(roomId, client);
+//                System.out.println("Reserved " + roomId);
 
                 createRoomService.processRequest(createRoomClientRequest);
 

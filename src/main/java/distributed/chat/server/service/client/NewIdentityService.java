@@ -16,10 +16,11 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
 
     private static NewIdentityService instance;
 
-    private NewIdentityService(){}
+    private NewIdentityService() {
+    }
 
-    public static synchronized NewIdentityService  getInstance(){
-        if (instance == null){
+    public static synchronized NewIdentityService getInstance() {
+        if (instance == null) {
             instance = new NewIdentityService();
         }
         return instance;
@@ -30,13 +31,12 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         String identity = request.getIdentity();
         Client client = request.getSender();
         boolean approved = false;
-        synchronized (this){
-            if (isValidValue(identity)){
+        synchronized (this) {
+            if (isValidValue(identity)) {
                 approved = !checkReservedIdentity(identity, request);
-                if (approved) {
+                if (approved) { // if leader
                     approveIdentityProcessed(false, identity);
-                }
-                else if (!ServerState.reservedClients.containsKey(identity) && (Objects.equals(ServerState.localId, ServerState.leaderId))){
+                } else if (!ServerState.reservedClients.containsKey(identity) && (Objects.equals(ServerState.localId, ServerState.leaderId))) {
                     System.out.println("send already taken or reserved response");
                     sendResponse(new NewIdentityClientResponse(false), client);
                 }
@@ -48,7 +48,7 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         }
     }
 
-    public synchronized void approveIdentityProcessed(boolean reserved, String identity){
+    public synchronized void approveIdentityProcessed(boolean reserved, String identity) {
         System.out.println("approve identity leader approval " + !reserved);
         Client client = ServerState.reservedClients.get(identity);
         ServerState.reservedClients.remove(identity);
@@ -86,13 +86,13 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
         boolean globallyRedundant = ServerState.globalClients.contains(identity);
         boolean alreadyReservedIdentity = ServerState.reservedClients.containsKey(identity);
 
-        if (globallyRedundant || alreadyReservedIdentity){
+        if (globallyRedundant || alreadyReservedIdentity) {
             System.out.println("globally redundant or reserved");
+            sendResponse(new NewIdentityClientResponse(false), request.getSender());
             return true;
-        }
-        else {
+        } else {
 
-            if (ServerState.localId != ServerState.leaderId){
+            if (ServerState.localId != ServerState.leaderId) {
                 System.out.println("send reserveIdentityServerRequest");
                 ServerState.reservedClients.put(identity, request.getSender());
                 ReserveIdentityServerService.getInstance().processRequest(

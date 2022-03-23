@@ -23,9 +23,7 @@ public class ServerAsClientInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("string_encode", new StringEncoder(CharsetUtil.UTF_8));
         pipeline.addLast("pojo_decode", new MessageDecoder());
         pipeline.addLast("sync_global_lists", new SyncGlobalListsHandler());
-        pipeline.addLast("add_identity", new AddIdentityHandler());
         pipeline.addLast("reserve_identity_confirm", new ReserveIdentityConfirmHandler());
-        pipeline.addLast("add_room", new AddRoomInboundHandler());
         pipeline.addLast("reserve_room_confirm", new ReserveRoomConfirmHandler());
 
         pipeline.addLast(new IdleStateHandler(

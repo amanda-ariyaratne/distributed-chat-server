@@ -10,6 +10,7 @@ import distributed.chat.server.model.message.request.server.*;
 import distributed.chat.server.model.message.response.server.AddIdentityServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveIdentityConfirmServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
+import distributed.chat.server.model.message.response.server.ReserveRoomConfirmServerResponse;
 
 import java.lang.reflect.Type;
 
@@ -65,9 +66,36 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
             case RequestConstants.WHO:
                 request = new WhoClientRequest();
                 break;
+
+
             case RequestConstants.CREATE_ROOM:
                 request = new CreateRoomClientRequest(requestJson.get("roomid").getAsString());
                 break;
+            case RequestConstants.RESERVE_ROOM:
+                request = new ReserveRoomServerRequest(
+                        requestJson.get("serverid").getAsString(),
+                        requestJson.get("roomid").getAsString()
+                        );
+                break;
+            case RequestConstants.RESERVE_ROOM_CONFIRM:
+                request = new ReserveRoomConfirmServerRequest(
+                        requestJson.get("roomid").getAsString(),
+                        requestJson.get("reserved").getAsBoolean()
+                );
+                break;
+            case RequestConstants.RESERVE_ROOM_CONFIRM_RESPONSE:
+                request = new ReserveRoomConfirmServerResponse(
+                        requestJson.get("roomid").getAsString(),
+                        requestJson.get("reserved").getAsBoolean());
+                break;
+            case RequestConstants.ADD_ROOM:
+                request = new AddRoomServerRequest(
+                        requestJson.get("serverid").getAsString(),
+                        requestJson.get("roomid").getAsString()
+                );
+                break;
+
+
             case RequestConstants.JOIN_ROOM:
                 request = new JoinRoomClientRequest(requestJson.get("roomid").getAsString());
                 break;
@@ -90,12 +118,7 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
             case RequestConstants.QUIT_SERVER:
                 request = new QuitServerRequest(requestJson.get("identity").getAsString());
                 break;
-            case RequestConstants.ADD_ROOM:
-                request = new AddRoomServerRequest(
-                        requestJson.get("serverid").getAsString(),
-                        requestJson.get("roomid").getAsString()
-                );
-                break;
+
             case RequestConstants.DELETE_IDENTITY:
                 request = new DeleteIdentityServerRequest(
                         requestJson.get("serverid").getAsString(),
