@@ -14,7 +14,7 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        System.out.println("Channel Inactive detected");
+        System.out.println("WARNING: Server Channel inactive detected");
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             Channel c = ServerState.serverChannels.get(server.getKey());
             if (c.equals(ctx.channel())) {

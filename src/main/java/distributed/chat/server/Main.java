@@ -1,11 +1,12 @@
 package distributed.chat.server;
 
-import distributed.chat.server.bootstrap.server.ServerAsClient;
 import distributed.chat.server.bootstrap.client.ServerToClient;
+import distributed.chat.server.bootstrap.server.ServerAsClient;
 import distributed.chat.server.bootstrap.server.ServerToServer;
 import distributed.chat.server.model.ServerConfig;
 import distributed.chat.server.service.election.IAmUpService;
 import distributed.chat.server.states.ServerState;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,8 +19,10 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Logger logger = Logger.getLogger(Main.class);
+
         if (args.length != 4) {
-            System.out.println("Command line arguments are missing");
+            logger.warn("Command line arguments are missing");
             return;
         }
 
@@ -32,7 +35,7 @@ public class Main {
             serverId = args[3];
             configFile = args[1];
         } else {
-            System.out.println("Command line arguments are incorrect");
+            logger.warn("Command line arguments are Incorrect");
             return;
         }
 
@@ -45,10 +48,10 @@ public class Main {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("IO Exception occurred");
+            logger.warn("Command line arguments are missing");
             return;
         }
-        System.out.println("This is " + serverId);
+
         int portServerToClient = servers.get(serverId).getClients_port();
         int portServerToServer = servers.get(serverId).getCoordination_port();
 
@@ -57,7 +60,6 @@ public class Main {
         ServerState.leaderPort = portServerToServer;
         ServerState.localServerPort = portServerToServer;
         ServerState.localClientPort = portServerToClient;
-
 
         String finalServerId = serverId;
         Thread coordinatorThread = new Thread(() -> {
@@ -80,11 +82,11 @@ public class Main {
                                 configs.getServer_address(),
                                 configs.getCoordination_port()
                         );
-                        System.out.println("Trying to connect to " + configs.getServer_id() + " on port " + configs.getCoordination_port());
+                        logger.info("Trying to connect to " + configs.getServer_id() + " on port " + configs.getCoordination_port());
                         serverAsClient.start();
 
                     } catch (Exception e) {
-                        System.out.println("Connection failed for " + configs.getServer_id());
+                        logger.warn("Connection failed for " + configs.getServer_id());
                     } finally {
                         ServerState.serverAsClientThreadCount.getAndIncrement();
                     }

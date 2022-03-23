@@ -36,7 +36,6 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                         c.close();
                         ServerState.serverChannels.remove(server.getKey());
                         System.out.println(server.getKey() + " channel closed");
-                        // TODO : stop write requests
                     }
                     if (server.getKey().equals(ServerState.leaderId)) {
                         System.out.println("Leader was removed.");
