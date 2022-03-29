@@ -38,23 +38,19 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
                     ServerState.reservedClients.put(identity, request.getSender());
                     approveIdentityProcessed(false, identity);
                 } else if (!ServerState.reservedClients.containsKey(identity) && (Objects.equals(ServerState.localId, ServerState.leaderId))) {
-                    System.out.println("send already taken or reserved response");
                     sendResponse(new NewIdentityClientResponse(false), client);
                 }
 
             } else {
-                System.out.println("invalid format");
                 sendResponse(new NewIdentityClientResponse(false), client);
             }
         }
     }
 
     public synchronized void approveIdentityProcessed(boolean reserved, String identity) {
-        System.out.println("approve identity leader approval " + !reserved);
         Client client = ServerState.reservedClients.get(identity);
         ServerState.reservedClients.remove(identity);
 
-        System.out.println("send response = " + !reserved);
         sendResponse(new NewIdentityClientResponse(!reserved), client);
 
         if (!reserved) {
@@ -62,7 +58,6 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
             ServerState.globalClients.add(identity);
             client.setIdentity(identity);
 
-            System.out.println("Add " + identity + " to MainHall");
             client.setRoom(ServerState.localRooms.get("MainHall-" + ServerState.localId));
             ServerState.localRooms.get("MainHall-" + ServerState.localId).addMember(client);
             AddIdentityServerService.getInstance().broadcast(new AddIdentityServerRequest(identity));
@@ -83,18 +78,15 @@ public class NewIdentityService extends AbstractClientService<NewIdentityClientR
     }
 
     private boolean checkReservedIdentity(String identity, NewIdentityClientRequest request) {
-        System.out.println("check unique id");
         boolean globallyRedundant = ServerState.globalClients.contains(identity);
         boolean alreadyReservedIdentity = ServerState.reservedClients.containsKey(identity);
 
         if (globallyRedundant || alreadyReservedIdentity) {
-            System.out.println("globally redundant or reserved");
             sendResponse(new NewIdentityClientResponse(false), request.getSender());
             return true;
         } else {
 
             if (ServerState.localId != ServerState.leaderId) {
-                System.out.println("send reserveIdentityServerRequest");
                 ServerState.reservedClients.put(identity, request.getSender());
                 ReserveIdentityServerService.getInstance().processRequest(
                         new ReserveIdentityServerRequest(identity),

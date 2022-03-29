@@ -37,7 +37,6 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
      */
     @Override
     public void processRequest(CreateRoomClientRequest request) {
-        System.out.println("Create room : process request");
         Client client = request.getSender();
         String roomId = request.getRoomId();
 

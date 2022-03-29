@@ -30,14 +30,12 @@ public class WhoService extends AbstractClientService<WhoClientRequest, RoomCont
      */
     @Override
     public void processRequest(WhoClientRequest request) {
-        System.out.println("Who Service : process request");
         // get client's current room
         Room room = request.getSender().getRoom();
         if (room != null){
 
             // get members in room
             ArrayList<String> members_ids = new ArrayList<>();
-            System.out.println("No of Members = "+ room.getMembers().size());
             for (Client member : room.getMembers()){
                 members_ids.add(member.getIdentity());
             }
