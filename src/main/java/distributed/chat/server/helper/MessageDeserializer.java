@@ -93,8 +93,8 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 break;
             case RequestConstants.ADD_ROOM:
                 request = new AddRoomServerRequest(
-                        requestJson.get("serverid").getAsString(),
-                        requestJson.get("roomid").getAsString()
+                        requestJson.get("roomid").getAsString(),
+                        requestJson.get("serverid").getAsString()
                 );
                 break;
 
@@ -105,8 +105,8 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
             case RequestConstants.MOVE_JOIN:
                 request = new MoveJoinClientRequest(
                         requestJson.get("former").getAsString(),
-                        requestJson.get("identity").getAsString(),
-                        requestJson.get("roomid").getAsString()
+                        requestJson.get("roomid").getAsString(),
+                        requestJson.get("identity").getAsString()
                 );
                 break;
             case RequestConstants.DELETE_ROOM:
@@ -119,7 +119,10 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
                 request = new QuitClientRequest();
                 break;
             case RequestConstants.QUIT_SERVER:
-                request = new QuitServerRequest(requestJson.get("identity").getAsString());
+                request = new QuitServerRequest(
+                        requestJson.get("identity").getAsString(),
+                        requestJson.get("roomid").getAsString()
+                );
                 break;
 
             case RequestConstants.DELETE_IDENTITY:

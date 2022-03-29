@@ -1,5 +1,6 @@
 package distributed.chat.server.model.message.request.client;
 
+import distributed.chat.server.RequestConstants;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.MessageType;
 
@@ -40,7 +41,7 @@ public class MoveJoinClientRequest extends AbstractClientRequest {
     @Override
     public String toString() {
         return "{" +
-                " \"type\" : \"" + MessageType.MOVE_JOIN + '\"' +
+                " \"type\" : \"" + RequestConstants.MOVE_JOIN + '\"' +
                 ", \"former\" : \"" + former + '\"' +
                 ", \"roomid\" : \"" + roomid + '\"' +
                 ", \"identity\" : \"" + identity + '\"' +

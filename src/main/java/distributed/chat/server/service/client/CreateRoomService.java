@@ -45,9 +45,10 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
         synchronized (this) {
             if (!request.getSender().isAlready_room_owner()) { // check if client already a room owner
                 if (isValidValue(roomId)) { // if valid
-                    room_approved = !checkReservedRoomId(roomId, request);
+                    room_approved = checkReservedRoomId(roomId, request);
 
                     if (room_approved) { // if leader
+                        ServerState.reservedRooms.put(roomId, request.getSender());
                         approveRoomIdProcessed(false, roomId);
                     }
                     else if (!ServerState.reservedRooms.containsKey(roomId) && (Objects.equals(ServerState.localId, ServerState.leaderId))) { // if leader

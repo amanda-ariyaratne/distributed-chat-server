@@ -1,9 +1,12 @@
 package distributed.chat.server.service.server;
 
+import distributed.chat.server.model.Client;
 import distributed.chat.server.model.message.request.server.QuitServerRequest;
 import distributed.chat.server.model.message.response.server.AbstractServerResponse;
 import distributed.chat.server.states.ServerState;
 import io.netty.channel.Channel;
+
+import java.util.Objects;
 
 public class QuitServerService extends AbstractServerService<QuitServerRequest, AbstractServerResponse> {
     private static QuitServerService instance;
@@ -20,16 +23,32 @@ public class QuitServerService extends AbstractServerService<QuitServerRequest, 
 
     /***
      *
-     * @param request {"type" : "quit", "identity" : "name"}
+     * @param request {"type" : "quitserver", "identity" : "name", "roomid" : "room"}
      * @param channel channel
      */
     @Override
     public void processRequest(QuitServerRequest request, Channel channel) {
         System.out.println("QuitServerService : process request");
-        ServerState.globalRooms.remove(request.getIdentity());
+        synchronized (this) {
+            ServerState.globalClients.remove(request.getIdentity());
+            System.out.println(request.getIdentity() + " removed from global clients : ");
+            for (String id : ServerState.globalClients) {
+                System.out.println(id);
+            }
+            
+            if (!Objects.equals(request.getRoomId(), "")){ // if owner
+                System.out.println("Owner delete room from globalRooms "+ request.getRoomId());
+                ServerState.globalRooms.remove(request.getRoomId());
+                for (String rid : ServerState.globalRooms.keySet()) {
+                    System.out.println(rid);
+                }
+            }
+
+        }
+
     }
 
-    public void broadcastRequest(QuitServerRequest request){
+    public void broadcastRequest(QuitServerRequest request) {
         System.out.println("QuitServerService : broadcast to other servers");
         broadcast(request);
     }
