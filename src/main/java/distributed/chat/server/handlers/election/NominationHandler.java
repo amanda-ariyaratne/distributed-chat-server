@@ -3,9 +3,13 @@ package distributed.chat.server.handlers.election;
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.election.NominationMessage;
 import distributed.chat.server.service.election.NominationService;
+import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling nomination message by the election starter
+ */
 public class NominationHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -13,7 +17,7 @@ public class NominationHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof NominationMessage){
             NominationMessage message = (NominationMessage) msg;
-            System.out.println("Received Nomination Message " + message);
+            System.out.println("INFO: " + ServerState.localId + " nominated for the leader by "+ message.getServerId());
             NominationService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

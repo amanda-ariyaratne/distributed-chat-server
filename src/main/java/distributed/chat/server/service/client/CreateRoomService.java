@@ -52,16 +52,13 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
                         approveRoomIdProcessed(false, roomId);
                     }
                     else if (!ServerState.reservedRooms.containsKey(roomId) && (Objects.equals(ServerState.localId, ServerState.leaderId))) { // if leader
-                        System.out.println("send already taken or reserved response");
                         sendResponse(new CreateRoomClientResponse(roomId, false), client);
                     }
 
                 } else {
-                    System.out.println("invalid format");
                     sendResponse(new CreateRoomClientResponse(roomId, false), client);
                 }
             } else { // if already an owner
-                System.out.println(client.getIdentity() + " already a room owner");
                 sendResponse(new CreateRoomClientResponse(roomId, false), client);
             }
         }
@@ -70,7 +67,6 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
 
 
     private boolean isValidValue(String identity) {
-        System.out.println("Create room : is valid");
         if (identity.length() < 3 || identity.length() > 16) return false;
         else return Character.isAlphabetic(identity.charAt(0));
     }
@@ -85,18 +81,15 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
      * @return boolean
      */
     private boolean checkReservedRoomId(String roomId, CreateRoomClientRequest request) {
-        System.out.println("Create room : check unique room id");
         boolean globallyRedundant = ServerState.globalRooms.containsKey(roomId);
         boolean alreadyReservedRoomId = ServerState.reservedRooms.containsKey(roomId);
 
         if (globallyRedundant || alreadyReservedRoomId) { // room-id already exists in server's global room list or reserved
-            System.out.println("Create room : globally redundant or reserved");
             sendResponse(new CreateRoomClientResponse(roomId, false), request.getSender());
             return false;
         } else { // check room-id with leader's list -> send request to leader
 
             if (!Objects.equals(ServerState.localId, ServerState.leaderId)) { // if not leader
-                System.out.println("Create room : check room id with leaders list");
                 ServerState.reservedRooms.put(roomId, request.getSender());
 
                 // request message object - {"type" : "reserveroomid", "serverid" : "s1", "roomid" : "jokes"}
@@ -119,20 +112,15 @@ public class CreateRoomService extends AbstractClientService<CreateRoomClientReq
      * @param roomId String
      */
     public void approveRoomIdProcessed(boolean reserved, String roomId) {
-        System.out.println("Create room : approveRoomIdProcessed");
         Client client = ServerState.reservedRooms.get(roomId);
         ServerState.reservedRooms.remove(roomId);
 
-        System.out.println("send response = " + !reserved);
-        System.out.println(client);
         // send response to client
         // {"type" : "createroom", "roomid" : "jokes", "approved" : "true"}
         CreateRoomClientResponse createRoomClientResponse = new CreateRoomClientResponse(roomId, !reserved);
         sendResponse(createRoomClientResponse, client);
 
         if (!reserved) {
-            System.out.println("Create room : approveIdentityProcessed : approved");
-
             // set client as the owner
             client.setAlready_room_owner(true);
 

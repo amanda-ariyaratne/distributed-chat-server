@@ -9,6 +9,12 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling new room syncing
+ *
+ * {"type" : "addroom", "serverid" : "s1", "roomid" : "jokes"}
+ *
+ */
 public class AddRoomInboundHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -18,9 +24,11 @@ public class AddRoomInboundHandler extends ChannelInboundHandlerAdapter {
         if (request instanceof AddRoomServerRequest) {
             // request object
             AddRoomServerRequest addRoomServerRequest = (AddRoomServerRequest) msg;
-            System.out.println("\nReceived Add Room Server Request " + addRoomServerRequest);
             // call service -> AddRoomServerService
             AddRoomServerService addRoomServerService = AddRoomServerService.getInstance();
+
+            System.out.println("INFO: " + "add room " + addRoomServerRequest.getRoomId() + " to the global room list");
+
             addRoomServerService.handleRequest(addRoomServerRequest,
                     ServerState.serverChannels.get(ServerState.serverConfig.getServer_id()));
         } else {

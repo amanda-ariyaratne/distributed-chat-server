@@ -38,7 +38,6 @@ public class RoomListClientResponse extends AbstractClientResponse {
                 roomsStr = roomsStr + "\"" + rooms.get(i) + "\",";
             }
         }
-        System.out.println("roomStr " + roomsStr);
         return "{" +
                 "\"type\" : \"" + RequestConstants.ROOM_LIST + '"' +
                 ", \"rooms\" : [" + roomsStr + "]" +

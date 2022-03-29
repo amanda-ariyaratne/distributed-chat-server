@@ -12,6 +12,9 @@ import io.netty.handler.timeout.IdleStateEvent;
 
 import java.util.Map;
 
+/***
+ * Inbound Handler for handling heartbeats
+ */
 public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -29,18 +32,20 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
         if (evt instanceof IdleStateEvent) {
             final IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
             if (idleStateEvent.state() == IdleState.READER_IDLE) {
-                System.out.println("Did not receive heartbeat message");
+                System.out.println("WARN: Did not receive heartbeat message");
                 for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
                     Channel c = ServerState.serverChannels.get(server.getKey());
                     if (c.equals(ctx.channel())) {
                         c.close();
                         ServerState.serverChannels.remove(server.getKey());
-                        System.out.println(server.getKey() + " channel closed");
-                    }
-                    if (server.getKey().equals(ServerState.leaderId)) {
-                        System.out.println("Leader was removed.");
-                        ElectionService electionService = ElectionService.getInstance();
-                        electionService.startElection();
+                        System.out.println("INFO: " + server.getKey() + " channel closed");
+
+                        if (server.getKey().equals(ServerState.leaderId)) {
+                            System.out.println("WARN: " + server.getKey() + " was the leader");
+                            ElectionService electionService = ElectionService.getInstance();
+                            electionService.startElection();
+                        }
+                        break;
                     }
                 }
             } else if (idleStateEvent.state() == IdleState.WRITER_IDLE) {

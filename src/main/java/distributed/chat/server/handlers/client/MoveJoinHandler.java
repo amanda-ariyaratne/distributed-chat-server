@@ -8,6 +8,9 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling move join request from client
+ */
 public class MoveJoinHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -28,7 +31,9 @@ public class MoveJoinHandler extends ChannelInboundHandlerAdapter {
             client.setIdentity(moveJoinClientRequest.getIdentity());
             moveJoinClientRequest.setSender(client);
 
-            System.out.println("\nMoveJoinHandler : "+moveJoinClientRequest);
+            System.out.println("INFO: " + "movejoin request from "+ client.getIdentity() +
+                    " from the room " + moveJoinClientRequest.getFormer() +
+                    " to the room " + moveJoinClientRequest.getRoomid());
 
             MoveJoinService.getInstance().processRequest(moveJoinClientRequest);
 

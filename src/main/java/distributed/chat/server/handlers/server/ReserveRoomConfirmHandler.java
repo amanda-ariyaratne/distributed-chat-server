@@ -21,10 +21,11 @@ public class ReserveRoomConfirmHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerResponse instanceof ReserveRoomServerResponse) {
             // request object : {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
             ReserveRoomServerResponse response = (ReserveRoomServerResponse) abstractServerResponse;
-            System.out.println("\nReceived Rseserve Room Server Response " + response);
+            System.out.println("INFO: Received Rseserve Room Server Response " + response);
             // get service
             ReservedRoomConfirmServerService reservedRoomConfirmServerService = ReservedRoomConfirmServerService.getInstance();
-            // call service
+
+            System.out.println("INFO: " + "recieved reserve request for room " + response.getRoomId());
             reservedRoomConfirmServerService.processRequest(
                     new ReserveRoomConfirmServerRequest(response.getRoomId(), response.isReserved()), ctx.channel());
         } else {

@@ -12,6 +12,10 @@ public class ElectionMessage extends FastBullyMessage {
         this.serverId = serverId;
     }
 
+    public String getServerId() {
+        return serverId;
+    }
+
     @Override
     public String toString() {
         return "{" +

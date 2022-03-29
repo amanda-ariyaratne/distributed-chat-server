@@ -8,18 +8,21 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling join room
+ */
 public class JoinRoomHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        //{"type" : "joinroom", "roomid" : "jokes"}
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof JoinRoomClientRequest) {
             Client client = ServerState.activeClients.get(ctx.channel().id());
 
             JoinRoomClientRequest joinRoomClientRequest = (JoinRoomClientRequest) msg;
             joinRoomClientRequest.setSender(client);
-            System.out.println("\nJoin room handler : mag = " + msg);
+
+            System.out.println("INFO: " + "join room request from "+ client.getIdentity() + " to the room " + joinRoomClientRequest.getRoomId());
 
             JoinRoomClientService.getInstance().processRequest(joinRoomClientRequest);
 

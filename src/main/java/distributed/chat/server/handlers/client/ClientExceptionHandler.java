@@ -12,11 +12,14 @@ import io.netty.handler.codec.CorruptedFrameException;
 import java.net.SocketException;
 import java.util.Map;
 
+/***
+ * Inbound Handler for handling exceptions
+ */
 public class ClientExceptionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        System.out.println("Channel Inactive detected");
+        System.out.println("WARN: Channel Inactive event detected");
         for (Map.Entry<String, Client> client : ServerState.localClients.entrySet()) {
             Channel c = client.getValue().getCtx().channel();
 

@@ -9,6 +9,9 @@ import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling new client join request
+ */
 public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -33,8 +36,6 @@ public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof NewIdentityClientRequest){
-            System.out.println("New Identity Client Request");
-
             NewIdentityClientRequest newIdentityClientRequest = (NewIdentityClientRequest) msg;
             Client client = ServerState.activeClients.get(ctx.channel().id());
 
@@ -42,11 +43,14 @@ public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
 
             NewIdentityService newIdentityService = NewIdentityService.getInstance();
 
+            System.out.println("INFO: " + "new identity request from "+ client.getIdentity());
+
             if (ServerState.serverChannels.size()+1 >= ServerState.servers.size()/2) { // TODO change +1
-                System.out.println("\nProcessing New Identity Client Request " + msg);
+                System.out.println("INFO: Processing New Identity Client Request");
                 newIdentityService.processRequest(newIdentityClientRequest);
             } else {
-                System.out.println("\nRejecting New Identity Client Request " + msg);
+                System.out.println("WARN: Minimum required number of servers missing");
+                System.out.println("WARN: Rejecting New Identity Client Request");
                 newIdentityService.sendResponse(new NewIdentityClientResponse(false), client);
             }
 

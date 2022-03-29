@@ -10,6 +10,9 @@ import io.netty.handler.codec.CorruptedFrameException;
 import java.net.SocketException;
 import java.util.Map;
 
+/***
+ * Inbound Handler for handling exception
+ */
 public class ExceptionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -19,10 +22,10 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
             Channel c = ServerState.serverChannels.get(server.getKey());
             if (c.equals(ctx.channel())) {
                 ServerState.serverChannels.remove(server.getKey());
-                System.out.println(server.getKey() + " channel closed");
+                System.out.println("WARN: " + server.getKey() + " channel closed");
 
                 if (server.getKey().equals(ServerState.leaderId)) {
-                    System.out.println(server.getKey() + " was the coordinator.");
+                    System.out.println("INFO: " + server.getKey() + " was the coordinator");
                     ElectionService electionService = ElectionService.getInstance();
                     electionService.startElection();
                 }

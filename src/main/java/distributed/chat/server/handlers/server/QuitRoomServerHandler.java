@@ -1,12 +1,14 @@
 package distributed.chat.server.handlers.server;
 
 import distributed.chat.server.model.message.AbstractMessage;
-import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.request.server.QuitServerRequest;
 import distributed.chat.server.service.server.QuitServerService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/***
+ * Inbound Handler for handling quit room requests
+ */
 public class QuitRoomServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -15,7 +17,7 @@ public class QuitRoomServerHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractServerRequest instanceof QuitServerRequest){
             QuitServerRequest request = (QuitServerRequest) abstractServerRequest;
-            System.out.println("\nQuitRoom Server Handler Request = "+request);
+            System.out.println("INFO: " + "quit room request from " + request.getIdentity());
             QuitServerService.getInstance().processRequest(request, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

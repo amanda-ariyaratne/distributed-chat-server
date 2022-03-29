@@ -31,18 +31,14 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
      */
     @Override
     public void processRequest(DeleteRoomClientRequest request) {
-        System.out.println("DeleteRoomService : process request");
         synchronized (ServerState.globalRoomListLock) {
             Client client = request.getSender();
             String roomId = request.getRoomId();
 
             if (isCapable(client, roomId)) { // client is the owner
-                System.out.println("DeleteRoomService : process request : client is the owner");
                 handleDelete(roomId, client, "MainHall-" + ServerState.localId);
 
             } else { // failed to delete
-                System.out.println("DeleteRoomService : process request : failed to delete");
-                // {"type" : "deleteroom", "roomid" : "jokes", "approved" : "false"}
                 DeleteRoomClientResponse deleteRoomClientResponse = new DeleteRoomClientResponse(roomId, false);
                 sendResponse(deleteRoomClientResponse, client);
             }
@@ -50,9 +46,6 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
     }
 
     public void handleDelete(String roomId, Client client, String mainhall) {
-
-
-        System.out.println("DeleteRoomService : send response");
         // response
         DeleteRoomClientResponse deleteRoomClientResponse = new DeleteRoomClientResponse(roomId, true);
         sendResponse(deleteRoomClientResponse, client);
@@ -60,7 +53,6 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
         // move client and other members to main-hall -> broadcast joinroom
         moveMembersToMainHall(roomId, mainhall);
 
-        System.out.println("DeleteRoomService : handle delete");
         // inform other servers - {"type" : "deleteroom", "serverid" : "s1", "roomid" : "jokes"}
         DeleteRoomServerRequest deleteRoomServerRequest = new DeleteRoomServerRequest(ServerState.localId, roomId);
         DeleteRoomServerService.getInstance().broadcastRequest(deleteRoomServerRequest);
@@ -74,13 +66,11 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
     }
 
     private boolean isCapable(Client client, String roomId) {
-        System.out.println("DeleteRoomService : isCapable");
         return (roomId.equals(client.getRoom().getRoomId()) // client's current room
                 && (client.getRoom()).getOwner().getIdentity().equals(client.getIdentity())); // client is the owner
     }
 
     private void moveMembersToMainHall(String roomId, String mainhall) {
-        System.out.println("DeleteRoomService : moveMembersToMainHall");
         Room room = ServerState.localRooms.get(roomId);
         Room mainHall = ServerState.localRooms.get("MainHall-" + ServerState.localId);
 
