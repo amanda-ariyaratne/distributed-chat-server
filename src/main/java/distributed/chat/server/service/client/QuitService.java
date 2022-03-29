@@ -31,14 +31,12 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
      */
     @Override
     public void processRequest(QuitClientRequest request) {
-        System.out.println("QuitService : process request");
         Client client = request.getSender();
         Room room = client.getRoom();
 
         QuitServerRequest quitServerRequest;
 
         if (client.isAlready_room_owner()) { // already a room owner
-            System.out.println("client already a owner");
             // delete room
             DeleteRoomClientRequest deleteRoomClientRequest = new DeleteRoomClientRequest(room.getRoomId());
             deleteRoomClientRequest.setSender(client);
@@ -47,9 +45,7 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
             quitServerRequest = new QuitServerRequest(client.getIdentity(), room.getRoomId());
         } else { // not a owner
             // room change response to client
-            System.out.println("client is not an room owner");
             room.removeMember(client);
-            System.out.println("Current room member no = " + room.getMembers().size());
             RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), room.getRoomId(), "");
             sendResponse(roomChangeClientResponse, client);
 
@@ -57,17 +53,13 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
 
         }
 
-        System.out.println("remove client from list");
         // remove from client list
         ServerState.localClients.remove(client.getIdentity());
         ServerState.globalClients.remove(client.getIdentity());
 
         // server closes the connection
-        System.out.println("close connections");
         ServerState.activeClients.remove(client.getCtx().channel().id());
 
-
-        System.out.println("broadcast to other servers");
         // broadcast to other servers
         QuitServerService.getInstance().broadcastRequest(quitServerRequest);
 

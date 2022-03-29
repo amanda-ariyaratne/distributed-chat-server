@@ -28,20 +28,19 @@ public class QuitServerService extends AbstractServerService<QuitServerRequest, 
      */
     @Override
     public void processRequest(QuitServerRequest request, Channel channel) {
-        System.out.println("QuitServerService : process request");
         synchronized (this) {
             ServerState.globalClients.remove(request.getIdentity());
-            System.out.println(request.getIdentity() + " removed from global clients : ");
-            for (String id : ServerState.globalClients) {
-                System.out.println(id);
-            }
+//            System.out.println(request.getIdentity() + " removed from global clients : ");
+//            for (String id : ServerState.globalClients) {
+//                System.out.println(id);
+//            }
             
             if (!Objects.equals(request.getRoomId(), "")){ // if owner
-                System.out.println("Owner delete room from globalRooms "+ request.getRoomId());
+//                System.out.println("Owner delete room from globalRooms "+ request.getRoomId());
                 ServerState.globalRooms.remove(request.getRoomId());
-                for (String rid : ServerState.globalRooms.keySet()) {
-                    System.out.println(rid);
-                }
+//                for (String rid : ServerState.globalRooms.keySet()) {
+//                    System.out.println(rid);
+//                }
             }
 
         }
@@ -49,7 +48,6 @@ public class QuitServerService extends AbstractServerService<QuitServerRequest, 
     }
 
     public void broadcastRequest(QuitServerRequest request) {
-        System.out.println("QuitServerService : broadcast to other servers");
         broadcast(request);
     }
 }

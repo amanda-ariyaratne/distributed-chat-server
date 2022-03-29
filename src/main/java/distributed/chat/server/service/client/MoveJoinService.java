@@ -33,7 +33,6 @@ public class MoveJoinService extends AbstractClientService<MoveJoinClientRequest
         if (ServerState.localRooms.containsKey(roomId)) { // if room exists
             // add to client list
             ServerState.localClients.put(client.getIdentity(), client);
-            System.out.println(client.getIdentity() + " added to room " + roomId);
 
             // add to room
             Room room = ServerState.localRooms.get(roomId);
@@ -49,7 +48,6 @@ public class MoveJoinService extends AbstractClientService<MoveJoinClientRequest
             sendResponse(serverChangeClientResponse, client);
 
         } else { // room does not exist
-            System.out.println("room does not exist");
             // the server places the client in its MainHall chat room
             Room mainhall = ServerState.localRooms.get("MainHall-" + ServerState.localId);
             mainhall.addMember(client);
@@ -57,7 +55,6 @@ public class MoveJoinService extends AbstractClientService<MoveJoinClientRequest
             // set room to client
             client.setRoom(mainhall);
 
-            System.out.println(client.getIdentity() + " added to main hall " + ServerState.localId);
             // server broadcasts a roomchange message with the roomid as the MainHall-s2
             RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), former_roomId, roomId);
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, mainhall);

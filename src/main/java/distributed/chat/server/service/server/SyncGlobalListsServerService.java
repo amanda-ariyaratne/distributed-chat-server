@@ -26,10 +26,10 @@ public class SyncGlobalListsServerService extends AbstractServerService<SyncGlob
     public void processRequest(SyncGlobalListsServerRequest request, Channel channel) {
         if (Objects.equals(ServerState.localId, ServerState.leaderId)) {
             synchronized (this){
-                System.out.println("\nSync : Add Clients");
+//                System.out.println("\nSync : Add Clients");
                 ServerState.globalClients.addAll(Arrays.asList(request.getClients()));
 
-                System.out.println("\nSync : Add rooms");
+//                System.out.println("\nSync : Add rooms");
                 for (Map.Entry<String, String> room : request.getRooms().entrySet()) {
                     if (!ServerState.globalRooms.containsKey(room.getKey())) {
                         ServerState.globalRooms.put(room.getKey(), room.getValue());
