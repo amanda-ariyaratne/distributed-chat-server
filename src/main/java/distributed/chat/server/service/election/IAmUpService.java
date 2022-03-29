@@ -23,7 +23,7 @@ public class IAmUpService extends FastBullyService<IAmUpMessage> {
     }
 
     public void broadcastIAmUpMessage() {
-        System.out.println("Broadcasting IAmUp Message to all servers");
+        System.out.println("INFO: Broadcasting IAmUp Message to all servers");
         broadcast(new IAmUpMessage(ServerState.localId));
 
         synchronized (ServerState.electionLock) {

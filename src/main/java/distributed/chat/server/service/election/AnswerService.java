@@ -41,7 +41,7 @@ public class AnswerService extends FastBullyService<AnswerMessage> {
                         // this server is the coordinator
                         ServerState.leaderId = ServerState.localId;
                         ServerState.electionStatus = ElectionStatus.LEADER_ELECTED;
-                        System.out.println("New leader is " + ServerState.leaderId);
+                        System.out.println("INFO: New leader is " + ServerState.leaderId);
                         CoordinatorService coordinatorService = CoordinatorService.getInstance();
                         coordinatorService.sendCoordinatorMessage();
                     }

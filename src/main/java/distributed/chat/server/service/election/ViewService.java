@@ -28,7 +28,7 @@ public class ViewService extends FastBullyService<ViewMessage> {
         if (ServerState.electionStatus == ElectionStatus.WAITING_FOR_VIEW) {
             synchronized (ServerState.electionLock) {
                 if (ServerState.viewMessagesReceived.isEmpty()) {
-                    System.out.println("viewMessagesReceived is empty");
+                    System.out.println("INFO: ViewMessagesReceived is empty");
                     // no view messages received
                     // this server is the coordinator
                     ServerState.leaderId = ServerState.localId;
@@ -56,7 +56,7 @@ public class ViewService extends FastBullyService<ViewMessage> {
 
                 }
                 ServerState.electionStatus = ElectionStatus.LEADER_ELECTED;
-                System.out.println("New leader set to " + ServerState.leaderId);
+                System.out.println("INFO: New leader set to " + ServerState.leaderId);
             }
         }
     }
