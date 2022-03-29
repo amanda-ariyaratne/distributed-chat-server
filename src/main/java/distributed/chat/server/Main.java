@@ -117,8 +117,9 @@ public class Main {
 
             while ((line = reader.readLine()) != null) {
                 try (Scanner s = new Scanner(line)) {
-                    s.useDelimiter("\\t");
+                    s.useDelimiter("\\s");
                     String serverId = s.next();
+
                     ServerConfig server = new ServerConfig(serverId, s.next(), s.nextInt(), s.nextInt());
                     servers.put(serverId, server);
                 }
