@@ -20,7 +20,7 @@ public class ReserveIdentityHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerRequest instanceof ReserveIdentityServerRequest){
             ReserveIdentityServerRequest request = (ReserveIdentityServerRequest) abstractServerRequest;
 
-            if (ServerState.serverChannels.size() >= ServerState.servers.size()/2) {
+            if (ServerState.serverChannels.size() >= (1+ServerState.servers.size()/2)) {
                 System.out.println("INFO: " + "recieved reserve request for " + request.getIdentity());
                 ReserveIdentityServerService.getInstance().processRequest(request, ctx.channel());
             } else {

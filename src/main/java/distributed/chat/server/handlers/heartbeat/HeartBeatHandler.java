@@ -22,6 +22,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof HeartBeatMessage){
             HeartBeatMessage message = (HeartBeatMessage) msg;
+            System.out.println("INFO: heartbeat received from " + message.getServerId());
         } else {
             ctx.fireChannelRead(msg);
         }

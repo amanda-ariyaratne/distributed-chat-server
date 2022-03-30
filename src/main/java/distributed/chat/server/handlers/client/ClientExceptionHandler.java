@@ -39,8 +39,8 @@ public class ClientExceptionHandler extends ChannelInboundHandlerAdapter {
         if (cause instanceof SocketException) {
             ctx.close();
         } else if (cause instanceof CorruptedFrameException) {}
-        else {
-            cause.printStackTrace();
-        }
+//        else {
+//            cause.printStackTrace();
+//        }
     }
 }

@@ -45,7 +45,7 @@ public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
 
             System.out.println("INFO: " + "new identity request from "+ client.getIdentity());
 
-            if (ServerState.serverChannels.size() >= ServerState.servers.size()/2) {
+            if (ServerState.serverChannels.size() >= (1+ServerState.servers.size()/2)) {
                 System.out.println("INFO: Processing New Identity Client Request");
                 newIdentityService.processRequest(newIdentityClientRequest);
             } else {

@@ -20,4 +20,8 @@ public class HeartBeatMessage extends AbstractMessage {
                 "\"serverid\" : \"" + serverId + "\"" +
                 "}";
     }
+
+    public String getServerId() {
+        return serverId;
+    }
 }
