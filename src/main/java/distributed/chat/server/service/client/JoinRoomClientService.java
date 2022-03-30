@@ -62,15 +62,15 @@ public class JoinRoomClientService extends AbstractClientService<JoinRoomClientR
                     RouteClientService.getInstance().handleJoinRoomResponse(routeClientResponse, client);
 
                     // remove from former room
-                    ServerState.localRooms.get(former_roomId).removeMember(client);
+//                    ServerState.localRooms.get(former_roomId).removeMember(client);
                     // server removes the client from its list
-                    ServerState.localClients.remove(client.getIdentity());
+//                    ServerState.localClients.remove(client.getIdentity());
                     // broadcasts a roomchange message to all the members of the former chat room
                     RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), former_roomId, new_roomId);
                     broadCastRoomChangeMessage(roomChangeClientResponse, ServerState.localRooms.get(former_roomId));
 
-                    System.out.println("INFO: " + client.getIdentity() + " removed from activeClients list");
-                    ServerState.activeClients.remove(client.getCtx().channel().id());
+//                    System.out.println(client.getIdentity() + " removed from activeClients list");
+//                    ServerState.activeClients.remove(client.getCtx().channel().id());
 
                 } else { // room does not exist -> join is not successful
                     // {"type" : "roomchange", "identity" : "Maria", "former" : "jokes", "roomid" : "jokes"}
