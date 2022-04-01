@@ -3,6 +3,7 @@ package distributed.chat.server.handlers.server;
 import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.server.DeleteRoomServerRequest;
 import distributed.chat.server.service.server.DeleteRoomServerService;
+import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -18,7 +19,7 @@ public class DeleteRoomServerHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerRequest instanceof DeleteRoomServerRequest){
             DeleteRoomServerRequest request = (DeleteRoomServerRequest) abstractServerRequest;
 
-            System.out.println("INFO: " + "delete room " + request.getRoomId() + " from the global room list");
+            System.out.println(ServerState.localId + " INFO: " + "delete room " + request.getRoomId() + " from the global room list");
 
             DeleteRoomServerService.getInstance().processRequest(request, ctx.channel());
         } else {

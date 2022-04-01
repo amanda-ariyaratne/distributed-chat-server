@@ -5,6 +5,7 @@ import distributed.chat.server.model.message.request.server.ReserveRoomConfirmSe
 import distributed.chat.server.model.message.response.server.AbstractServerResponse;
 import distributed.chat.server.model.message.response.server.ReserveRoomServerResponse;
 import distributed.chat.server.service.server.ReservedRoomConfirmServerService;
+import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -21,11 +22,11 @@ public class ReserveRoomConfirmHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerResponse instanceof ReserveRoomServerResponse) {
             // request object : {"type" : "reserveroomresponse", "roomid" : "jokes", "reserved" : "true"}
             ReserveRoomServerResponse response = (ReserveRoomServerResponse) abstractServerResponse;
-            System.out.println("INFO: Received Rseserve Room Server Response " + response);
+            System.out.println(ServerState.localId + " INFO: Received Rseserve Room Server Response " + response);
             // get service
             ReservedRoomConfirmServerService reservedRoomConfirmServerService = ReservedRoomConfirmServerService.getInstance();
 
-            System.out.println("INFO: " + "recieved reserve request for room " + response.getRoomId());
+            System.out.println(ServerState.localId + " INFO: " + "recieved reserve request for room " + response.getRoomId());
             reservedRoomConfirmServerService.processRequest(
                     new ReserveRoomConfirmServerRequest(response.getRoomId(), response.isReserved()), ctx.channel());
         } else {

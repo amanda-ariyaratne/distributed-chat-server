@@ -39,8 +39,8 @@ public class ReserveRoomHandler extends ChannelInboundHandlerAdapter {
                 reserveRoomServerService.processRequest(reserveRoomServerRequest, ctx.channel());
 
             } else {
-                System.out.println("WARN: Minimum required number of servers missing");
-                System.out.println("WARN: Reject Reserve Room Server Request for room " + reserveRoomServerRequest.getRoomId());
+                System.out.println(ServerState.localId + " WARN: Minimum required number of servers missing");
+                System.out.println(ServerState.localId + " WARN: Reject Reserve Room Server Request for room " + reserveRoomServerRequest.getRoomId());
                 reserveRoomServerService.sendResponse(
                         new ReserveRoomServerResponse(reserveRoomServerRequest.getRoomId(), false), ctx.channel());
             }

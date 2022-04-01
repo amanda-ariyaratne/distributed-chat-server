@@ -29,12 +29,12 @@ public class CreateRoomHandler extends ChannelInboundHandlerAdapter {
                 CreateRoomClientRequest createRoomClientRequest = (CreateRoomClientRequest) msg;
                 createRoomClientRequest.setSender(client);
 
-                System.out.println("INFO: " + "create room request from "+ client.getIdentity() + " for the room " + createRoomClientRequest.getRoomId());
+                System.out.println(ServerState.localId + " INFO: " + "create room request from "+ client.getIdentity() + " for the room " + createRoomClientRequest.getRoomId());
                 createRoomService.processRequest(createRoomClientRequest);
 
             } else {
-                System.out.println("WARN: Minimum required number of servers missing");
-                System.out.println("WARN: Rejecting New room Request");
+                System.out.println(ServerState.localId + " WARN: Minimum required number of servers missing");
+                System.out.println(ServerState.localId + " WARN: Rejecting New room Request");
                 createRoomService.sendResponse(new CreateRoomClientResponse(roomId, false), client);
             }
 

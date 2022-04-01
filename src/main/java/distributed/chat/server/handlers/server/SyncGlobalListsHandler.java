@@ -4,6 +4,7 @@ import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.server.AddRoomServerRequest;
 import distributed.chat.server.model.message.request.server.SyncGlobalListsServerRequest;
 import distributed.chat.server.service.server.SyncGlobalListsServerService;
+import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -17,7 +18,7 @@ public class SyncGlobalListsHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerRequest instanceof AddRoomServerRequest) {
             SyncGlobalListsServerRequest request = (SyncGlobalListsServerRequest) abstractServerRequest;
 
-            System.out.println("INFO: Received sync lists request");
+            System.out.println(ServerState.localId + " INFO: Received sync lists request");
 
             SyncGlobalListsServerService.getInstance().processRequest(request, ctx.channel());
         } else {

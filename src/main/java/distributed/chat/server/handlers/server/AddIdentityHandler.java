@@ -4,6 +4,7 @@ import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.server.AbstractServerRequest;
 import distributed.chat.server.model.message.request.server.AddIdentityServerRequest;
 import distributed.chat.server.service.server.AddIdentityServerService;
+import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -19,7 +20,7 @@ public class AddIdentityHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerRequest instanceof AddIdentityServerRequest){
             AddIdentityServerRequest request = (AddIdentityServerRequest) abstractServerRequest;
 
-            System.out.println("INFO: " + "add identity " + request.getIdentity() + " to the global clients list");
+            System.out.println(ServerState.localId + " INFO: " + "add identity " + request.getIdentity() + " to the global clients list");
 
             AddIdentityServerService.getInstance().processRequest(request, ctx.channel());
         } else {

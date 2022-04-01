@@ -22,7 +22,7 @@ public class CoordinatorService extends FastBullyService<CoordinatorMessage> {
     }
 
     public void sendCoordinatorMessage() {
-        // System.out.println("INFO: Sending coordinator message for lower servers");
+        // System.out.println(ServerState.localId + " INFO: Sending coordinator message for lower servers");
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             if (server.getKey().compareTo(ServerState.localId) < 0) {
                 CoordinatorMessage coordinatorMessage = new CoordinatorMessage(ServerState.localId);

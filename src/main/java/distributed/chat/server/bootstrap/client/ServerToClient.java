@@ -35,10 +35,10 @@ public class ServerToClient {
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ServerToClientInitializer());
             ChannelFuture f = b.bind().sync();
-            System.out.println("INFO: " + ServerState.localId + " listening on service port " + port);
+            System.out.println(ServerState.localId + " INFO: " + ServerState.localId + " listening on service port " + port);
             f.channel().closeFuture().sync();
         } finally {
-            System.out.println("WARN: Shutting down");
+            System.out.println(ServerState.localId + " WARN: Shutting down");
             bossGroup.shutdownGracefully().sync();
             workerGroup.shutdownGracefully().sync();
         }

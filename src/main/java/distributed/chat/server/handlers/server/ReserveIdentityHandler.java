@@ -24,8 +24,8 @@ public class ReserveIdentityHandler extends ChannelInboundHandlerAdapter {
                 System.out.println("INFO: " + "recieved reserve request for " + request.getIdentity());
                 ReserveIdentityServerService.getInstance().processRequest(request, ctx.channel());
             } else {
-                System.out.println("WARN: Minimum required number of servers missing");
-                System.out.println("WARN: " + "reject reserve request for " + request.getIdentity());
+                System.out.println(ServerState.localId + " WARN: Minimum required number of servers missing");
+                System.out.println(ServerState.localId + " WARN: " + "reject reserve request for " + request.getIdentity());
                 ReserveIdentityServerService.getInstance().sendResponse(
                         new ReserveIdentityServerResponse(request.getIdentity(), true), ctx.channel());
             }
