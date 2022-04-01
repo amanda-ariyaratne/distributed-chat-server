@@ -22,7 +22,7 @@ public class JoinRoomHandler extends ChannelInboundHandlerAdapter {
             JoinRoomClientRequest joinRoomClientRequest = (JoinRoomClientRequest) msg;
             joinRoomClientRequest.setSender(client);
 
-            System.out.println("INFO: " + "join room request from "+ client.getIdentity() + " to the room " + joinRoomClientRequest.getRoomId());
+            System.out.println(ServerState.localId + " INFO: " + "join room request from "+ client.getIdentity() + " to the room " + joinRoomClientRequest.getRoomId());
 
             JoinRoomClientService.getInstance().processRequest(joinRoomClientRequest);
 

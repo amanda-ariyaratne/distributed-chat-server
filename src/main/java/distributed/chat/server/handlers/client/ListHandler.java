@@ -22,7 +22,7 @@ public class ListHandler extends ChannelInboundHandlerAdapter {
             ListClientRequest listClientRequest = (ListClientRequest) msg;
             listClientRequest.setSender(client);
 
-            System.out.println("INFO: " + "list of chat rooms request from "+ client.getIdentity());
+            System.out.println(ServerState.localId + " INFO: " + "list of chat rooms request from "+ client.getIdentity());
 
             ListService listService = ListService.getInstance();
             listService.processRequest(listClientRequest);

@@ -20,7 +20,7 @@ public class Main {
 
 
         if (args.length != 4) {
-            System.out.println("WARN: Command line arguments are missing");
+            System.out.println(ServerState.localId + " WARN: Command line arguments are missing");
             return;
         }
 
@@ -33,7 +33,7 @@ public class Main {
             serverId = args[3];
             configFile = args[1];
         } else {
-            System.out.println("WARN: Command line arguments are incorrect");
+            System.out.println(ServerState.localId + " WARN: Command line arguments are incorrect");
             return;
         }
 
@@ -46,7 +46,7 @@ public class Main {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("WARN: Command line arguments are missing");
+            System.out.println(ServerState.localId + " WARN: Command line arguments are missing");
             return;
         }
 
@@ -80,11 +80,11 @@ public class Main {
                                 configs.getServer_address(),
                                 configs.getCoordination_port()
                         );
-                        System.out.println("INFO: " + "Trying to connect to " + configs.getServer_id() + " on port " + configs.getCoordination_port());
+                        System.out.println(ServerState.localId + " INFO: " + "Trying to connect to " + configs.getServer_id() + " on port " + configs.getCoordination_port());
                         serverAsClient.start();
 
                     } catch (Exception e) {
-                        System.out.println("WARN: " + "Connection failed for " + configs.getServer_id());
+                        System.out.println(ServerState.localId + " WARN: " + "Connection failed for " + configs.getServer_id());
                     } finally {
                         ServerState.serverAsClientThreadCount.getAndIncrement();
                     }

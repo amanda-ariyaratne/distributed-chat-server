@@ -22,7 +22,7 @@ public class CoordinatorService extends FastBullyService<CoordinatorMessage> {
     }
 
     public void sendCoordinatorMessage() {
-        // System.out.println("INFO: Sending coordinator message for lower servers");
+        // System.out.println(ServerState.localId + " INFO: Sending coordinator message for lower servers");
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             if (server.getKey().compareTo(ServerState.localId) < 0) {
                 CoordinatorMessage coordinatorMessage = new CoordinatorMessage(ServerState.localId);
@@ -39,7 +39,7 @@ public class CoordinatorService extends FastBullyService<CoordinatorMessage> {
             ServerState.coordinatorMessage = message;
             ServerState.leaderId = message.getServerId();
             ServerState.electionStatus = ElectionStatus.LEADER_ELECTED;
-            System.out.println("INFO: 1 New leader set to " + ServerState.leaderId);
+            System.out.println(ServerState.localId + " INFO: 1 New leader set to " + ServerState.leaderId);
         }
     }
 
@@ -54,7 +54,7 @@ public class CoordinatorService extends FastBullyService<CoordinatorMessage> {
                     ServerState.coordinatorMessage = null;
                     ServerState.answerMessagesReceived = new ArrayList<>();
                 } else {
-                    // System.out.println("INFO: Coordinator message is not received");
+                    // System.out.println(ServerState.localId + " INFO: Coordinator message is not received");
                     for (int i = 0; i < ServerState.answerMessagesReceived.size(); i++) {
                         AnswerMessage am = ServerState.answerMessagesReceived.get(i);
                         if (am.getServerId().equals(highestServerId)) {
