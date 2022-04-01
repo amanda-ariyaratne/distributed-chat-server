@@ -23,7 +23,7 @@ public class WhoHandler extends ChannelInboundHandlerAdapter {
             WhoClientRequest whoClientRequest = (WhoClientRequest) msg;
             whoClientRequest.setSender(client);
 
-            System.out.println("INFO: " + "who request from "+ client.getIdentity() + " of the room " + client.getRoom());
+            System.out.println("INFO: " + "who request from "+ client.getIdentity() + " of the room " + client.getRoom().getRoomId());
 
             WhoService whoService = WhoService.getInstance();
             whoService.processRequest(whoClientRequest);
