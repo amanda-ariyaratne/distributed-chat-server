@@ -21,7 +21,7 @@ public class AnswerService extends FastBullyService<AnswerMessage> {
     @Override
     public void processMessage(AnswerMessage message, Channel channel) {
         synchronized (ServerState.electionLock) {
-            // System.out.println(ServerState.localId + " INFO: Add answer message to ServerState.answerMessagesReceived");
+            // System.out.println("[" + ServerState.localId + " INFO]: Add answer message to ServerState.answerMessagesReceived");
             ServerState.answerMessagesReceived.add(message);
         }
     }
@@ -33,7 +33,7 @@ public class AnswerService extends FastBullyService<AnswerMessage> {
         if (ServerState.electionStatus == ElectionStatus.ELECTION_STARTED) {
             synchronized (ServerState.electionLock) {
                 if (ServerState.answerMessagesReceived.isEmpty()) {
-                    // System.out.println(ServerState.localId + " WARN: Answer messages received is empty");
+                    // System.out.println("[" + ServerState.localId + " WARN]: Answer messages received is empty");
                     if (reelect) {
                         restartElection = true;
                     } else {
@@ -41,7 +41,7 @@ public class AnswerService extends FastBullyService<AnswerMessage> {
                         // this server is the coordinator
                         ServerState.leaderId = ServerState.localId;
                         ServerState.electionStatus = ElectionStatus.LEADER_ELECTED;
-                        System.out.println(ServerState.localId + " INFO: New leader is to " + ServerState.leaderId);
+                        System.out.println("[" + ServerState.localId + " INFO]: New leader is to " + ServerState.leaderId);
                         CoordinatorService coordinatorService = CoordinatorService.getInstance();
                         coordinatorService.sendCoordinatorMessage();
                     }
@@ -54,7 +54,7 @@ public class AnswerService extends FastBullyService<AnswerMessage> {
                             highestServerId = am.getServerId();
                         }
                     }
-                    // System.out.println(ServerState.localId + " INFO: Nominate " + highestServerId);
+                    // System.out.println("[" + ServerState.localId + " INFO]: Nominate " + highestServerId);
                     // send nomination message
                     NominationService nominationService = NominationService.getInstance();
                     nominationService.sendNominationMessage(highestServerId);
@@ -71,7 +71,7 @@ public class AnswerService extends FastBullyService<AnswerMessage> {
                 String finalHighestServerId = highestServerId;
                 new Thread(() -> {
                     try {
-                        // System.out.println(ServerState.localId + " INFO: Waiting for coordinator message");
+                        // System.out.println("[" + ServerState.localId + " INFO]: Waiting for coordinator message");
                         Thread.sleep(ServerState.coordinatorTimeout);
                         CoordinatorService coordinatorService = CoordinatorService.getInstance();
                         coordinatorService.handleCoordinatorMessageReception(finalHighestServerId);
@@ -82,7 +82,7 @@ public class AnswerService extends FastBullyService<AnswerMessage> {
             }
 
             if (restartElection) {
-                // System.out.println(ServerState.localId + " INFO: Restarting election");
+                // System.out.println("[" + ServerState.localId + " INFO]: Restarting election");
                 ElectionService electionService = ElectionService.getInstance();
                 electionService.startElection();
             }

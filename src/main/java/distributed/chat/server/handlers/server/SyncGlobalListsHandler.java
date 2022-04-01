@@ -18,7 +18,7 @@ public class SyncGlobalListsHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerRequest instanceof AddRoomServerRequest) {
             SyncGlobalListsServerRequest request = (SyncGlobalListsServerRequest) abstractServerRequest;
 
-            System.out.println(ServerState.localId + " INFO: Received sync lists request");
+            System.out.println("[" + ServerState.localId + " INFO]: Received sync lists request");
 
             SyncGlobalListsServerService.getInstance().processRequest(request, ctx.channel());
         } else {

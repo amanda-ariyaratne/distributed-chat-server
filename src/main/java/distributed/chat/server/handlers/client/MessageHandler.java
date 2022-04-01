@@ -22,7 +22,7 @@ public class MessageHandler extends ChannelInboundHandlerAdapter {
             MessageClientRequest messageClientRequest = (MessageClientRequest) msg;
             messageClientRequest.setSender(client);
 
-            System.out.println(ServerState.localId + " INFO: " + "message request from "+ client.getIdentity() + " to the room " + client.getRoom().getRoomId());
+            System.out.println("[" + ServerState.localId + " INFO]: " + "message request from "+ client.getIdentity() + " to the room " + client.getRoom().getRoomId());
 
             MessageService.getInstance().processRequest(messageClientRequest);
 

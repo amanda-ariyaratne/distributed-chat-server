@@ -27,7 +27,7 @@ public class AddRoomInboundHandler extends ChannelInboundHandlerAdapter {
             // call service -> AddRoomServerService
             AddRoomServerService addRoomServerService = AddRoomServerService.getInstance();
 
-            System.out.println(ServerState.localId + " INFO: " + "add room " + addRoomServerRequest.getRoomId() + " to the global room list");
+            System.out.println("[" + ServerState.localId + " INFO]: " + "add room " + addRoomServerRequest.getRoomId() + " to the global room list");
 
             addRoomServerService.handleRequest(addRoomServerRequest,
                     ServerState.serverChannels.get(ServerState.serverConfig.getServer_id()));

@@ -43,14 +43,14 @@ public class NewIdentityHandler extends ChannelInboundHandlerAdapter {
 
             NewIdentityService newIdentityService = NewIdentityService.getInstance();
 
-            System.out.println(ServerState.localId + " INFO: " + "new identity request from "+ client.getIdentity());
+            System.out.println("[" + ServerState.localId + " INFO]: " + "new identity request from "+ client.getIdentity());
 
             if (ServerState.serverChannels.size() >= (1+ServerState.servers.size()/2)) {
-                System.out.println(ServerState.localId + " INFO: Processing New Identity Client Request");
+                System.out.println("[" + ServerState.localId + " INFO]: Processing New Identity Client Request");
                 newIdentityService.processRequest(newIdentityClientRequest);
             } else {
-                System.out.println(ServerState.localId + " WARN: Minimum required number of servers missing");
-                System.out.println(ServerState.localId + " WARN: Rejecting New Identity Client Request");
+                System.out.println("[" + ServerState.localId + " WARN]: Minimum required number of servers missing");
+                System.out.println("[" + ServerState.localId + " WARN]: Rejecting New Identity Client Request");
                 newIdentityService.sendResponse(new NewIdentityClientResponse(false), client);
             }
 

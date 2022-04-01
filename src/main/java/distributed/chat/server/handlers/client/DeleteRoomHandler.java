@@ -21,7 +21,7 @@ public class DeleteRoomHandler extends ChannelInboundHandlerAdapter {
             DeleteRoomClientRequest deleteRoomClientRequest = (DeleteRoomClientRequest) msg;
             deleteRoomClientRequest.setSender(client);
 
-            System.out.println(ServerState.localId + " INFO: " + "delete room request from "+ client.getIdentity() + " for the room " + deleteRoomClientRequest.getRoomId());
+            System.out.println("[" + ServerState.localId + " INFO]: " + "delete room request from "+ client.getIdentity() + " for the room " + deleteRoomClientRequest.getRoomId());
 
             DeleteRoomService.getInstance().processRequest(deleteRoomClientRequest);
         } else {

@@ -16,7 +16,7 @@ public class NominationHandler extends ChannelInboundHandlerAdapter {
 
         if (abstractMessage instanceof NominationMessage){
             NominationMessage message = (NominationMessage) msg;
-            // System.out.println(ServerState.localId + " INFO: " + ServerState.localId + " nominated for the leader by "+ message.getServerId());
+            // System.out.println("[" + ServerState.localId + " INFO]: " + ServerState.localId + " nominated for the leader by "+ message.getServerId());
             NominationService.getInstance().processMessage(message, ctx.channel());
         } else {
             ctx.fireChannelRead(msg);

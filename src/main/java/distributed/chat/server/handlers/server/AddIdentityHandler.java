@@ -20,7 +20,7 @@ public class AddIdentityHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerRequest instanceof AddIdentityServerRequest){
             AddIdentityServerRequest request = (AddIdentityServerRequest) abstractServerRequest;
 
-            System.out.println(ServerState.localId + " INFO: " + "add identity " + request.getIdentity() + " to the global clients list");
+            System.out.println("[" + ServerState.localId + " INFO]: " + "add identity " + request.getIdentity() + " to the global clients list");
 
             AddIdentityServerService.getInstance().processRequest(request, ctx.channel());
         } else {

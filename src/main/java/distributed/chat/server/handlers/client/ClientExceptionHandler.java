@@ -19,7 +19,7 @@ public class ClientExceptionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        System.out.println(ServerState.localId + " WARN: Channel Inactive event detected");
+        System.out.println("[" + ServerState.localId + " WARN]: Channel Inactive event detected");
         for (Map.Entry<String, Client> client : ServerState.localClients.entrySet()) {
             Channel c = client.getValue().getCtx().channel();
 

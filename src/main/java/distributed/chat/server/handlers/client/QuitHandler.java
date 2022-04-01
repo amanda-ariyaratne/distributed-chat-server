@@ -22,7 +22,7 @@ public class QuitHandler extends ChannelInboundHandlerAdapter {
             QuitClientRequest quitClientRequest = (QuitClientRequest) msg;
             quitClientRequest.setSender(client);
 
-            System.out.println(ServerState.localId + " INFO: " + "quit request from "+ client.getIdentity());
+            System.out.println("[" + ServerState.localId + " INFO]: " + "quit request from "+ client.getIdentity());
 
             QuitService.getInstance().processRequest(quitClientRequest);
 

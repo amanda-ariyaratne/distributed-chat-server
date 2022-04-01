@@ -22,7 +22,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
         AbstractMessage request = (AbstractMessage) msg;
         if (request instanceof HeartBeatMessage){
             HeartBeatMessage message = (HeartBeatMessage) msg;
-            // System.out.println(ServerState.localId + " INFO: heartbeat received from " + message.getServerId());
+            // System.out.println("[" + ServerState.localId + " INFO]: heartbeat received from " + message.getServerId());
         } else {
             ctx.fireChannelRead(msg);
         }
@@ -33,16 +33,16 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
         if (evt instanceof IdleStateEvent) {
             final IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
             if (idleStateEvent.state() == IdleState.READER_IDLE) {
-                System.out.println(ServerState.localId + " WARN: Did not receive heartbeat message");
+                System.out.println("[" + ServerState.localId + " WARN]: Did not receive heartbeat message");
                 for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
                     Channel c = ServerState.serverChannels.get(server.getKey());
                     if (c.equals(ctx.channel())) {
                         c.close();
                         ServerState.serverChannels.remove(server.getKey());
-                        System.out.println(ServerState.localId + " INFO: " + server.getKey() + " channel closed");
+                        System.out.println("[" + ServerState.localId + " INFO]: " + server.getKey() + " channel closed");
 
                         if (server.getKey().equals(ServerState.leaderId)) {
-                            System.out.println(ServerState.localId + " WARN: " + server.getKey() + " was the leader");
+                            System.out.println("[" + ServerState.localId + " WARN]: " + server.getKey() + " was the leader");
                             ElectionService electionService = ElectionService.getInstance();
                             electionService.startElection();
                         }

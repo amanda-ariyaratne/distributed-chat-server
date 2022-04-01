@@ -17,15 +17,15 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        System.out.println(ServerState.localId + " WARN: Server Channel inactive detected");
+        System.out.println("[" + ServerState.localId + " WARN]: Server Channel inactive detected");
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             Channel c = ServerState.serverChannels.get(server.getKey());
             if (c.equals(ctx.channel())) {
                 ServerState.serverChannels.remove(server.getKey());
-                System.out.println(ServerState.localId + " WARN: " + server.getKey() + " channel closed");
+                System.out.println("[" + ServerState.localId + " WARN]: " + server.getKey() + " channel closed");
 
                 if (server.getKey().equals(ServerState.leaderId)) {
-                    System.out.println(ServerState.localId + " INFO: " + server.getKey() + " was the coordinator");
+                    System.out.println("[" + ServerState.localId + " INFO]: " + server.getKey() + " was the coordinator");
                     ElectionService electionService = ElectionService.getInstance();
                     electionService.startElection();
                 }

@@ -19,7 +19,7 @@ public class DeleteRoomServerHandler extends ChannelInboundHandlerAdapter {
         if (abstractServerRequest instanceof DeleteRoomServerRequest){
             DeleteRoomServerRequest request = (DeleteRoomServerRequest) abstractServerRequest;
 
-            System.out.println(ServerState.localId + " INFO: " + "delete room " + request.getRoomId() + " from the global room list");
+            System.out.println("[" + ServerState.localId + " INFO]: " + "delete room " + request.getRoomId() + " from the global room list");
 
             DeleteRoomServerService.getInstance().processRequest(request, ctx.channel());
         } else {
