@@ -43,6 +43,7 @@ public class MoveJoinService extends AbstractClientService<MoveJoinClientRequest
             // broadcast roomchange msg to all the members
             RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), former_roomId, roomId);
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, room);
+
             // response to client  {"type" : "serverchange", "approved" : "true", "serverid" : "s2"}
             ServerChangeClientResponse serverChangeClientResponse = new ServerChangeClientResponse(true, ServerState.localId);
             sendResponse(serverChangeClientResponse, client);
