@@ -9,7 +9,7 @@ public class DeleteRoomServerRequest extends AbstractServerRequest {
     private final String roomId;
 
     public DeleteRoomServerRequest(String serverId, String roomId) {
-        super(MessageType.DELETE_ROOM);
+        super(MessageType.DELETE_ROOM_SERVER);
         this.serverId = serverId;
         this.roomId = roomId;
     }
@@ -25,7 +25,7 @@ public class DeleteRoomServerRequest extends AbstractServerRequest {
     @Override
     public String toString() {
         return "{" +
-                "\"type\" : \"" + RequestConstants.DELETE_ROOM + '"' +
+                "\"type\" : \"" + RequestConstants.DELETE_ROOM_SERVER + '"' +
                 ", \"serverid\" : \"" + serverId + '"' +
                 ", \"roomid\" : \"" + roomId + '"' +
                 '}';

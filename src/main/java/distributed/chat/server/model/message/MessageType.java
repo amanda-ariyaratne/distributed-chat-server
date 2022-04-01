@@ -22,6 +22,7 @@ public enum MessageType {
     MOVE_JOIN,
     SERVER_CHANGE,
     DELETE_ROOM,
+    DELETE_ROOM_SERVER,
     MESSAGE,
     MESSAGE_RESPONSE,
     QUIT,
