@@ -48,7 +48,6 @@ public class MoveJoinService extends AbstractClientService<MoveJoinClientRequest
             RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), former_roomId, roomId);
             JoinRoomClientService.getInstance().broadCastRoomChangeMessage(roomChangeClientResponse, room);
 
-
         } else { // room does not exist
             // the server places the client in its MainHall chat room
             Room mainhall = ServerState.localRooms.get("MainHall-" + ServerState.localId);
