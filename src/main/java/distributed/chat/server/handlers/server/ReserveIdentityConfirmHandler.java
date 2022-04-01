@@ -4,6 +4,7 @@ import distributed.chat.server.model.message.AbstractMessage;
 import distributed.chat.server.model.message.request.server.ReserveIdentityConfirmServerRequest;
 import distributed.chat.server.model.message.response.server.ReserveIdentityServerResponse;
 import distributed.chat.server.service.server.ReserveIdentityConfirmServerService;
+import distributed.chat.server.states.ServerState;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -19,7 +20,7 @@ public class ReserveIdentityConfirmHandler extends ChannelInboundHandlerAdapter 
         if (abstractServerResponse instanceof ReserveIdentityServerResponse){
             ReserveIdentityServerResponse response = (ReserveIdentityServerResponse) abstractServerResponse;
 
-            System.out.println("INFO: " + "recieved reserve confirm responses for " + response.getIdentity());
+            System.out.println(ServerState.localId + " INFO: " + "recieved reserve confirm responses for " + response.getIdentity());
 
             ReserveIdentityConfirmServerService.getInstance().processRequest(new ReserveIdentityConfirmServerRequest(
                     response.isReserved(),

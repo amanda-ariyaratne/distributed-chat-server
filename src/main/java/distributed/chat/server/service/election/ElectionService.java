@@ -23,13 +23,13 @@ public class ElectionService extends FastBullyService<ElectionMessage> {
     }
 
     public void startElection() {
-        // System.out.println("INFO: Starting election");
+        // System.out.println(ServerState.localId + " INFO: Starting election");
         synchronized (ServerState.electionLock) {
             ServerState.electionStatus = ElectionStatus.ELECTION_STARTED;
             ServerState.answerMessagesReceived = new ArrayList<>();
         }
 
-        // System.out.println("INFO: sending election messages to higher servers");
+        // System.out.println(ServerState.localId + " INFO: sending election messages to higher servers");
         ElectionMessage em = new ElectionMessage(ServerState.localId);
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             if (server.getKey().compareTo(ServerState.localId) > 0) {
@@ -39,7 +39,7 @@ public class ElectionService extends FastBullyService<ElectionMessage> {
 
         new Thread(() -> {
             try {
-                // System.out.println("INFO: Waiting for answer messages");
+                // System.out.println(ServerState.localId + " INFO: Waiting for answer messages");
                 Thread.sleep(ServerState.answerTimeout);
                 AnswerService answerService = AnswerService.getInstance();
                 answerService.handleAnswerMessageReception(false);
@@ -53,7 +53,7 @@ public class ElectionService extends FastBullyService<ElectionMessage> {
     public void processMessage(ElectionMessage message, Channel channel) {
         // send answer message
         channel.writeAndFlush(new AnswerMessage(ServerState.localId).toString());
-        // System.out.println("INFO: Sent Answer message");
+        // System.out.println(ServerState.localId + " INFO: Sent Answer message");
 
         synchronized (ServerState.electionLock) {
             ServerState.coordinatorMessage = null;
@@ -62,11 +62,11 @@ public class ElectionService extends FastBullyService<ElectionMessage> {
 
         new Thread(() -> {
             try {
-                // System.out.println("INFO: Waiting for Nomination message or Coordinator message");
+                // System.out.println(ServerState.localId + " INFO: Waiting for Nomination message or Coordinator message");
                 Thread.sleep(ServerState.nominatorOrCoordinatorTimeout);
                 synchronized (ServerState.electionLock) {
                     if (ServerState.nominationMessage == null && ServerState.coordinatorMessage == null) {
-                        // System.out.println("INFO: No Nomination message or Coordinator message received");
+                        // System.out.println(ServerState.localId + " INFO: No Nomination message or Coordinator message received");
                         ElectionService electionService = ElectionService.getInstance();
                         electionService.startElection();
 

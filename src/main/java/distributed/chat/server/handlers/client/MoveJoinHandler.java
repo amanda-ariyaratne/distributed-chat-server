@@ -31,7 +31,7 @@ public class MoveJoinHandler extends ChannelInboundHandlerAdapter {
             client.setIdentity(moveJoinClientRequest.getIdentity());
             moveJoinClientRequest.setSender(client);
 
-            System.out.println("INFO: " + "movejoin request from "+ client.getIdentity() +
+            System.out.println(ServerState.localId + " INFO: " + "movejoin request from "+ client.getIdentity() +
                     " from the room " + moveJoinClientRequest.getFormer() +
                     " to the room " + moveJoinClientRequest.getRoomid());
 

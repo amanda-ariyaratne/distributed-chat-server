@@ -30,10 +30,10 @@ public class ServerToServer {
                     .childHandler(new ServerToServerInitializer());
             ChannelFuture f = b.bind().sync();
             ServerState.serverAsClientThreadCount.getAndIncrement();
-            System.out.println("INFO: " + ServerState.localId + " listening on management port " + port);
+            System.out.println(ServerState.localId + " INFO: " + ServerState.localId + " listening on management port " + port);
             f.channel().closeFuture().sync();
         } finally {
-            System.out.println("WARN: Shutting down");
+            System.out.println(ServerState.localId + " WARN: Shutting down");
             bossGroup.shutdownGracefully().sync();
             workerGroup.shutdownGracefully().sync();
         }

@@ -14,7 +14,7 @@ public abstract class AbstractServerService<S extends AbstractServerRequest, T e
     public abstract void processRequest(S request, Channel channel);
 
     public void broadcast(S request) {
-        System.out.println("INFO: Broadcast Request: " + request.toString());
+        System.out.println(ServerState.localId + " INFO: Broadcast Request: " + request.toString());
         for (Map.Entry<String, Channel> server : ServerState.serverChannels.entrySet()) {
             final ChannelFuture f = ServerState.serverChannels.get(server.getKey()).writeAndFlush(request.toString());
             f.addListener((ChannelFutureListener) future -> {
@@ -24,7 +24,7 @@ public abstract class AbstractServerService<S extends AbstractServerRequest, T e
     }
 
     public void sendRequest(S request, Channel channel) {
-        System.out.println("INFO: Request: " + request.toString());
+        System.out.println(ServerState.localId + " INFO: Request: " + request.toString());
         final ChannelFuture f = channel.writeAndFlush(request.toString());
         f.addListener((ChannelFutureListener) future -> {
             assert f == future;
@@ -32,7 +32,7 @@ public abstract class AbstractServerService<S extends AbstractServerRequest, T e
     }
 
     public void sendResponse(T response, Channel channel) {
-        System.out.println("INFO: Response: " + response.toString());
+        System.out.println(ServerState.localId + " INFO: Response: " + response.toString());
         final ChannelFuture f = channel.writeAndFlush(response.toString());
         f.addListener((ChannelFutureListener) future -> {
             assert f == future;

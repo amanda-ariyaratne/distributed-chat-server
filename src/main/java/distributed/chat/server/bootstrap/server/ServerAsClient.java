@@ -38,7 +38,7 @@ public class ServerAsClient {
             ServerState.serverAsClientThreadCount.getAndIncrement();
             ServerState.globalRooms.put("MainHall-"+serverId, serverId);
 
-            System.out.println("INFO: " + ServerState.localId + " Connected to " + serverId);
+            System.out.println(ServerState.localId + " INFO: " + ServerState.localId + " Connected to " + serverId);
 
             f.channel().closeFuture().sync();
         } finally {
