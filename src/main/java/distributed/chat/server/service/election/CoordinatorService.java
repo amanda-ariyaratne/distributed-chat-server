@@ -39,7 +39,7 @@ public class CoordinatorService extends FastBullyService<CoordinatorMessage> {
             ServerState.coordinatorMessage = message;
             ServerState.leaderId = message.getServerId();
             ServerState.electionStatus = ElectionStatus.LEADER_ELECTED;
-            System.out.println("INFO: 1 New leader set to " + ServerState.leaderId);
+            System.out.println("INFO: New leader set to " + ServerState.leaderId);
         }
     }
 

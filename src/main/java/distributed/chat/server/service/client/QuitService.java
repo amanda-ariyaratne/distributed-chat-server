@@ -3,10 +3,8 @@ package distributed.chat.server.service.client;
 import distributed.chat.server.model.Client;
 import distributed.chat.server.model.Room;
 import distributed.chat.server.model.message.request.client.DeleteRoomClientRequest;
-import distributed.chat.server.model.message.request.client.NewIdentityClientRequest;
 import distributed.chat.server.model.message.request.client.QuitClientRequest;
 import distributed.chat.server.model.message.request.server.QuitServerRequest;
-import distributed.chat.server.model.message.response.client.NewIdentityClientResponse;
 import distributed.chat.server.model.message.response.client.RoomChangeClientResponse;
 import distributed.chat.server.service.server.QuitServerService;
 import distributed.chat.server.states.ServerState;
@@ -34,7 +32,9 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
         Client client = request.getSender();
         Room room = client.getRoom();
 
+
         QuitServerRequest quitServerRequest;
+
 
         if (client.isAlready_room_owner()) { // already a room owner
             // delete room
@@ -43,7 +43,7 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
             DeleteRoomService.getInstance().handleDelete(room.getRoomId(), client, "");
 
             quitServerRequest = new QuitServerRequest(client.getIdentity(), room.getRoomId());
-        } else { // not a owner
+        } else { // not an owner
             // room change response to client
             room.removeMember(client);
             RoomChangeClientResponse roomChangeClientResponse = new RoomChangeClientResponse(client.getIdentity(), room.getRoomId(), "");
@@ -53,15 +53,14 @@ public class QuitService extends AbstractClientService<QuitClientRequest, RoomCh
 
         }
 
+        // broadcast to other servers
+        QuitServerService.getInstance().broadcastRequest(quitServerRequest);
+
         // remove from client list
         ServerState.localClients.remove(client.getIdentity());
         ServerState.globalClients.remove(client.getIdentity());
 
         // server closes the connection
         ServerState.activeClients.remove(client.getCtx().channel().id());
-
-        // broadcast to other servers
-        QuitServerService.getInstance().broadcastRequest(quitServerRequest);
-
     }
 }

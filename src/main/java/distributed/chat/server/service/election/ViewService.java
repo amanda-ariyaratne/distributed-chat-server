@@ -56,7 +56,7 @@ public class ViewService extends FastBullyService<ViewMessage> {
 
                 }
                 ServerState.electionStatus = ElectionStatus.LEADER_ELECTED;
-                System.out.println("INFO: 4 New leader set to " + ServerState.leaderId);
+                System.out.println("INFO: New leader set to " + ServerState.leaderId);
             }
         }
     }

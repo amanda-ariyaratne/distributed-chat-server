@@ -34,7 +34,7 @@ public class ReserveRoomHandler extends ChannelInboundHandlerAdapter {
             ReserveRoomServerService reserveRoomServerService = ReserveRoomServerService.getInstance();
             ReserveRoomServerRequest reserveRoomServerRequest = (ReserveRoomServerRequest) msg;
 
-            if (ServerState.serverChannels.size() >= (1+ServerState.servers.size()/2)) {
+            if (ServerState.serverChannels.size() >= (ServerState.servers.size()/2)) {
                 System.out.println("INFO: Process Reserve Room Server Request for room " + reserveRoomServerRequest.getRoomId());
                 reserveRoomServerService.processRequest(reserveRoomServerRequest, ctx.channel());
 

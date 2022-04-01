@@ -53,10 +53,12 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
         // move client and other members to main-hall -> broadcast joinroom
         moveMembersToMainHall(roomId, mainhall);
 
+        System.out.println("DEBUG: inform other servers");
         // inform other servers - {"type" : "deleteroom", "serverid" : "s1", "roomid" : "jokes"}
         DeleteRoomServerRequest deleteRoomServerRequest = new DeleteRoomServerRequest(ServerState.localId, roomId);
         DeleteRoomServerService.getInstance().broadcastRequest(deleteRoomServerRequest);
 
+        System.out.println("DEBUG: delete room");
         // delete room
         ServerState.localRooms.remove(roomId);
         ServerState.globalRooms.remove(roomId);
@@ -71,6 +73,7 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
     }
 
     private void moveMembersToMainHall(String roomId, String mainhall) {
+        System.out.println("DEBUG: moveMembersToMainHall");
         Room room = ServerState.localRooms.get(roomId);
         Room mainHall = ServerState.localRooms.get("MainHall-" + ServerState.localId);
 
