@@ -10,6 +10,7 @@ import distributed.chat.server.service.server.DeleteRoomServerService;
 import distributed.chat.server.states.ServerState;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class DeleteRoomService extends AbstractClientService<DeleteRoomClientRequest, DeleteRoomClientResponse> {
     private static DeleteRoomService instance;
@@ -72,7 +73,7 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
                 && (client.getRoom()).getOwner().getIdentity().equals(client.getIdentity())); // client is the owner
     }
 
-    private void moveMembersToMainHall(String roomId, String mainhall) {
+    private void moveMembersToMainHall(String roomId, String mainhallStr) {
         System.out.println("DEBUG: moveMembersToMainHall");
         Room room = ServerState.localRooms.get(roomId);
         Room mainHall = ServerState.localRooms.get("MainHall-" + ServerState.localId);
@@ -81,7 +82,7 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
 
             RoomChangeClientResponse roomChangeClientResponse;
             if (room.getOwner() == member) { // if owner
-                roomChangeClientResponse = new RoomChangeClientResponse(member.getIdentity(), roomId, mainhall);
+                roomChangeClientResponse = new RoomChangeClientResponse(member.getIdentity(), roomId, mainhallStr);
             }
             else {
                 roomChangeClientResponse = new RoomChangeClientResponse(member.getIdentity(), roomId, "MainHall-" + ServerState.localId);
@@ -99,8 +100,11 @@ public class DeleteRoomService extends AbstractClientService<DeleteRoomClientReq
             member.setRoom(mainHall);
             // remove from room
             i.remove();
-            // add to main hall
-            mainHall.addMember(member);
+
+            if (Objects.equals(mainhallStr, "") && room.getOwner() != member){ // if roomowner is quiting && not an owner
+                // add to main hall
+                mainHall.addMember(member);
+            }
         }
     }
 }
