@@ -1,7 +1,7 @@
 package distributed.chat.server.bootstrap.initializers;
 
 import distributed.chat.server.handlers.election.*;
-import distributed.chat.server.handlers.heartbeat.HeartBeatHandler;
+import distributed.chat.server.handlers.heartbeat.ClientHeartBeatHandler;
 import distributed.chat.server.handlers.server.*;
 import distributed.chat.server.helper.MessageDecoder;
 import distributed.chat.server.states.ServerState;
@@ -30,7 +30,7 @@ public class ServerAsClientInitializer extends ChannelInitializer<SocketChannel>
                 ServerState.heartBeatReadTimeout,
                 ServerState.heartBeatWriteTimeout,
                 0));
-        pipeline.addLast("heartbeat", new HeartBeatHandler());
+        pipeline.addLast("heartbeat", new ClientHeartBeatHandler());
         pipeline.addLast(
                 new AnswerHandler(),
                 new CoordinatorHandler(),
