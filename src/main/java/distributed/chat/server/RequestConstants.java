@@ -19,6 +19,7 @@ public final class RequestConstants {
     public static final String JOIN_ROOM                            = "joinroom";
     public static final String MOVE_JOIN                            = "movejoin";
     public static final String DELETE_ROOM                          = "deleteroom";
+    public static final String DELETE_ROOM_SERVER                   = "deleteroomserver";
     public static final String MESSAGE                              = "message";
     public static final String QUIT                                 = "quit";
 

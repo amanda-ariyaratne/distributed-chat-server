@@ -24,8 +24,8 @@ public class ServerToServerInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("pojo_decode", new MessageDecoder());
         pipeline.addLast("reserve_identity", new ReserveIdentityHandler());
         pipeline.addLast("reserve_room", new ReserveRoomHandler());
-        pipeline.addLast("delete_room", new DeleteRoomServerHandler());
-        pipeline.addLast("quit", new QuitRoomServerHandler());
+        pipeline.addLast("delete_room_server", new DeleteRoomServerHandler());
+        pipeline.addLast("quit_server", new QuitRoomServerHandler());
         pipeline.addLast("add_identity", new AddIdentityHandler());
         pipeline.addLast("add_room", new AddRoomInboundHandler());
 

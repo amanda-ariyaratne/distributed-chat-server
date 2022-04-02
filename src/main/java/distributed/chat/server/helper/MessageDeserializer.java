@@ -112,6 +112,11 @@ public class MessageDeserializer implements JsonDeserializer<AbstractMessage> {
             case RequestConstants.DELETE_ROOM:
                 request = new DeleteRoomClientRequest(requestJson.get("roomid").getAsString());
                 break;
+            case RequestConstants.DELETE_ROOM_SERVER:
+                request = new DeleteRoomServerRequest(
+                        requestJson.get("serverid").getAsString(),
+                        requestJson.get("roomid").getAsString());
+                break;
             case RequestConstants.MESSAGE:
                 request = new MessageClientRequest(requestJson.get("content").getAsString());
                 break;
