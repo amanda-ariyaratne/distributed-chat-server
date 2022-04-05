@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Main-Class: distributed.chat.server.Main
+Class-Path: log4j-1.2.17.jar netty-codec-mqtt-4.1.74.Final.jar netty-cod
+ ec-http-4.1.74.Final.jar netty-transport-sctp-4.1.74.Final.jar netty-re
+ solver-dns-native-macos-4.1.74.Final-osx-x86_64.jar netty-codec-dns-4.1
+ .74.Final.jar netty-transport-native-kqueue-4.1.74.Final-osx-x86_64.jar
+  netty-transport-4.1.74.Final.jar netty-resolver-dns-4.1.74.Final.jar n
+ etty-all-4.1.74.Final.jar netty-tcnative-classes-2.0.48.Final.jar netty
+ -transport-native-kqueue-4.1.74.Final-osx-aarch_64.jar netty-transport-
+ native-epoll-4.1.74.Final-linux-x86_64.jar netty-transport-udt-4.1.74.F
+ inal.jar junit-4.10.jar netty-codec-smtp-4.1.74.Final.jar netty-handler
+ -4.1.74.Final.jar netty-codec-memcache-4.1.74.Final.jar netty-transport
+ -classes-epoll-4.1.74.Final.jar netty-transport-native-unix-common-4.1.
+ 74.Final.jar gson-2.8.9.jar netty-transport-rxtx-4.1.74.Final.jar netty
+ -buffer-4.1.74.Final.jar netty-transport-classes-kqueue-4.1.74.Final.ja
+ r netty-common-4.1.74.Final.jar netty-handler-proxy-4.1.74.Final.jar ne
+ tty-codec-socks-4.1.74.Final.jar netty-transport-native-epoll-4.1.74.Fi
+ nal-linux-aarch_64.jar netty-resolver-4.1.74.Final.jar netty-codec-http
+ 2-4.1.74.Final.jar netty-resolver-dns-classes-macos-4.1.74.Final.jar ha
+ mcrest-core-1.1.jar json-simple-1.1.1.jar netty-codec-redis-4.1.74.Fina
+ l.jar netty-codec-stomp-4.1.74.Final.jar netty-resolver-dns-native-maco
+ s-4.1.74.Final-osx-aarch_64.jar netty-codec-haproxy-4.1.74.Final.jar ne
+ tty-codec-4.1.74.Final.jar netty-codec-xml-4.1.74.Final.jar
+
